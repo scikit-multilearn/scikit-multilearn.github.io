@@ -23,3 +23,8 @@ header {
 
 }
 
+footer {
+	width: 100%;
+	text-align:center;
+	margin: 1em 0;
+}
