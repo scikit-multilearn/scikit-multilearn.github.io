@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>skmultilearn.dataset &mdash; scikit-multilearn 0.0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> scikit-multilearn</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets.html#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../classify.html">Classifying input using scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../base.html">Implementing a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../base.html#the-fit-method">The fit method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base.html#the-predict-method">The predict method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../meka.html#setting-up-meka">Setting up MEKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../meka.html#using-the-interface">Using the interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/meka.html">meka package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/skmultilearn.html">skmultilearn package</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>skmultilearn.dataset</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for skmultilearn.dataset</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">arff</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Dataset.load_arff_to_numpy"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.load_arff_to_numpy">[docs]</a>    <span class="k">def</span> <span class="nf">load_arff_to_numpy</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">labelcount</span><span class="p">,</span> <span class="n">endian</span> <span class="o">=</span> <span class="s">&quot;big&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for loading ARFF files as numpy array</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        filename : string</span>
+<span class="sd">            Path to ARFF file</span>
+<span class="sd">        </span>
+<span class="sd">        labelcount: integer</span>
+<span class="sd">            Number of labels in the ARFF file</span>
+
+<span class="sd">        endian: string{&quot;big&quot;, &quot;little&quot;}</span>
+<span class="sd">            Whether the ARFF file contains labels at the beginning of the attributes list (&quot;big&quot; endianness, MEKA format) </span>
+<span class="sd">            or at the end (&quot;little&quot; endianness, MULAN format)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        </span>
+<span class="sd">        data: dictionary {&#39;X&#39;: array-like of array-likes, &#39;y&#39;: array-like of binary label vectors }</span>
+<span class="sd">            The dictionary containing the data frame, with &#39;X&#39; key storing the input space array-like of input feature vectors</span>
+<span class="sd">            and &#39;y&#39; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1</span>
+<span class="sd">            then the input vector has label no. 5) </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">arff_frame</span> <span class="o">=</span> <span class="n">arff</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span> <span class="p">,</span><span class="s">&#39;rb&#39;</span><span class="p">))</span>
+        <span class="n">input_features_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arff_frame</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">labelcount</span>
+        <span class="n">input_space</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">endian</span> <span class="o">==</span> <span class="s">&quot;big&quot;</span><span class="p">:</span>
+            <span class="n">input_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="n">labelcount</span><span class="p">:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]])</span>
+            <span class="n">labels</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">row</span><span class="p">[:</span><span class="n">labelcount</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]])</span>
+        <span class="k">elif</span> <span class="n">endian</span> <span class="o">==</span> <span class="s">&quot;little&quot;</span><span class="p">:</span>
+            <span class="n">input_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">row</span><span class="p">[:</span><span class="n">input_features_count</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]])</span>
+            <span class="n">labels</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="o">-</span><span class="n">labelcount</span><span class="p">:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># unknown endian</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="k">return</span> <span class="n">input_space</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;i8&#39;</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Dataset.save_dataset_dump"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.save_dataset_dump">[docs]</a>    <span class="k">def</span> <span class="nf">save_dataset_dump</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">input_space</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves a compressed data set dump</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        filename : string</span>
+<span class="sd">            Path to dump file, if without .bz2, the .bz2 extension will be appended.</span>
+
+<span class="sd">        input_space: array-like of array-likes</span>
+<span class="sd">            Input space array-like of input feature vectors</span>
+
+<span class="sd">        labels: array-like of binary label vectors</span>
+<span class="sd">            Array-like of labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1</span>
+<span class="sd">            then the input vector has label no. 5)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s">&#39;.bz2&#39;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">+=</span> <span class="s">&quot;.bz2&quot;</span>
+
+        <span class="k">with</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s">&#39;X&#39;</span><span class="p">:</span> <span class="n">input_space</span><span class="p">,</span> <span class="s">&#39;y&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="p">},</span> <span class="n">file_handle</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Dataset.load_dataset_dump"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.load_dataset_dump">[docs]</a>    <span class="k">def</span> <span class="nf">load_dataset_dump</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Loads a compressed data set dump</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        filename : string</span>
+<span class="sd">            Path to dump file, if without .bz2, the .bz2 extension will be appended.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        data: dictionary {&#39;X&#39;: array-like of array-likes, &#39;y&#39;: array-like of binary label vectors }</span>
+<span class="sd">            The dictionary containing the data frame, with &#39;X&#39; key storing the input space array-like of input feature vectors</span>
+<span class="sd">            and &#39;y&#39; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1</span>
+<span class="sd">            then the input vector has label no. 5) </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">filename</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s">&#39;.bz2&#39;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">+=</span> <span class="s">&quot;.bz2&quot;</span>
+
+        <span class="k">with</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">data</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Piotr Szymański.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

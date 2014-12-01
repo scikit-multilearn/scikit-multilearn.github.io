@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Datasets: loading data sets for scikit-multilearn &mdash; scikit-multilearn 0.0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="index.html"/>
+        <link rel="next" title="Implementing a multi-label classifier" href="base.html"/>
+        <link rel="prev" title="Welcome to scikit-multilearn’s documentation!" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> scikit-multilearn</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Datasets: loading data sets for scikit-multilearn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base.html#the-fit-method">The fit method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="base.html#the-predict-method">The predict method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#setting-up-meka">Setting up MEKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#using-the-interface">Using the interface</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Datasets: loading data sets for scikit-multilearn</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/datasets.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="datasets-loading-data-sets-for-scikit-multilearn">
+<h1>Datasets: loading data sets for scikit-multilearn<a class="headerlink" href="#datasets-loading-data-sets-for-scikit-multilearn" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="loading-from-arff">
+<h2>Loading from ARFF<a class="headerlink" href="#loading-from-arff" title="Permalink to this headline">¶</a></h2>
+<p>The class <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><tt class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></tt></a> allows loading data from <tt class="docutils literal"><span class="pre">WEKA</span></tt>, <tt class="docutils literal"><span class="pre">MULAN</span></tt> or <tt class="docutils literal"><span class="pre">MEKA</span></tt> provided data sets in <cite>ARFF</cite> format. The module depends on <a class="reference external" href="https://pypi.python.org/pypi/liac-arff">liac-arff</a> and apart from the file path it takes two arguments:</p>
+<ul class="simple">
+<li>labelcount: integer, the number of labels in the data set</li>
+<li>endian: enum{&#8220;big&#8221;, &#8220;little&#8221;}: defiens whether to look for labels at the beginning of attributes in the ARFF file (&#8220;big&#8221; endian) such as the files used by MEKA or at the end (&#8220;little&#8221;) endian such as the MULAN files.</li>
+</ul>
+<p>Example code for converting ARFF file to data dumps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="n">input_features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s">&quot;path_to/file.arff&quot;</span><span class="p">,</span> <span class="n">labelcount</span><span class="p">,</span> <span class="s">&quot;big&quot;</span><span class="p">)</span>
+
+<span class="c"># will be saved to &quot;path_to/output.dump.bz2&quot;</span>
+<span class="n">Dataset</span><span class="o">.</span><span class="n">save_dataset_dump</span><span class="p">(</span><span class="s">&quot;path_to/output.dump&quot;</span><span class="p">,</span> <span class="n">input_features</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scikit-multilearn-data-set-format">
+<h2>Scikit-multilearn data set format<a class="headerlink" href="#scikit-multilearn-data-set-format" title="Permalink to this headline">¶</a></h2>
+<p>Following <tt class="docutils literal"><span class="pre">scikit-learn</span></tt>&#8216;s <a class="reference external" href="http://scikit-learn.org/stable/modules/multiclass.html#multilabel-classification-format">approach</a> we assume multilabel data to be divided into two sets:</p>
+<ul class="simple">
+<li>X: the array-like of vector-likes, i.e. the array of row vectors that consist of input features (same length, i.e. feature/attribute count),</li>
+</ul>
+<p>ex. a two-object set with each row being a small 1px x 1px image with rgb channels (3 int8 describing red,blue,green colors per pixel): <tt class="docutils literal"><span class="pre">[[128,10,10,20,30,128],</span> <span class="pre">[10,155,30,10,155,10]]</span></tt></p>
+<ul class="simple">
+<li>y: the array-like of vector-likes, i.e. the array of binary label vectors of the same length (i.e. the label count) ex, for 3 labels: <tt class="docutils literal"><span class="pre">[[1,0,1],</span> <span class="pre">[0,1,0]]</span></tt></li>
+</ul>
+<p>The <tt class="docutils literal"><span class="pre">scikit-multilearn</span></tt> provided data sets are produced using <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><tt class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></tt></a> class and contain a dictionary with two keys: <tt class="docutils literal"><span class="pre">X</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt>, containing a data set in the format described above. The data sets are <tt class="docutils literal"><span class="pre">pickle</span></tt> dumps compressed using the <tt class="docutils literal"><span class="pre">bz2</span></tt> module. They can be loaded using the <tt class="docutils literal"><span class="pre">Dataset</span></tt> class.</p>
+<p>Example use case of loading data sets:
+.. code-block:: python</p>
+<blockquote>
+<div><p>from skmultilearn.dataset import Dataset</p>
+<p>train_set = Dataset.load_dataset_dump(&#8220;data/scene-train.dump.bz2&#8221;)</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="base.html" class="btn btn-neutral float-right" title="Implementing a multi-label classifier"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to scikit-multilearn’s documentation!"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Piotr Szymański.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

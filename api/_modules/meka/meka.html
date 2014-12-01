@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meka.meka &mdash; scikit-multilearn 0.0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> scikit-multilearn</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets.html#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../classify.html">Classifying input using scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../base.html">Implementing a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../base.html#the-fit-method">The fit method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../base.html#the-predict-method">The predict method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../meka.html#setting-up-meka">Setting up MEKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../meka.html#using-the-interface">Using the interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/meka.html">meka package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/skmultilearn.html">skmultilearn package</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>meka.meka</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for meka.meka</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">commands</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="c"># import tempfile</span>
+
+<div class="viewcode-block" id="Meka"><a class="viewcode-back" href="../../api/meka.html#meka.meka.Meka">[docs]</a><span class="k">class</span> <span class="nc">Meka</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Runs the MEKA classifier</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        meka_classifier : string</span>
+<span class="sd">            The MEKA classifier string and parameters from the MEKA API, such as: &quot;meka.classifiers.multilabel.MULAN -S RAkEL2&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        weka_classifier : string</span>
+<span class="sd">            The WEKA classifier string and parameters from the WEKA API, such as: &quot;weka.classifiers.trees.J48&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        java_command : string</span>
+<span class="sd">            Path to test the java command</span>
+
+<span class="sd">        meka_classpath: string</span>
+<span class="sd">            Path to the MEKA class path folder, usually the folder lib in the directory MEKA was extracted to</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meka_classifier</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">weka_classifier</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">java_command</span> <span class="o">=</span> <span class="s">&#39;/usr/bin/java&#39;</span><span class="p">,</span> <span class="n">meka_classpath</span> <span class="o">=</span> <span class="s">&quot;/home/niedakh/icml/meka-1.7/lib/&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Meka</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">java_command</span> <span class="o">=</span> <span class="n">java_command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classpath</span> <span class="o">=</span> <span class="n">meka_classpath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meka_classifier</span> <span class="o">=</span> <span class="n">meka_classifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weka_classifier</span> <span class="o">=</span> <span class="n">weka_classifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="Meka.run"><a class="viewcode-back" href="../../api/meka.html#meka.meka.Meka.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Runs the meka classifiers</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        train_file : string</span>
+<span class="sd">            Path to train .arff file in meka format (big endian, labels first in attributes list).</span>
+<span class="sd">        </span>
+<span class="sd">        test_file : string</span>
+<span class="sd">            Path to test .arff file in meka format (big endian, labels first in attributes list).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        predictions: array-like of array-likes of {0,1}</span>
+<span class="sd">            array of binary label vectors including label predictions</span>
+
+<span class="sd">        extra_output: dictionary</span>
+<span class="sd">            dictionary of additional output generated by meka, consult meka documentation for more information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c"># meka_command_string = &#39;java -cp &quot;/home/niedakh/pwr/old/meka-1.5/lib/*&quot; meka.classifiers.multilabel.MULAN -S RAkEL2  </span>
+        <span class="c"># -threshold 0 -t {train} -T {test} -verbosity {verbosity} -W weka.classifiers.bayes.NaiveBayes&#39;</span>
+        <span class="c"># meka.classifiers.multilabel.LC, weka.classifiers.bayes.NaiveBayes</span>
+        <span class="n">meka_command_string</span> <span class="o">=</span> <span class="s">&#39;{java} -cp &quot;{classpath}*&quot; {meka} -threshold {threshold} -t {train} -T {test} -verbosity {verbosity} -W {weka}&#39;</span>
+        
+
+        <span class="n">input_files</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;java&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">java_command</span><span class="p">,</span>
+            <span class="s">&#39;meka&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meka_classifier</span><span class="p">,</span>
+            <span class="s">&#39;weka&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">weka_classifier</span><span class="p">,</span>
+            <span class="s">&#39;train&#39;</span><span class="p">:</span> <span class="n">train_file</span><span class="p">,</span>
+            <span class="s">&#39;test&#39;</span><span class="p">:</span> <span class="n">test_file</span><span class="p">,</span>
+            <span class="s">&#39;threshold&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span>
+            <span class="s">&#39;verbosity&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span><span class="p">,</span>
+            <span class="s">&#39;classpath&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">classpath</span>
+        <span class="p">}</span>
+        <span class="n">meka_command</span> <span class="o">=</span> <span class="n">meka_command_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">input_files</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">meka_command</span><span class="p">)</span>
+        <span class="n">status</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="n">commands</span><span class="o">.</span><span class="n">getstatusoutput</span><span class="p">(</span><span class="n">meka_command</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">output</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_output</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span>
+</div>
+<div class="viewcode-block" id="Meka.parse_output"><a class="viewcode-back" href="../../api/meka.html#meka.meka.Meka.parse_output">[docs]</a>    <span class="k">def</span> <span class="nf">parse_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Internal function for parsing MEKA output.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="n">predictions_split_head</span> <span class="o">=</span> <span class="s">&quot;|==== PREDICTIONS ===============&gt;</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">predictions_split_foot</span> <span class="o">=</span> <span class="s">&quot;|==============================&lt;</span><span class="se">\n</span><span class="s">&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">predictions_split_head</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c"># predictions, first split</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">predictions_split_head</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">predictions_split_foot</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c"># then clean up and remove empty lines</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">predictions</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
+        <span class="c"># parse into list of row classifications</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+                 <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;[ &#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; ]&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">])</span>
+
+        <span class="c"># split, cleanup, remove empty lines</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">predictions_split_head</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">predictions_split_foot</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">statistics</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
+
+        <span class="c"># remove per label stats, they can be calculated using python later, parse into a dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">statistics</span> <span class="k">if</span> <span class="s">&#39;]:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
+</pre></div></div></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Piotr Szymański.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

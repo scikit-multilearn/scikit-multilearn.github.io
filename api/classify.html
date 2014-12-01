@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Classifying input using scikit-multilearn &mdash; scikit-multilearn 0.0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> scikit-multilearn</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base.html#the-fit-method">The fit method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="base.html#the-predict-method">The predict method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#setting-up-meka">Setting up MEKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#using-the-interface">Using the interface</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Classifying input using scikit-multilearn</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/classify.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="classifying-input-using-scikit-multilearn">
+<h1>Classifying input using scikit-multilearn<a class="headerlink" href="#classifying-input-using-scikit-multilearn" title="Permalink to this headline">¶</a></h1>
+<p>To classify data with a multi-label classifier, you need to have:</p>
+<ul class="simple">
+<li>a training data set: <tt class="docutils literal"><span class="pre">X</span></tt> - array of input feature vectors and <tt class="docutils literal"><span class="pre">y</span></tt> arary of binary label indicator vectors associated with each row</li>
+<li>selected a base classifier, ex. a naive bayes one</li>
+<li>selected the multi-label classification method, ex. Binary Relevance</li>
+<li>an array of input feature vectors you want to have labeled</li>
+</ul>
+<p>An example use case of the data sets for classification:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.meta.br</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+
+<span class="c"># load data</span>
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_dataset_dump</span><span class="p">(</span><span class="s">&quot;data/scene-train.dump.bz2&quot;</span><span class="p">)</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_dataset_dump</span><span class="p">(</span><span class="s">&quot;data/scene-test.dump.bz2&quot;</span><span class="p">)</span>
+
+<span class="c"># initialize Binary Relevance multi-label classifier with gaussian naive bayes base classifier</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span><span class="n">GaussianNB</span><span class="p">())</span>
+
+<span class="c"># train</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">&#39;X&#39;</span><span class="p">],</span><span class="n">train_set</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">])</span>
+
+<span class="c"># predict</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">&#39;X&#39;</span><span class="p">])</span>
+
+<span class="c"># measure</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">],</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Piotr Szymański.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meka package &mdash; scikit-multilearn 0.0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> scikit-multilearn</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../base.html#the-fit-method">The fit method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../base.html#the-predict-method">The predict method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../meka.html#setting-up-meka">Setting up MEKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../meka.html#using-the-interface">Using the interface</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>meka package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/api/meka.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="meka-package">
+<h1>meka package<a class="headerlink" href="#meka-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-meka.meka">
+<span id="meka-meka-module"></span><h2>meka.meka module<a class="headerlink" href="#module-meka.meka" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="meka.meka.Meka">
+<em class="property">class </em><tt class="descclassname">meka.meka.</tt><tt class="descname">Meka</tt><big>(</big><em>meka_classifier=None</em>, <em>weka_classifier=None</em>, <em>java_command='/usr/bin/java'</em>, <em>meka_classpath='/home/niedakh/icml/meka-1.7/lib/'</em><big>)</big><a class="reference internal" href="../_modules/meka/meka.html#Meka"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meka.meka.Meka" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Runs the MEKA classifier</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>meka_classifier</strong> : string</p>
+<blockquote>
+<div><p>The MEKA classifier string and parameters from the MEKA API, such as: &#8220;meka.classifiers.multilabel.MULAN -S RAkEL2&#8221;</p>
+</div></blockquote>
+<p><strong>weka_classifier</strong> : string</p>
+<blockquote>
+<div><p>The WEKA classifier string and parameters from the WEKA API, such as: &#8220;weka.classifiers.trees.J48&#8221;</p>
+</div></blockquote>
+<p><strong>java_command</strong> : string</p>
+<blockquote>
+<div><p>Path to test the java command</p>
+</div></blockquote>
+<p><strong>meka_classpath: string</strong></p>
+<blockquote class="last">
+<div><p>Path to the MEKA class path folder, usually the folder lib in the directory MEKA was extracted to</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#meka.meka.Meka.parse_output" title="meka.meka.Meka.parse_output"><tt class="xref py py-obj docutils literal"><span class="pre">parse_output</span></tt></a>()</td>
+<td>Internal function for parsing MEKA output.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#meka.meka.Meka.run" title="meka.meka.Meka.run"><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></a>(train_file,&nbsp;test_file)</td>
+<td>Runs the meka classifiers</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="meka.meka.Meka.parse_output">
+<tt class="descname">parse_output</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/meka/meka.html#Meka.parse_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meka.meka.Meka.parse_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal function for parsing MEKA output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meka.meka.Meka.run">
+<tt class="descname">run</tt><big>(</big><em>train_file</em>, <em>test_file</em><big>)</big><a class="reference internal" href="../_modules/meka/meka.html#Meka.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meka.meka.Meka.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the meka classifiers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>train_file</strong> : string</p>
+<blockquote>
+<div><p>Path to train .arff file in meka format (big endian, labels first in attributes list).</p>
+</div></blockquote>
+<p><strong>test_file</strong> : string</p>
+<blockquote>
+<div><p>Path to test .arff file in meka format (big endian, labels first in attributes list).</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">predictions: array-like of array-likes of {0,1}</p>
+<blockquote>
+<div><p>array of binary label vectors including label predictions</p>
+</div></blockquote>
+<p>extra_output: dictionary</p>
+<blockquote class="last">
+<div><p>dictionary of additional output generated by meka, consult meka documentation for more information</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-meka">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-meka" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Piotr Szymański.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
