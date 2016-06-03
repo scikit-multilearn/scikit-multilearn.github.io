@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Classifying input using scikit-multilearn &mdash; scikit-multilearn 0.0.1 documentation</title>
+  <title>Classify your dataset &mdash; scikit-multilearn 0.0.2 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,10 +28,14 @@
   
 
   
-    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="index.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
+        <link rel="next" title="Using the meka wrapper" href="meka.html"/>
+        <link rel="prev" title="Datasets: loading data sets for scikit-multilearn" href="datasets.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -41,41 +45,63 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> scikit-multilearn</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#loading-from-arff">Loading from ARFF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Classify your dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-the-data-set">Loading the data set</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#loading-from-arff">Loading from arff</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="base.html#the-fit-method">The fit method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="base.html#the-predict-method">The predict method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#classifying-input-using-scikit-multilearn">Classifying input using scikit-multilearn</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="meka.html#setting-up-meka">Setting up MEKA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meka.html#using-the-interface">Using the interface</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -90,70 +116,172 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Classifying input using scikit-multilearn</li>
+    <li>Classify your dataset</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/classify.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/classify.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
-  <div class="section" id="classifying-input-using-scikit-multilearn">
-<h1>Classifying input using scikit-multilearn<a class="headerlink" href="#classifying-input-using-scikit-multilearn" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="classify-your-dataset">
+<h1>Classify your dataset<a class="headerlink" href="#classify-your-dataset" title="Permalink to this headline">¶</a></h1>
 <p>To classify data with a multi-label classifier, you need to have:</p>
-<ul class="simple">
-<li>a training data set: <tt class="docutils literal"><span class="pre">X</span></tt> - array of input feature vectors and <tt class="docutils literal"><span class="pre">y</span></tt> arary of binary label indicator vectors associated with each row</li>
-<li>selected a base classifier, ex. a naive bayes one</li>
-<li>selected the multi-label classification method, ex. Binary Relevance</li>
-<li>an array of input feature vectors you want to have labeled</li>
+<ul>
+<li><p class="first">selected a base classifier, ex. a naive bayes one</p>
+</li>
+<li><p class="first">selected the multi-label classification method, ex. Binary Relevance</p>
+</li>
+<li><p class="first">an array or (dense/sparse) matrix with feature vectors to classify</p>
+</li>
+<li><dl class="first docutils">
+<dt>a training data set:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">X</span></code>: array of input feature vectors</li>
+<li><code class="docutils literal"><span class="pre">y</span></code> arary of binary label indicator vectors associated with each row</li>
 </ul>
-<p>An example use case of the data sets for classification:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">skmultilearn.meta.br</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
-<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
-<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="loading-the-data-set">
+<h2>Loading the data set<a class="headerlink" href="#loading-the-data-set" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">scikit-multilearn</span></code> lets you load two formats of data, one of them is the traditional ARFF format, using <a class="reference external" href="https://pythonhosted.org/liac-arff/">liac-arff</a> package. The other uses scikit-multilearn format that is a BZ2-pped pickle of a dict containing two sparse matrices.</p>
+<div class="section" id="loading-from-arff">
+<h3>Loading from arff<a class="headerlink" href="#loading-from-arff" title="Permalink to this headline">¶</a></h3>
+<p>This approach uses the <code class="docutils literal"><span class="pre">liac-arff</span></code> library to load ARFF files into <code class="docutils literal"><span class="pre">scikit-multilearn</span></code>. Many benchmark ARFF data sets can be found in <a class="reference external" href="http://mulan.sourceforge.net/datasets-mlc.html">MULAN&#8217;s collection</a>. This can be done using the <code class="xref py py-class docutils literal"><span class="pre">Dataset</span></code> static method <code class="xref py py-func docutils literal"><span class="pre">Dataset::load_arff_to_numpy()</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
-<span class="c"># load data</span>
-<span class="n">train_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_dataset_dump</span><span class="p">(</span><span class="s">&quot;data/scene-train.dump.bz2&quot;</span><span class="p">)</span>
-<span class="n">test_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_dataset_dump</span><span class="p">(</span><span class="s">&quot;data/scene-test.dump.bz2&quot;</span><span class="p">)</span>
+<span class="c1">## some information about the data set</span>
+<span class="c1"># number of labels</span>
+<span class="n">labelcount</span> <span class="o">=</span> <span class="mi">16</span>
 
-<span class="c"># initialize Binary Relevance multi-label classifier with gaussian naive bayes base classifier</span>
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span><span class="n">GaussianNB</span><span class="p">())</span>
+<span class="c1"># where the labels are located,</span>
+<span class="c1"># big = at the beginning of the file</span>
+<span class="n">endianness</span> <span class="o">=</span> <span class="s1">&#39;big&#39;</span>
 
-<span class="c"># train</span>
-<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="s">&#39;X&#39;</span><span class="p">],</span><span class="n">train_set</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">])</span>
+<span class="c1"># dtype used in the feature space</span>
+<span class="n">feature_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
 
-<span class="c"># predict</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">&#39;X&#39;</span><span class="p">])</span>
+<span class="c1"># whether the nominal attributes should be encoded as integers</span>
+<span class="n">encode_nominal</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="c"># measure</span>
-<span class="k">print</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">test_set</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">],</span> <span class="n">predictions</span><span class="p">))</span>
+<span class="c1"># if True - use the sparse loading mechanism from liac-arff</span>
+<span class="c1"># if False - load dense representation and convert to sparse</span>
+<span class="n">load_sparse</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># load data</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to_data/dataset-train.dump.bz2&quot;</span><span class="p">,</span>
+    <span class="n">labelcount</span> <span class="o">=</span> <span class="n">labelcount</span><span class="p">,</span>
+    <span class="n">endian</span> <span class="o">=</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span>
+    <span class="n">input_feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+    <span class="n">encode_nominal</span> <span class="o">=</span> <span class="n">encode_nominal</span><span class="p">,</span>
+    <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
+
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to_data/dataset-train.dump.bz2&quot;</span><span class="p">,</span>
+    <span class="n">labelcount</span> <span class="o">=</span> <span class="n">labelcount</span><span class="p">,</span>
+    <span class="n">endian</span> <span class="o">=</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span>
+    <span class="n">input_feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+    <span class="n">encode_nominal</span> <span class="o">=</span> <span class="n">encode_nominal</span><span class="p">,</span>
+    <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="classifying-input-using-scikit-multilearn">
+<h2>Classifying input using scikit-multilearn<a class="headerlink" href="#classifying-input-using-scikit-multilearn" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to perform multi-label classification is to transform it to a single-label classification task and then use scikit classifiers for that new job. There is a variety of such classifiers available in the <a href="#id1"><span class="problematic" id="id2">:module:`skmultilearn.problem_transformation`</span></a> module. <code class="xref py py-class docutils literal"><span class="pre">Binary</span> <span class="pre">Relevance</span></code> is an example of such approach.</p>
+<p>Binary Relevance requires a base classifier to use in the single-label problem. It clones a new one for each label and performs per label classification, summing the results together in the end. It can be done using scikit-multilearn as follows.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+
+<span class="c1"># assume data is loaded using</span>
+<span class="c1"># and is available in X_train/X_test, y_train/y_test</span>
+
+<span class="c1"># initialize Binary Relevance multi-label classifier</span>
+<span class="c1"># with gaussian naive bayes base classifier</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span><span class="n">GaussianNB</span><span class="p">(),</span> <span class="n">require_dense</span><span class="p">)</span>
+
+<span class="c1"># train</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># predict</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># measure</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>As described in <code class="xref py py-class docutils literal"><span class="pre">ProblemTransformationBase</span></code>, the <code class="docutils literal"><span class="pre">requires_dense</span></code> parameter can be used to make scikit-multilearn pass sparse representations of data down to scikit-learn (only a few classifiers support this). While <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> uses sparse matrices everywhere, <code class="docutils literal"><span class="pre">scikit-learn</span></code> is still in transition - to enable this (and a large speed up) use the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+
+<span class="c1"># assume data is loaded using</span>
+<span class="c1"># and is available in X_train/X_test, y_train/y_test</span>
+
+<span class="c1"># initialize Binary Relevance multi-label classifier</span>
+<span class="c1"># with an SVM classifier</span>
+<span class="c1"># SVM in scikit only supports the X matrix in sparse representation</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(),</span> <span class="n">require_dense</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">])</span>
+
+<span class="c1"># train</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># predict</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># measure</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 
 
+           </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="meka.html" class="btn btn-neutral float-right" title="Using the meka wrapper" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datasets.html" class="btn btn-neutral" title="Datasets: loading data sets for scikit-multilearn" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Piotr Szymański.
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -168,7 +296,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -177,7 +305,7 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

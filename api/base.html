@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Implementing a multi-label classifier &mdash; scikit-multilearn 0.0.1 documentation</title>
+  <title>Implementing a multi-label classifier &mdash; scikit-multilearn 0.0.2 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,12 +28,14 @@
   
 
   
-    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="index.html"/>
-        <link rel="next" title="Meka: python interface to java’s meka library" href="meka.html"/>
-        <link rel="prev" title="Datasets: loading data sets for scikit-multilearn" href="datasets.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
+        <link rel="next" title="Developing a label space clusterer" href="clusterer.html"/>
+        <link rel="prev" title="Using the meka wrapper" href="meka.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -43,41 +45,76 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> scikit-multilearn</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#loading-from-arff">Loading from ARFF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Implementing a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scikit-learn-base-classses">Scikit-learn base classses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#baseestimator">BaseEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#classifiermixin">ClassifierMixin</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Implementing a multi-label classifier</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-fit-method">The fit method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-predict-method">The predict method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mlclassifierbase">MLClassifierBase</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#copyable-fields">Copyable fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-fit-method">The fit method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-predict-method">The predict method</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="meka.html#setting-up-meka">Setting up MEKA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meka.html#using-the-interface">Using the interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selecting-the-base-class">Selecting the base class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problem-transformation">Problem transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ensemble-classification">Ensemble classification</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-testing">Unit testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implement-your-classifier-checklist">Implement your classifier checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -92,44 +129,143 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
     <li>Implementing a multi-label classifier</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/base.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/base.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="implementing-a-multi-label-classifier">
 <h1>Implementing a multi-label classifier<a class="headerlink" href="#implementing-a-multi-label-classifier" title="Permalink to this headline">¶</a></h1>
-<p>To implement a multi-label classifier you need to subclass <a class="reference internal" href="api/skmultilearn.html#skmultilearn.base.MLClassifierBase" title="skmultilearn.base.MLClassifierBase"><tt class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase()</span></tt></a>. The constructor takes the underlying base classifier and sets it to <tt class="docutils literal"><span class="pre">self.classifier</span></tt> for future deep copying and access. In order to implement a new classifier you should implement the <a class="reference internal" href="api/skmultilearn.html#skmultilearn.base.MLClassifierBase.fit" title="skmultilearn.base.MLClassifierBase.fit"><tt class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase.fit()</span></tt></a> and <a class="reference internal" href="api/skmultilearn.html#skmultilearn.base.MLClassifierBase.predict" title="skmultilearn.base.MLClassifierBase.predict"><tt class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase.predict()</span></tt></a> methods.</p>
+<p>To implement a multi-label classifier you need to subclass a classifier base class, Currently you can select of a few classifier base classes depending on which approach to multi-label classification you follow.</p>
+<p>Scikit-multilearn inheritance tree for classiffier is shown on figure below.</p>
+<img alt="_images/inheritance.png" src="_images/inheritance.png" />
+<p>To implement a scikit-learn&#8217;s ecosystem compatible classifier we need to subclass two classes from sklearn.base: BaseEstimator and ClassifierMixin. For that we provide <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase</span></code> base class. We further extend this class with properties specific to the problem transformation approach in multi-label classification in <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.ProblemTransformationBase</span></code>.</p>
+<div class="section" id="scikit-learn-base-classses">
+<h2>Scikit-learn base classses<a class="headerlink" href="#scikit-learn-base-classses" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="baseestimator">
+<h3>BaseEstimator<a class="headerlink" href="#baseestimator" title="Permalink to this headline">¶</a></h3>
+<p>The base estimator class from scikit is responsible for providing the ability of cloning classifiers, for example when multiple instances of exactly the same classifier are needed for cross validation performed using the CrossValidation class.</p>
+<p>The class provides two functions responsible for that: <code class="docutils literal"><span class="pre">get_params</span></code>, which fetches parameters from a classifier object and <code class="docutils literal"><span class="pre">set_params</span></code>, which sets params of the target clone. The params should also be acceptable by the constructor.</p>
+</div>
+<div class="section" id="classifiermixin">
+<h3>ClassifierMixin<a class="headerlink" href="#classifiermixin" title="Permalink to this headline">¶</a></h3>
+<p>This is an interface with a non-important method that allows different classes in scikit to detect that our classifier behaves as a classifier (i.e. implements <code class="docutils literal"><span class="pre">fit</span></code>/<code class="docutils literal"><span class="pre">predict</span></code> etc.) and provides certain kind of outputs.</p>
+</div>
+</div>
+<div class="section" id="mlclassifierbase">
+<h2>MLClassifierBase<a class="headerlink" href="#mlclassifierbase" title="Permalink to this headline">¶</a></h2>
+<p>The base multi-label classifier in scikit-multilearn is <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase</span></code>. It provides two abstract methods: fit(X, y) to train the classifier and predict(X) to predict labels for a set of samplese. These functions are expected from every classifier. It also provides a default implementation of get_params/set_params that works for multi-label classifiers.</p>
+<div class="section" id="copyable-fields">
+<h3>Copyable fields<a class="headerlink" href="#copyable-fields" title="Permalink to this headline">¶</a></h3>
+<p>One of the most important concepts in scikit-learn&#8217;s <code class="docutils literal"><span class="pre">BaseEstimator</span></code>, is the concept of cloning. Scikit-learn provides a plethora of experiment performing methods, among others cross validation, which require the ability to clone a classifier. Scikit-multilearn&#8217;s base multi-label class - <code class="docutils literal"><span class="pre">MLClassifierBase</span></code> - provides infrastructure for automatic cloning support.</p>
+<p>All you need to do in your classifier is:</p>
+<ol class="arabic simple">
+<li>subclass <code class="docutils literal"><span class="pre">MLClassifierBase</span></code> or a derivative class</li>
+<li>set self.copyable_attrs in your class&#8217;s constructor to a list of fields (as strings), that should be cloned (usually it is equal to the list of constructor&#8217;s arguments)</li>
+</ol>
+<p>An example of this would be:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AssignKBestLabels</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Assigns k most probable labels&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AssignKBestLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="the-fit-method">
-<h2>The fit method<a class="headerlink" href="#the-fit-method" title="Permalink to this headline">¶</a></h2>
-<p>The <tt class="docutils literal"><span class="pre">fit(self,</span> <span class="pre">X,</span> <span class="pre">y)</span></tt> expects classifier training data represented as an array-like of input feature vectors (rows) <tt class="docutils literal"><span class="pre">X</span></tt> and an array-like of binary label vectors as described in <em class="xref std std-ref">datasets</em>. It should return <tt class="docutils literal"><span class="pre">self</span></tt> after the classifier has been fitted to training data.</p>
+<h3>The fit method<a class="headerlink" href="#the-fit-method" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">fit(self,</span> <span class="pre">X,</span> <span class="pre">y)</span></code> expects classifier training data:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">X</span></code> should be a sparse matrix of shape: <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>, although for compatibility reasons array of arrays and a dense matrix are supported.</li>
+<li><code class="docutils literal"><span class="pre">y</span></code> should be a sparse, binary indicator, matrix of shape: <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code> with 1 in a position <code class="docutils literal"><span class="pre">i,j</span></code> when <code class="docutils literal"><span class="pre">i</span></code>-th sample  is labeled with label no. <code class="docutils literal"><span class="pre">j</span></code></li>
+</ul>
+<p>It should return <code class="docutils literal"><span class="pre">self</span></code> after the classifier has been fitted to training data. It is customary that <code class="docutils literal"><span class="pre">fit</span></code> should remember <code class="docutils literal"><span class="pre">n_labels</span></code> in a way. In practice we store <code class="docutils literal"><span class="pre">n_labels</span></code> as <code class="docutils literal"><span class="pre">self.label_count</span></code> in scikit-multilearn classifiers.</p>
 </div>
 <div class="section" id="the-predict-method">
-<h2>The predict method<a class="headerlink" href="#the-predict-method" title="Permalink to this headline">¶</a></h2>
-<p>The <tt class="docutils literal"><span class="pre">predict(self</span> <span class="pre">,X)</span></tt> expects an array-like of input feature vectors (rows) <tt class="docutils literal"><span class="pre">X</span></tt> that are to be classified. It should return an array-like of binary label vectors as described in <em class="xref std std-ref">datasets</em>.</p>
+<h3>The predict method<a class="headerlink" href="#the-predict-method" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">predict(self,</span> <span class="pre">X)</span></code> returns a prediction of labels for the samples from <code class="docutils literal"><span class="pre">X</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">X</span></code> should be a sparse matrix of shape: <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>, although for compatibility reasons array of arrays and a dense matrix are supported.</li>
+</ul>
+<p>The returned value is similar to <code class="docutils literal"><span class="pre">y</span></code> in <code class="docutils literal"><span class="pre">fit</span></code>. It should be a sparse binary indicator matrix of the shape <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code>.</p>
+<p>In some cases, while scikit continues to progress towards complete switch to sparse matrices, it might be needed to convert the sparse matrix to a <cite>dense matrix</cite> or even <cite>array-like of array-likes</cite>. Such is the case for some scoring functions in scikit. This problem should go away in the future versions of scikit.</p>
+</div>
+</div>
+<div class="section" id="selecting-the-base-class">
+<h2>Selecting the base class<a class="headerlink" href="#selecting-the-base-class" title="Permalink to this headline">¶</a></h2>
+<p>Madjarov et al. divide approaches to multi-label classification into three categories, you should select a scikit-multilearn base class according to the philosophy behind your classifier:</p>
+<ul class="simple">
+<li>algorithm adaptation, when a single-label algorithm is directly adapted to multi-label case, ex. Decision Trees can be adapted by taking multiple labels into consideration in decision functions, for now the base function for this approach is <code class="docutils literal"><span class="pre">MLClassifierBase</span></code></li>
+<li>problem transformation, when the multi-label problem is transformed to a set of single-label problems, solved there and converted to a multi-label solution afterwards - for this approach we provide a comfortable <code class="docutils literal"><span class="pre">ProblemTransformationBase</span></code> base class</li>
+<li>ensemble classification, when multi-label classification is performed by an ensemble of multi-label classifiers to improve performance, overcome overfitting etc. - there are a couple of ensemble classifiers that can server as base classes, see below</li>
+</ul>
+<div class="section" id="problem-transformation">
+<h3>Problem transformation<a class="headerlink" href="#problem-transformation" title="Permalink to this headline">¶</a></h3>
+<p>Problem transformation approach is centered around the idea of converting a multi-label problem into one or more single-label problems, which are usually solved by single- or multi-class classifiers. Scikit-learn is the de facto standard source of Python implementations of single-label classifiers.</p>
+<p>In order to perform the transformation, every problem transformation classifier needs a base classifier. As all classifiers that follow scikit-s BaseEstimator a clonable, scikit-multilearn&#8217;s base class for problem transformation classifiers requires an instance of a base classifier in initialization. Such an instance can be cloned if needed, and its parameters can be set up comfortably.</p>
+<p>The biggest problem with joining single-label scikit classifiers with multi-label classifiers is that there exists no way to learn whether a given scikit classifier accepts sparse matrices as input for <code class="docutils literal"><span class="pre">fit</span></code>/<code class="docutils literal"><span class="pre">predict</span></code> functions. For this reason <code class="docutils literal"><span class="pre">ProblemTransformationBase</span></code> requires another parameter - <code class="docutils literal"><span class="pre">require_dense</span></code> : <code class="docutils literal"><span class="pre">[</span> <span class="pre">bool,</span> <span class="pre">bool</span> <span class="pre">]</span></code> - a list/tuple of two boolean values. If the first one is true, that means the base classifier expects a dense (scikit-compatible array-like of array-likes) representation of the sample feature space <code class="docutils literal"><span class="pre">X</span></code>. If the second one is true - the target space <code class="docutils literal"><span class="pre">y</span></code> is passed to the base classifier as an array like of numbers. In case any of these are false - the arguments are passed as a sparse matrix.</p>
+<p>If the <code class="docutils literal"><span class="pre">required_dense</span></code> argument is not passed, it is set to <code class="docutils literal"><span class="pre">[false,</span> <span class="pre">false]</span></code> if a classifier inherits ::class::<code class="docutils literal"><span class="pre">MLClassifierBase</span></code> and to <code class="docutils literal"><span class="pre">[true,</span> <span class="pre">true]</span></code> as a fallback otherwise. In short it assumes dense representation is required for base classifier if the base classifier is not a scikit-multilearn classifier.</p>
+</div>
+<div class="section" id="ensemble-classification">
+<h3>Ensemble classification<a class="headerlink" href="#ensemble-classification" title="Permalink to this headline">¶</a></h3>
+<p>Ensemble classification is an approach of transforming a multi-label classification problem into a family (an ensemble) of multi-label subproblems.</p>
+<p>In the case when your classifier concentrates on clustering the label space you should look into existing clustering schemes in the skmultilearn.ensemble module as base classes. In most cases you can take an existing general scheme, such as: <code class="xref py py-class docutils literal"><span class="pre">LabelSpacePartitioningClassifier</span></code> - which partitions a label space using a clusterer class that implements the <code class="xref py py-class docutils literal"><span class="pre">LabelSpaceClustererBase</span></code> interface.</p>
+</div>
+</div>
+<div class="section" id="unit-testing">
+<h2>Unit testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-multilearn provides a base unit test class for testing classifiers. Please check <code class="docutils literal"><span class="pre">skmultilearn.tests.classifier_basetest</span></code> for a general framework for testing the multi-label classifier.</p>
+<p>Currently tests test three capabilities of the classifier:
+- whether the classifier works with dense/sparse input data <code class="xref py py-func docutils literal"><span class="pre">ClassifierBaseTest.assertClassifierWorksWithSparsity()</span></code>
+- whether it is clonable and works with scikit-learn&#8217;s cross-validation classes <code class="xref py py-func docutils literal"><span class="pre">ClassifierBaseTest.assertClassifierWorksWithCV()</span></code></p>
+</div>
+<div class="section" id="implement-your-classifier-checklist">
+<h2>Implement your classifier checklist<a class="headerlink" href="#implement-your-classifier-checklist" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>fork the scikit-multilearn repo</li>
+<li>choose a base classifier class</li>
+<li>implement constructor and set self.copyable_attrs</li>
+<li>implement fit</li>
+<li>implement predict</li>
+<li>write unit tests</li>
+<li>create a pull-request</li>
+<li>receive thanks from the team and bathe in glory</li>
+</ul>
 </div>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="meka.html" class="btn btn-neutral float-right" title="Meka: python interface to java’s meka library"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="clusterer.html" class="btn btn-neutral float-right" title="Developing a label space clusterer" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="datasets.html" class="btn btn-neutral" title="Datasets: loading data sets for scikit-multilearn"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="meka.html" class="btn btn-neutral" title="Using the meka wrapper" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -138,12 +274,14 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Piotr Szymański.
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -158,7 +296,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -167,7 +305,7 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

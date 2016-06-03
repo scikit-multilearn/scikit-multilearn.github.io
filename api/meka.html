@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Meka: python interface to java’s meka library &mdash; scikit-multilearn 0.0.1 documentation</title>
+  <title>Using the meka wrapper &mdash; scikit-multilearn 0.0.2 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,11 +28,14 @@
   
 
   
-    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="index.html"/>
-        <link rel="prev" title="Implementing a multi-label classifier" href="base.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
+        <link rel="next" title="Implementing a multi-label classifier" href="base.html"/>
+        <link rel="prev" title="Classify your dataset" href="classify.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -42,41 +45,60 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> scikit-multilearn</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#loading-from-arff">Loading from ARFF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="base.html#the-fit-method">The fit method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="base.html#the-predict-method">The predict method</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Meka: python interface to java&#8217;s meka library</a><ul>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using the meka wrapper</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-meka">Setting up MEKA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#using-the-interface">Using the interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-wrapper">Using the wrapper</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -91,74 +113,123 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Meka: python interface to java&#8217;s meka library</li>
+    <li>Using the meka wrapper</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/meka.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/meka.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
-  <div class="section" id="meka-python-interface-to-java-s-meka-library">
-<h1>Meka: python interface to java&#8217;s meka library<a class="headerlink" href="#meka-python-interface-to-java-s-meka-library" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="using-the-meka-wrapper">
+<h1>Using the meka wrapper<a class="headerlink" href="#using-the-meka-wrapper" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="setting-up-meka">
 <h2>Setting up MEKA<a class="headerlink" href="#setting-up-meka" title="Permalink to this headline">¶</a></h2>
-<p>In order to use the python interface to <a class="reference external" href="http://meka.sourceforge.net/">MEKA</a>  you need to have JAVA and MEKA installed. Paths to both are passed to the class&#8217;s constructor. To set up MEKA download the <tt class="docutils literal"><span class="pre">meka-&lt;version&gt;-realease.zip</span></tt> from <a class="reference external" href="https://sourceforge.net/projects/meka/">MEKA&#8217;s sourceforge page</a>, unzip it to <tt class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;</span></tt> and use <tt class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;/lib</span></tt> as the MEKA classpath for the constructor.</p>
-<p>An example path to java might be: <tt class="docutils literal"><span class="pre">/usr/bin/java</span></tt>, an example classpath to meka can be: <tt class="docutils literal"><span class="pre">/opt/meka-1.7/lib/</span></tt>.</p>
-<p><strong>The current version supports meka 1.7</strong></p>
+<p>In order to use the python interface to <a class="reference external" href="http://meka.sourceforge.net/">MEKA</a>  you need to have JAVA and MEKA installed. Paths to both are passed to the class&#8217;s constructor. To set up MEKA download the <code class="docutils literal"><span class="pre">meka-&lt;version&gt;-realease.zip</span></code> from <a class="reference external" href="https://sourceforge.net/projects/meka/">MEKA&#8217;s sourceforge page</a>, unzip it to <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;</span></code> and use <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;/lib</span></code> as the MEKA classpath for the constructor.</p>
+<p>An example path to java might be: <code class="docutils literal"><span class="pre">/usr/bin/java</span></code>, an example classpath to meka can be: <code class="docutils literal"><span class="pre">/opt/meka-1.9/lib/</span></code>.</p>
+<p><strong>The current version supports meka 1.9</strong></p>
+<p>Note that you will need to have <code class="docutils literal"><span class="pre">liac-arff</span></code> installed if you want to use the MEKA wrapper, you can get them using: <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">liac-arff</span></code>.</p>
 </div>
-<div class="section" id="using-the-interface">
-<h2>Using the interface<a class="headerlink" href="#using-the-interface" title="Permalink to this headline">¶</a></h2>
-<p>To use the interface class start with importing skmultilearn&#8217;s module, then create an object of the <tt class="docutils literal"><span class="pre">Meka</span></tt> class using the constructor and run the interface such as in the example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
-<span class="kn">import</span> <span class="nn">Meka</span> <span class="nn">from</span> <span class="nn">meka.meka</span>
+<div class="section" id="using-the-wrapper">
+<h2>Using the wrapper<a class="headerlink" href="#using-the-wrapper" title="Permalink to this headline">¶</a></h2>
+<p>Starting from scikit-multilearn <code class="docutils literal"><span class="pre">0.0.2</span></code> the meka wrapper is available from <code class="docutils literal"><span class="pre">skmultilearn.ext</span></code> (ext as in external) and is a fully scikit-compatible multi-label classifier.</p>
+<p>To use the interface class start with importing skmultilearn&#8217;s module, then create an object of the <code class="docutils literal"><span class="pre">Meka</span></code> class using the constructor and run the interface such as in the example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_multilabel_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">hamming_loss</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.ext</span> <span class="kn">import</span> <span class="n">Meka</span>
 
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_multilabel_classification</span><span class="p">(</span><span class="n">sparse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">return_indicator</span> <span class="o">=</span> <span class="s1">&#39;sparse&#39;</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">)</span>
 
 <span class="n">meka</span> <span class="o">=</span> <span class="n">Meka</span><span class="p">(</span>
-        <span class="n">meka_classifier</span> <span class="o">=</span> <span class="s">&quot;meka.classifiers.multilabel.LC&quot;</span><span class="p">,</span>
-        <span class="n">weka_classifier</span> <span class="o">=</span> <span class="s">&quot;weka.classifiers.bayes.NaiveBayes&quot;</span><span class="p">,</span>
-        <span class="n">meka_classpath</span> <span class="o">=</span> <span class="s">&quot;/opt/meka-1.7/lib/&quot;</span><span class="p">,</span>
-        <span class="n">java_command</span> <span class="o">=</span> <span class="s">&#39;/usr/bin/java&#39;</span><span class="p">)</span>
+    <span class="n">meka_classifier</span> <span class="o">=</span> <span class="s2">&quot;meka.classifiers.multilabel.LC&quot;</span><span class="p">,</span>
+    <span class="n">weka_classifier</span> <span class="o">=</span> <span class="s2">&quot;weka.classifiers.bayes.NaiveBayes&quot;</span><span class="p">,</span>
+    <span class="n">meka_classpath</span> <span class="o">=</span> <span class="s2">&quot;/opt/meka-1.9/lib/&quot;</span><span class="p">,</span>
+    <span class="n">java_command</span> <span class="o">=</span> <span class="s1">&#39;/usr/bin/java&#39;</span><span class="p">)</span>
 
-<span class="n">predictions</span><span class="p">,</span> <span class="n">extra_output</span> <span class="o">=</span> <span class="n">meka</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;path_to/train.arff&quot;</span><span class="p">,</span> <span class="s">&quot;path_to/test.arff&quot;</span><span class="p">)</span>
+<span class="n">meka</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="n">label_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">extra_output</span><span class="p">[</span><span class="s">&#39;L&#39;</span><span class="p">])</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">meka</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-<span class="c"># check classifier parameters</span>
-<span class="k">print</span><span class="p">(</span><span class="n">extra_output</span><span class="p">[</span><span class="s">&#39;Classifier_info&#39;</span><span class="p">])</span>
-
-<span class="c"># verify results, meka supports big endian only</span>
-<span class="n">input_features</span><span class="p">,</span> <span class="n">reference_labels</span> <span class="o">=</span>
-        <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s">&quot;path_to/test.arff&quot;</span><span class="p">,</span> <span class="n">label_count</span><span class="p">,</span> <span class="n">endian</span> <span class="o">=</span> <span class="s">&quot;big&quot;</span><span class="p">)</span>
-
-<span class="c"># measure</span>
-<span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">reference_labels</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Where:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">meka_classifier</span></tt> is the MEKA classifier class selected from the <a class="reference external" href="http://meka.sourceforge.net/api-1.7/index.html">MEKA API</a></li>
-<li><tt class="docutils literal"><span class="pre">weka_classifier</span></tt> is the WEKA classifier class selected from the <a class="reference external" href="http://http://weka.sourceforge.net/doc.stable/">WEKA API</a></li>
+<li><code class="docutils literal"><span class="pre">meka_classifier</span></code> is the MEKA classifier class selected from the <a class="reference external" href="http://meka.sourceforge.net/api-1.7/index.html">MEKA API</a></li>
+<li><code class="docutils literal"><span class="pre">weka_classifier</span></code> is the WEKA classifier class selected from the <a class="reference external" href="http://http://weka.sourceforge.net/doc.stable/">WEKA API</a></li>
+<li><code class="docutils literal"><span class="pre">java_command</span></code> is the path to java, if not provided, the wrapper will try to import the <a class="reference external" href="https://pypi.python.org/pypi/whichcraft">whichcraft</a> module to find java in the system PATH</li>
+<li>meka_classpath is the path to where meka.jar and weka.jar are located, usually they come together in meka releases, so this points to the <code class="docutils literal"><span class="pre">lib</span></code> subfolder of the folder where <code class="docutils literal"><span class="pre">meka-&lt;version&gt;-realease.zip</span></code> file was unzipped. If not provided the path is taken from environmental variable: <code class="docutils literal"><span class="pre">MEKA_CLASSPATH</span></code></li>
 </ul>
+<p>A good introduction to selecting MEKA or WEKA classifiers can be found on <a class="reference external" href="http://meka.sourceforge.net/methods.html">MEKA&#8217;s Methods page</a>.</p>
+<p>Remember that if you use MEKA, apart from citing scikit-multilearn, you should also cite both MEKA and WEKA papers:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span></span>@article<span class="nb">{</span>MEKA,
+    author = <span class="nb">{</span>Read, Jesse and Reutemann, Peter and Pfahringer, Bernhard and Holmes, Geoff<span class="nb">}</span>,
+    title = <span class="nb">{{</span>MEKA<span class="nb">}</span>: A Multi-label/Multi-target Extension to <span class="nb">{</span>Weka<span class="nb">}}</span>,
+    journal = <span class="nb">{</span>Journal of Machine Learning Research<span class="nb">}</span>,
+    year = <span class="nb">{</span>2016<span class="nb">}</span>,
+    volume = <span class="nb">{</span>17<span class="nb">}</span>,
+    number = <span class="nb">{</span>21<span class="nb">}</span>,
+    pages = <span class="nb">{</span>1--5<span class="nb">}</span>,
+    url = <span class="nb">{</span>http://jmlr.org/papers/v17/12-164.html<span class="nb">}</span>,
+<span class="nb">}</span>
+
+@article<span class="nb">{</span>Hall:2009:WDM:1656274.1656278,
+    author = <span class="nb">{</span>Hall, Mark and Frank, Eibe and Holmes, Geoffrey and Pfahringer, Bernhard and Reutemann, Peter and Witten, Ian H.<span class="nb">}</span>,
+    title = <span class="nb">{</span>The WEKA Data Mining Software: An Update<span class="nb">}</span>,
+    journal = <span class="nb">{</span>SIGKDD Explor. Newsl.<span class="nb">}</span>,
+    issue<span class="nb">_</span>date = <span class="nb">{</span>June 2009<span class="nb">}</span>,
+    volume = <span class="nb">{</span>11<span class="nb">}</span>,
+    number = <span class="nb">{</span>1<span class="nb">}</span>,
+    month = nov,
+    year = <span class="nb">{</span>2009<span class="nb">}</span>,
+    issn = <span class="nb">{</span>1931-0145<span class="nb">}</span>,
+    pages = <span class="nb">{</span>10--18<span class="nb">}</span>,
+    numpages = <span class="nb">{</span>9<span class="nb">}</span>,
+    url = <span class="nb">{</span>http://doi.acm.org/10.1145/1656274.1656278<span class="nb">}</span>,
+    doi = <span class="nb">{</span>10.1145/1656274.1656278<span class="nb">}</span>,
+    acmid = <span class="nb">{</span>1656278<span class="nb">}</span>,
+    publisher = <span class="nb">{</span>ACM<span class="nb">}</span>,
+    address = <span class="nb">{</span>New York, NY, USA<span class="nb">}</span>,
+<span class="nb">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="base.html" class="btn btn-neutral float-right" title="Implementing a multi-label classifier" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="base.html" class="btn btn-neutral" title="Implementing a multi-label classifier"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="classify.html" class="btn btn-neutral" title="Classify your dataset" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -167,12 +238,14 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Piotr Szymański.
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -187,7 +260,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -196,7 +269,7 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

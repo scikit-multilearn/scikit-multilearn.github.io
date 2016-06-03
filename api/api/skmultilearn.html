@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn package &mdash; scikit-multilearn 0.0.1 documentation</title>
+  <title>skmultilearn package &mdash; scikit-multilearn 0.0.2 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,10 +28,15 @@
   
 
   
-    <link rel="top" title="scikit-multilearn 0.0.1 documentation" href="../index.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../index.html"/>
+        <link rel="up" title="skmultilearn" href="modules.html"/>
+        <link rel="next" title="skmultilearn.base package" href="skmultilearn.base.html"/>
+        <link rel="prev" title="skmultilearn" href="modules.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -41,41 +46,77 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> scikit-multilearn</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul>
-<li class="toctree-l1"><a class="reference internal" href="../datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../datasets.html#loading-from-arff">Loading from ARFF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">skmultilearn</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">skmultilearn package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.base.html">skmultilearn.base package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.html">skmultilearn.cluster package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ext.html">skmultilearn.ext package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.html">skmultilearn.problem_transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.tests.html">skmultilearn.tests package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../base.html#the-fit-method">The fit method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../base.html#the-predict-method">The predict method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skmultilearn.dataset">skmultilearn.dataset module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../meka.html">Meka: python interface to java&#8217;s meka library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../meka.html#setting-up-meka">Setting up MEKA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../meka.html#using-the-interface">Using the interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skmultilearn-repeat-classifier-module">skmultilearn.repeat_classifier module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skmultilearn.utils">skmultilearn.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skmultilearn">Module contents</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changes.html">Changes from previous releases</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -90,20 +131,31 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="modules.html">skmultilearn</a> &raquo;</li>
       
     <li>skmultilearn package</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../_sources/api/skmultilearn.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/api/skmultilearn.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="skmultilearn-package">
 <h1>skmultilearn package<a class="headerlink" href="#skmultilearn-package" title="Permalink to this headline">¶</a></h1>
@@ -111,21 +163,112 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="skmultilearn.meta.html">skmultilearn.meta package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.meta.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.meta.html#module-skmultilearn.meta.br">skmultilearn.meta.br module</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.base.html">skmultilearn.base package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#module-skmultilearn.base.base">skmultilearn.base.base module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.meta.html#module-skmultilearn.meta.lp">skmultilearn.meta.lp module</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#module-skmultilearn.base.mock">skmultilearn.base.mock module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.meta.html#module-skmultilearn.meta.rakeld">skmultilearn.meta.rakeld module</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#module-skmultilearn.base.problem_transformation">skmultilearn.base.problem_transformation module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.meta.html#module-skmultilearn.meta.rakelo">skmultilearn.meta.rakelo module</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#module-skmultilearn.base">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.meta.html#module-skmultilearn.meta">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.cluster.html">skmultilearn.cluster package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skmultilearn.cluster.tests.html">skmultilearn.cluster.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#skmultilearn-cluster-tests-test-base-module">skmultilearn.cluster.tests.test_base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#skmultilearn-cluster-tests-test-graphtool-module">skmultilearn.cluster.tests.test_graphtool module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#skmultilearn-cluster-tests-test-igraph-module">skmultilearn.cluster.tests.test_igraph module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#skmultilearn-cluster-base-module">skmultilearn.cluster.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#skmultilearn-cluster-graphtool-module">skmultilearn.cluster.graphtool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#skmultilearn-cluster-igraph-module">skmultilearn.cluster.igraph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skmultilearn.ensemble.tests.html">skmultilearn.ensemble.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#skmultilearn-ensemble-tests-test-fixed-module">skmultilearn.ensemble.tests.test_fixed module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#skmultilearn-ensemble-tests-test-partition-module">skmultilearn.ensemble.tests.test_partition module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#skmultilearn-ensemble-tests-test-rakeld-module">skmultilearn.ensemble.tests.test_rakeld module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#skmultilearn-ensemble-tests-test-rakelo-module">skmultilearn.ensemble.tests.test_rakelo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#module-skmultilearn.ensemble.fixed">skmultilearn.ensemble.fixed module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#module-skmultilearn.ensemble.partition">skmultilearn.ensemble.partition module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#module-skmultilearn.ensemble.rakeld">skmultilearn.ensemble.rakeld module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#module-skmultilearn.ensemble.rakelo">skmultilearn.ensemble.rakelo module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.html#module-skmultilearn.ensemble">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.ext.html">skmultilearn.ext package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ext.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ext.html#module-skmultilearn.ext.meka">skmultilearn.ext.meka module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ext.html#module-skmultilearn.ext">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.problem_transform.html">skmultilearn.problem_transform package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skmultilearn.problem_transform.tests.html">skmultilearn.problem_transform.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.tests.html#skmultilearn-problem-transform-tests-test-br-module">skmultilearn.problem_transform.tests.test_br module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.tests.html#skmultilearn-problem-transform-tests-test-cc-module">skmultilearn.problem_transform.tests.test_cc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.tests.html#skmultilearn-problem-transform-tests-test-lp-module">skmultilearn.problem_transform.tests.test_lp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.tests.html#module-skmultilearn.problem_transform.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#module-skmultilearn.problem_transform.br">skmultilearn.problem_transform.br module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#module-skmultilearn.problem_transform.cc">skmultilearn.problem_transform.cc module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#module-skmultilearn.problem_transform.lp">skmultilearn.problem_transform.lp module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#skmultilearn-problem-transform-transformations-module">skmultilearn.problem_transform.transformations module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.problem_transform.html#module-skmultilearn.problem_transform">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.tests.html">skmultilearn.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.tests.html#skmultilearn-tests-classifier-basetest-module">skmultilearn.tests.classifier_basetest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.tests.html#module-skmultilearn.tests.test_base">skmultilearn.tests.test_base module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.tests.html#module-skmultilearn.tests.test_utils">skmultilearn.tests.test_utils module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.tests.html#module-skmultilearn.tests">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -134,133 +277,12 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-skmultilearn.base">
-<span id="skmultilearn-base-module"></span><h2>skmultilearn.base module<a class="headerlink" href="#module-skmultilearn.base" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="skmultilearn.base.MLClassifierBase">
-<em class="property">class </em><tt class="descclassname">skmultilearn.base.</tt><tt class="descname">MLClassifierBase</tt><big>(</big><em>classifier=None</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/base.html#MLClassifierBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.MLClassifierBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>Base class providing API and common functions for all multi-label classifiers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>classifier</strong> : scikit classifier type</p>
-<blockquote class="last">
-<div><p>The base classifier that will be used in a class, will be automagically put under self.classifier for future access.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Methods</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.base.MLClassifierBase.fit" title="skmultilearn.base.MLClassifierBase.fit"><tt class="xref py py-obj docutils literal"><span class="pre">fit</span></tt></a>(X,&nbsp;y)</td>
-<td>Abstract class to implement to fit classifier according to X,y.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.base.MLClassifierBase.generate_data_subset" title="skmultilearn.base.MLClassifierBase.generate_data_subset"><tt class="xref py py-obj docutils literal"><span class="pre">generate_data_subset</span></tt></a>(y,&nbsp;labels)</td>
-<td>This function subsets the array of binary label vectors to include only certain labels.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.base.MLClassifierBase.predict" title="skmultilearn.base.MLClassifierBase.predict"><tt class="xref py py-obj docutils literal"><span class="pre">predict</span></tt></a>(X)</td>
-<td>Abstract class to implement to perform classification on an array of test vectors X.</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="skmultilearn.base.MLClassifierBase.fit">
-<tt class="descname">fit</tt><big>(</big><em>X</em>, <em>y</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/base.html#MLClassifierBase.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.MLClassifierBase.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Abstract class to implement to fit classifier according to X,y.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<blockquote>
-<div><p>Training vectors, where n_samples is the number of samples and n_features is the number of features.</p>
-</div></blockquote>
-<p><strong>y</strong> : array-like, shape = [n_samples, n_labels]</p>
-<blockquote>
-<div><p>Binary label vectors with 1 if label should be applied and 0 if not.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>self</strong> : object</p>
-<blockquote class="last">
-<div><p>Returns self.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="skmultilearn.base.MLClassifierBase.generate_data_subset">
-<tt class="descname">generate_data_subset</tt><big>(</big><em>y</em>, <em>labels</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/base.html#MLClassifierBase.generate_data_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.MLClassifierBase.generate_data_subset" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function subsets the array of binary label vectors to include only certain labels.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>y</strong> : array-like of array-likes</p>
-<blockquote>
-<div><p>An array-like of binary label vectors.</p>
-</div></blockquote>
-<p><strong>labels: array-like of integers</strong></p>
-<blockquote>
-<div><p>array of integers, indices that will be subsetted from array-likes in y</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>multi-label binary label vector</strong> : array-like of array-likes of {0,1}</p>
-<blockquote class="last">
-<div><p>array of binary label vectors including label data only for labels from parameter labels</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="skmultilearn.base.MLClassifierBase.predict">
-<tt class="descname">predict</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/base.html#MLClassifierBase.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.MLClassifierBase.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Abstract class to implement to perform classification on an array of test vectors X.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<blockquote>
-<div><p>Training vectors, where n_samples is the number of samples and n_features is the number of features.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>y</strong> : array-like, shape = [n_samples, n_labels]</p>
-<blockquote class="last">
-<div><p>Binary label vectors with 1 if label should be applied and 0 if not. n_labels is number of labels in the 
-multi-label instance that the classifier was fit to.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 <div class="section" id="module-skmultilearn.dataset">
 <span id="skmultilearn-dataset-module"></span><h2>skmultilearn.dataset module<a class="headerlink" href="#module-skmultilearn.dataset" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="skmultilearn.dataset.Dataset">
-<em class="property">class </em><tt class="descclassname">skmultilearn.dataset.</tt><tt class="descname">Dataset</tt><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">skmultilearn.dataset.</code><code class="descname">Dataset</code><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -268,20 +290,23 @@ multi-label instance that the classifier was fit to.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="skmultilearn.dataset.Dataset.load_arff_to_numpy"><tt class="xref py py-obj docutils literal"><span class="pre">load_arff_to_numpy</span></tt></a>(filename,&nbsp;labelcount[,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="skmultilearn.dataset.Dataset.load_arff_to_numpy"><code class="xref py py-obj docutils literal"><span class="pre">load_arff_to_numpy</span></code></a>(filename,&nbsp;labelcount[,&nbsp;...])</td>
 <td>Method for loading ARFF files as numpy array</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.load_dataset_dump" title="skmultilearn.dataset.Dataset.load_dataset_dump"><tt class="xref py py-obj docutils literal"><span class="pre">load_dataset_dump</span></tt></a>(filename)</td>
+<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.load_dataset_dump" title="skmultilearn.dataset.Dataset.load_dataset_dump"><code class="xref py py-obj docutils literal"><span class="pre">load_dataset_dump</span></code></a>(filename)</td>
 <td>Loads a compressed data set dump</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.save_dataset_dump" title="skmultilearn.dataset.Dataset.save_dataset_dump"><tt class="xref py py-obj docutils literal"><span class="pre">save_dataset_dump</span></tt></a>(filename,&nbsp;input_space,&nbsp;labels)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.save_dataset_dump" title="skmultilearn.dataset.Dataset.save_dataset_dump"><code class="xref py py-obj docutils literal"><span class="pre">save_dataset_dump</span></code></a>(filename,&nbsp;input_space,&nbsp;labels)</td>
 <td>Saves a compressed data set dump</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.dataset.Dataset.save_to_arff" title="skmultilearn.dataset.Dataset.save_to_arff"><code class="xref py py-obj docutils literal"><span class="pre">save_to_arff</span></code></a>(X,&nbsp;y[,&nbsp;endian,&nbsp;save_sparse])</td>
+<td>Method for loading ARFF files as numpy array</td>
 </tr>
 </tbody>
 </table>
 <dl class="classmethod">
 <dt id="skmultilearn.dataset.Dataset.load_arff_to_numpy">
-<em class="property">classmethod </em><tt class="descname">load_arff_to_numpy</tt><big>(</big><em>filename</em>, <em>labelcount</em>, <em>endian='big'</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_arff_to_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">load_arff_to_numpy</code><span class="sig-paren">(</span><em>filename</em>, <em>labelcount</em>, <em>endian='big'</em>, <em>input_feature_type='float'</em>, <em>encode_nominal=True</em>, <em>load_sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_arff_to_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for loading ARFF files as numpy array</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -300,9 +325,22 @@ multi-label instance that the classifier was fit to.</p>
 <div><p>Whether the ARFF file contains labels at the beginning of the attributes list (&#8220;big&#8221; endianness, MEKA format) 
 or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
 </div></blockquote>
+<p><strong>input_feature_type: numpy.type as string</strong></p>
+<blockquote>
+<div><p>The desire type of the contents of the return &#8216;X&#8217; array-likes, default &#8216;i8&#8217;, 
+should be a numpy type, see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">http://docs.scipy.org/doc/numpy/user/basics.types.html</a></p>
+</div></blockquote>
+<p><strong>encode_nominal: boolean</strong></p>
+<blockquote>
+<div><p>Whether convert categorical data into numeric factors - required for some scikit classifiers that can&#8217;t handle non-numeric input featuers.</p>
+</div></blockquote>
+<p><strong>load_sparse: boolean</strong></p>
+<blockquote>
+<div><p>Whether to read arff file as a sparse file format, liac-arff breaks if sparse reading is enabled for non-sparse ARFFs.</p>
+</div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: dictionary {&#8216;X&#8217;: array-like of array-likes, &#8216;y&#8217;: array-like of binary label vectors }</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: dictionary {&#8216;X&#8217;: scipy sparse matrix with input_feature_type elements, &#8216;y&#8217;: scipy sparse matrix of binary (int8) label vectors }</p>
 <blockquote class="last">
 <div><p>The dictionary containing the data frame, with &#8216;X&#8217; key storing the input space array-like of input feature vectors
 and &#8216;y&#8217; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1
@@ -316,7 +354,7 @@ then the input vector has label no. 5)</p>
 
 <dl class="classmethod">
 <dt id="skmultilearn.dataset.Dataset.load_dataset_dump">
-<em class="property">classmethod </em><tt class="descname">load_dataset_dump</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_dataset_dump" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">load_dataset_dump</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_dataset_dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a compressed data set dump</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -342,7 +380,7 @@ then the input vector has label no. 5)</p>
 
 <dl class="classmethod">
 <dt id="skmultilearn.dataset.Dataset.save_dataset_dump">
-<em class="property">classmethod </em><tt class="descname">save_dataset_dump</tt><big>(</big><em>filename</em>, <em>input_space</em>, <em>labels</em><big>)</big><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.save_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.save_dataset_dump" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">save_dataset_dump</code><span class="sig-paren">(</span><em>filename</em>, <em>input_space</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.save_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.save_dataset_dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a compressed data set dump</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -367,7 +405,71 @@ then the input vector has label no. 5)</p>
 </table>
 </dd></dl>
 
+<dl class="classmethod">
+<dt id="skmultilearn.dataset.Dataset.save_to_arff">
+<em class="property">classmethod </em><code class="descname">save_to_arff</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>endian='little'</em>, <em>save_sparse=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.save_to_arff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.save_to_arff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for loading ARFF files as numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : string</p>
+<blockquote>
+<div><p>Path to ARFF file</p>
+</div></blockquote>
+<p><strong>labelcount: integer</strong></p>
+<blockquote>
+<div><p>Number of labels in the ARFF file</p>
+</div></blockquote>
+<p><strong>endian: string{&#8220;big&#8221;, &#8220;little&#8221;}</strong></p>
+<blockquote>
+<div><p>Whether the ARFF file contains labels at the beginning of the attributes list (&#8220;big&#8221; endianness, MEKA format) 
+or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
+</div></blockquote>
+<p><strong>input_feature_type: numpy.type as string</strong></p>
+<blockquote>
+<div><p>The desire type of the contents of the return &#8216;X&#8217; array-likes, default &#8216;i8&#8217;, 
+should be a numpy type, see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">http://docs.scipy.org/doc/numpy/user/basics.types.html</a></p>
+</div></blockquote>
+<p><strong>encode_nominal: boolean</strong></p>
+<blockquote>
+<div><p>Whether convert categorical data into numeric factors - required for some scikit classifiers that can&#8217;t handle non-numeric input featuers.</p>
+</div></blockquote>
+<p><strong>save_sparse: boolean</strong></p>
+<blockquote>
+<div><p>Whether to read arff file as a sparse file format, liac-arff breaks if sparse reading is enabled for non-sparse ARFFs.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: dictionary {&#8216;X&#8217;: scipy sparse matrix with input_feature_type elements, &#8216;y&#8217;: scipy sparse matrix of binary (int8) label vectors }</p>
+<blockquote class="last">
+<div><p>The dictionary containing the data frame, with &#8216;X&#8217; key storing the input space array-like of input feature vectors
+and &#8216;y&#8217; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1
+then the input vector has label no. 5)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="skmultilearn-repeat-classifier-module">
+<h2>skmultilearn.repeat_classifier module<a class="headerlink" href="#skmultilearn-repeat-classifier-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-skmultilearn.utils">
+<span id="skmultilearn-utils-module"></span><h2>skmultilearn.utils module<a class="headerlink" href="#module-skmultilearn.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="skmultilearn.utils.get_matrix_in_format">
+<code class="descclassname">skmultilearn.utils.</code><code class="descname">get_matrix_in_format</code><span class="sig-paren">(</span><em>original_matrix</em>, <em>matrix_format</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/utils.html#get_matrix_in_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.utils.get_matrix_in_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.utils.matrix_creation_function_for_format">
+<code class="descclassname">skmultilearn.utils.</code><code class="descname">matrix_creation_function_for_format</code><span class="sig-paren">(</span><em>sparse_format</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/utils.html#matrix_creation_function_for_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.utils.matrix_creation_function_for_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-skmultilearn">
@@ -376,20 +478,32 @@ then the input vector has label no. 5)</p>
 </div>
 
 
+           </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="skmultilearn.base.html" class="btn btn-neutral float-right" title="skmultilearn.base package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral" title="skmultilearn" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Piotr Szymański.
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -404,7 +518,7 @@ then the input vector has label no. 5)</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -413,7 +527,7 @@ then the input vector has label no. 5)</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
