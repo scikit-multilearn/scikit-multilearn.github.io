@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
         <link rel="next" title="Developing a label space clusterer" href="clusterer.html"/>
         <link rel="prev" title="Using the meka wrapper" href="meka.html"/> 
@@ -82,6 +85,7 @@
             
             
                 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
@@ -143,7 +147,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/base.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/base.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -187,7 +191,7 @@
     <span class="sd">&quot;&quot;&quot;Assigns k most probable labels&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">AssignKBestLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AssignKBestLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
 </pre></div>

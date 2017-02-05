@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
         <link rel="next" title="Using the meka wrapper" href="meka.html"/>
         <link rel="prev" title="Datasets: loading data sets for scikit-multilearn" href="datasets.html"/> 
@@ -82,6 +85,7 @@
             
             
                 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Classify your dataset</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#loading-the-data-set">Loading the data set</a><ul>
@@ -130,7 +134,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/classify.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/classify.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -143,16 +147,13 @@
   <div class="section" id="classify-your-dataset">
 <h1>Classify your dataset<a class="headerlink" href="#classify-your-dataset" title="Permalink to this headline">¶</a></h1>
 <p>To classify data with a multi-label classifier, you need to have:</p>
-<ul>
-<li><p class="first">selected a base classifier, ex. a naive bayes one</p>
-</li>
-<li><p class="first">selected the multi-label classification method, ex. Binary Relevance</p>
-</li>
-<li><p class="first">an array or (dense/sparse) matrix with feature vectors to classify</p>
-</li>
+<ul class="simple">
+<li>selected a base classifier, ex. a naive bayes one</li>
+<li>selected the multi-label classification method, ex. Binary Relevance</li>
+<li>an array or (dense/sparse) matrix with feature vectors to classify</li>
 <li><dl class="first docutils">
 <dt>a training data set:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">X</span></code>: array of input feature vectors</li>
 <li><code class="docutils literal"><span class="pre">y</span></code> arary of binary label indicator vectors associated with each row</li>
 </ul>

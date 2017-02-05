@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developing a label space clusterer &mdash; scikit-multilearn 0.0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
+        <link rel="next" title="skmultilearn" href="api/modules.html"/>
+        <link rel="prev" title="Implementing a multi-label classifier" href="base.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developing a label space clusterer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-classifier">Example classifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#label-co-occurence-graph">Label co-occurence graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Developing a label space clusterer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/clusterer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developing-a-label-space-clusterer">
+<h1>Developing a label space clusterer<a class="headerlink" href="#developing-a-label-space-clusterer" title="Permalink to this headline">¶</a></h1>
+<p>One of the approaches to multi-label classification is to cluster the label space into subspaces and perform classification in smaller subproblems to reduce the risk of under/overfitting.</p>
+<p><code class="docutils literal"><span class="pre">scikit-multilearn</span></code> follows <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.ClusterMixin.html#sklearn.base.ClusterMixin">scikit-learn&#8217;s ClustererMixin interface</a> API for a clustering class. <code class="docutils literal"><span class="pre">scikit-learn</span></code> concentrates on single-label classification in which one usually performs clustering of the input space <code class="docutils literal"><span class="pre">X</span></code> and not the output class space. In <code class="docutils literal"><span class="pre">scikit-learn</span></code> the clusterer class is expected to take <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> and provide a clustering of <code class="docutils literal"><span class="pre">X</span></code> as an <code class="docutils literal"><span class="pre">ndarray</span></code> of <code class="docutils literal"><span class="pre">n_samples</span></code> elements, each element corresponding to the id of the cluster to which the observation is assigned, thus if sample no. 3 is assigned to cluster no. 1: <code class="docutils literal"><span class="pre">result[3]</span></code> should be equal to 1.</p>
+<p>The clusterer for the label space in <cite>scikit-multilearn</cite> follows this interface, in order to create your own label space clusterer you need to inherit <code class="xref py py-class docutils literal"><span class="pre">LabelSpaceClustererBase</span></code> and implement the <code class="docutils literal"><span class="pre">fit_predict(X,</span> <span class="pre">y)</span></code> class method. Expect <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> to be sparse matrices, you and also use <a class="reference internal" href="api/skmultilearn.html#skmultilearn.utils.get_matrix_in_format" title="skmultilearn.utils.get_matrix_in_format"><code class="xref py py-func docutils literal"><span class="pre">skmultilearn.utils.get_matrix_in_format()</span></code></a> to convert to a desired matrix format. <code class="docutils literal"><span class="pre">fit_predict(X,</span> <span class="pre">y)</span></code> should return an array-like, preferably an <code class="docutils literal"><span class="pre">ndarray</span></code> or <code class="docutils literal"><span class="pre">list</span></code> of <code class="docutils literal"><span class="pre">n_labels</span></code> of integers indicating the no. of cluster a given label is assigned to similarly as it is performed in <code class="docutils literal"><span class="pre">scikit-learn</span></code> clusterers.</p>
+<div class="section" id="example-classifier">
+<h2>Example classifier<a class="headerlink" href="#example-classifier" title="Permalink to this headline">¶</a></h2>
+<p>Let us look at a toy example, where a clusterer divides the label space based on how a given label&#8217;s ordinal divides modulo a given number of clusters.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">LabelCooccurenceClustererBase</span>
+
+<span class="k">class</span> <span class="nc">ModuloClusterer</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_clusters</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ModuloClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_clusters</span> <span class="o">=</span> <span class="n">number_of_clusters</span>
+
+    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">number_of_labels</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># assign a label to a cluster no. label ordinal %  number of labeSls</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_clusters</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">number_of_labels</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="label-co-occurence-graph">
+<h2>Label co-occurence graph<a class="headerlink" href="#label-co-occurence-graph" title="Permalink to this headline">¶</a></h2>
+<p>A feature present currently only in <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> is the possibility to divide the label space based on analysing a label co-occurence graph. In such a graph labels are represented as nodes, and edges are generated based on how labels co-occur together among samples. In other words an edge between label no. <code class="docutils literal"><span class="pre">a</span></code> and number <code class="docutils literal"><span class="pre">b</span></code> is present if there exists a sample in <code class="docutils literal"><span class="pre">X</span></code> that is labeled with both <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code>. The <code class="xref py py-class docutils literal"><span class="pre">LabelCooccurenceClustererBase</span></code> provides a method <code class="xref py py-func docutils literal"><span class="pre">LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix(X,</span> <span class="pre">y)()</span></code> which generates a dict containing label pairs as keys, and a float as edge weight value:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">1.0</span></code> in an unweighted setting</li>
+<li>number of samples in <code class="docutils literal"><span class="pre">X</span></code> that are labeled with both labels in a weighted setting (when <code class="docutils literal"><span class="pre">self.is_weighted</span></code> is <code class="docutils literal"><span class="pre">True</span></code>)</li>
+</ul>
+<p>The <cite>edge_map</cite> is both returned and stored in the class as <code class="docutils literal"><span class="pre">self.edge_map</span></code>.  This is a base class for building label co-occurence graphs. Subclass <code class="docutils literal"><span class="pre">LabelCooccurenceClustererBase</span></code> and use  <code class="docutils literal"><span class="pre">generate_coocurence_adjacency_matrix</span></code> at the beginning of your <code class="docutils literal"><span class="pre">fit_predict</span></code> as shown below, than build a graph using the <cite>edge_map</cite> property, and infer the communities from the graph. Interfaces for two popular Python graph libraries already exist:</p>
+<ul class="simple">
+<li><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.ensemble.GraphToolCooccurenceClusterer</span></code> that constructs the graph-tool graph object and uses stochastic block modelling for clustering</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.ensemble.IGraphLabelCooccurenceClusterer</span></code> that constructs an igraph graph object and allows the use of a variety of igraph&#8217;s community detection methods for clustering</li>
+</ul>
+<p>to use them, just subclass the class and start your fit_predict method like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">generate_coocurence_adjacency_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">generate_coocurence_graph</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Your graph object (a <a class="reference external" href="https://graph-tool.skewed.de/static/doc/quickstart.html">graphtool Graph</a> or an <a class="reference external" href="http://igraph.org/python/doc/igraph.Graph-class.html">igraph Graph</a>) is available at <code class="docutils literal"><span class="pre">self.coocurence_graph</span></code> after those two lines.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="skmultilearn" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="base.html" class="btn btn-neutral" title="Implementing a multi-label classifier" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

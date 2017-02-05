@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>skmultilearn.tests.test_base &mdash; scikit-multilearn 0.0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>skmultilearn.tests.test_base</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for skmultilearn.tests.test_base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="kn">from</span> <span class="nn">.test_utils</span> <span class="k">import</span> <span class="n">SPARSE_MATRIX_FORMATS</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">ProblemTransformationBase</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span>
+
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest">[docs]</a><span class="k">class</span> <span class="nc">ProblemTransformationBaseTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.dense_and_dense_matrices_are_the_same"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.dense_and_dense_matrices_are_the_same">[docs]</a>    <span class="k">def</span> <span class="nf">dense_and_dense_matrices_are_the_same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">[</span><span class="n">row</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">])):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">],</span> <span class="n">ensured_X</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.dense_and_sparse_matrices_are_the_same"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.dense_and_sparse_matrices_are_the_same">[docs]</a>    <span class="k">def</span> <span class="nf">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">ensured_X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">]),</span> <span class="n">ensured_X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">])):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">],</span> <span class="n">ensured_X</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.sparse_and_sparse_matrices_are_the_same"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.sparse_and_sparse_matrices_are_the_same">[docs]</a>    <span class="k">def</span> <span class="nf">sparse_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ensured_X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="c1"># compare sparse matrices per</span>
+        <span class="c1"># http://stackoverflow.com/questions/30685024/check-if-two-scipy-sparse-csr-matrix-are-equal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">((</span><span class="n">X</span> <span class="o">!=</span> <span class="n">ensured_X</span><span class="p">)</span><span class="o">.</span><span class="n">nnz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_if_require_dense_is_correctly_set"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_if_require_dense_is_correctly_set">[docs]</a>    <span class="k">def</span> <span class="nf">test_if_require_dense_is_correctly_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="p">[</span>
+            <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+        <span class="n">expected_values</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="p">[</span>
+            <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+
+        <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">expected_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span>
+                <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_dense</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">require_dense</span><span class="p">,</span> <span class="n">expected_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_if_require_dense_is_correctly_inferred_when_none_passed"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_if_require_dense_is_correctly_inferred_when_none_passed">[docs]</a>    <span class="k">def</span> <span class="nf">test_if_require_dense_is_correctly_inferred_when_none_passed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">ProblemTransformationBase</span><span class="p">()]</span>
+        <span class="n">expected_values</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]]</span>
+
+        <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">expected_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span>
+                <span class="n">classifier</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">require_dense</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">require_dense</span><span class="p">,</span> <span class="n">expected_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_make_sure_abstract_methods_are_not_implemented_in_base"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_make_sure_abstract_methods_are_not_implemented_in_base">[docs]</a>    <span class="k">def</span> <span class="nf">test_make_sure_abstract_methods_are_not_implemented_in_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">):</span>
+            <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">([],</span> <span class="p">[])</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">):</span>
+            <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">([])</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_make_sure_params_include_all_params"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_make_sure_params_include_all_params">[docs]</a>    <span class="k">def</span> <span class="nf">test_make_sure_params_include_all_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">()</span>
+        <span class="n">classifier_params</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">expected_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="s1">&#39;require_dense&#39;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">expected_params</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">classifier_params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_make_sure_ml_base_classifier_follows_base_estimator"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_make_sure_ml_base_classifier_follows_base_estimator">[docs]</a>    <span class="k">def</span> <span class="nf">test_make_sure_ml_base_classifier_follows_base_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_dense_from_dense_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_dense_from_dense_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_dense_from_dense_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_dense_matrices_are_the_same</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_dense_from_sparse_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_dense_from_sparse_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_dense_from_sparse_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+        <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_dense_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_dense_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_sparse_from_dense_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_sparse_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_sparse_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_sparse_from_sparse_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+        <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_dense_if_enforced"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_dense_if_enforced">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_sparse_from_dense_if_enforced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">require_dense</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="n">require_dense</span><span class="p">)</span>
+
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_sparse_if_enforced"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_from_sparse_if_enforced">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_sparse_from_sparse_if_enforced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">require_dense</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="n">require_dense</span><span class="p">)</span>
+
+            <span class="n">X</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+            <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensured_X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_in_format_from_dense_if_enforced"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_in_format_from_dense_if_enforced">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_sparse_in_format_from_dense_if_enforced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">require_dense</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+                <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span>
+                    <span class="n">require_dense</span><span class="o">=</span><span class="n">require_dense</span><span class="p">)</span>
+
+                <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
+                    <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="n">sparse_format</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ensured_X</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_in_format_from_dense_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_input_format_returns_sparse_in_format_from_dense_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_input_format_returns_sparse_in_format_from_dense_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">ensured_X</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="n">sparse_format</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_X</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ensured_X</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_dense_from_dense_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_dense_from_dense_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_dense_from_dense_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_dense_matrices_are_the_same</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ensured_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_dense_from_sparse_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_dense_from_sparse_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_dense_from_sparse_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+        <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_dense_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_dense_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_sparse_from_dense_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ensured_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_sparse_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_sparse_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_sparse_from_sparse_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+        <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ensured_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_dense_if_enforced"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_dense_if_enforced">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_sparse_from_dense_if_enforced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">require_dense</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="n">require_dense</span><span class="p">)</span>
+
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dense_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ensured_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_sparse_if_enforced"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_from_sparse_if_enforced">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_sparse_from_sparse_if_enforced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">require_dense</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="n">require_dense</span><span class="p">)</span>
+
+            <span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+            <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_and_sparse_matrices_are_the_same</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ensured_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_in_format_from_dense_if_enforced"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_in_format_from_dense_if_enforced">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_sparse_in_format_from_dense_if_enforced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">require_dense</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+                <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span>
+                    <span class="n">require_dense</span><span class="o">=</span><span class="n">require_dense</span><span class="p">)</span>
+
+                <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span>
+                    <span class="n">y</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="n">sparse_format</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ensured_y</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_in_format_from_dense_if_required"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_format_returns_sparse_in_format_from_dense_if_required">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_format_returns_sparse_in_format_from_dense_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">ensured_y</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span>
+                <span class="n">y</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="n">sparse_format</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ensured_y</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ensured_y</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemTransformationBaseTest.test_ensure_output_is_1d_for_single_label_y_when_dense"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_base.ProblemTransformationBaseTest.test_ensure_output_is_1d_for_single_label_y_when_dense">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_output_is_1d_for_single_label_y_when_dense</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">input_sparse</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">ProblemTransformationBase</span><span class="p">(</span><span class="n">require_dense</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">y_single</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="n">shape</span> <span class="o">=</span> <span class="n">y_single</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">if</span> <span class="n">input_sparse</span><span class="p">:</span>
+                <span class="n">y_single</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">y_single</span><span class="p">)</span>
+
+            <span class="n">ensured_y_single</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y_single</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">ensured_y_single</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ensured_y_single</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ensured_y_single</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

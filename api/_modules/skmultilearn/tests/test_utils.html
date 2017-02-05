@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>skmultilearn.tests.test_utils &mdash; scikit-multilearn 0.0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>skmultilearn.tests.test_utils</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for skmultilearn.tests.test_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">get_matrix_in_format</span><span class="p">,</span> <span class="n">matrix_creation_function_for_format</span>
+
+<span class="n">SPARSE_MATRIX_FORMATS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bsr&quot;</span><span class="p">,</span> <span class="s2">&quot;coo&quot;</span><span class="p">,</span> <span class="s2">&quot;csc&quot;</span><span class="p">,</span> <span class="s2">&quot;csr&quot;</span><span class="p">,</span> <span class="s2">&quot;dia&quot;</span><span class="p">,</span> <span class="s2">&quot;dok&quot;</span><span class="p">,</span> <span class="s2">&quot;lil&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="UtilsTest"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_utils.UtilsTest">[docs]</a><span class="k">class</span> <span class="nc">UtilsTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="UtilsTest.test_if_get_matrix_ensures_type"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_utils.UtilsTest.test_if_get_matrix_ensures_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_if_get_matrix_ensures_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="n">new_matrix</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">new_matrix</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">new_matrix</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="n">sparse_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UtilsTest.test_if_matrix_creation_follows_format"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_utils.UtilsTest.test_if_matrix_creation_follows_format">[docs]</a>    <span class="k">def</span> <span class="nf">test_if_matrix_creation_follows_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="n">new_matrix</span> <span class="o">=</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span>
+                <span class="n">sparse_format</span><span class="p">)(</span><span class="n">matrix</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">new_matrix</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">new_matrix</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="n">sparse_format</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UtilsTest.test_ensure_get_matrix_does_not_clone_if_format_agrees"><a class="viewcode-back" href="../../../api/skmultilearn.tests.html#skmultilearn.tests.test_utils.UtilsTest.test_ensure_get_matrix_does_not_clone_if_format_agrees">[docs]</a>    <span class="k">def</span> <span class="nf">test_ensure_get_matrix_does_not_clone_if_format_agrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">sparse_format</span> <span class="ow">in</span> <span class="n">SPARSE_MATRIX_FORMATS</span><span class="p">:</span>
+            <span class="n">created_matrix</span> <span class="o">=</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span>
+                <span class="n">sparse_format</span><span class="p">)(</span><span class="n">matrix</span><span class="p">)</span>
+            <span class="n">converted_matrix</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span>
+                <span class="n">created_matrix</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">created_matrix</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">converted_matrix</span><span class="p">))</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2016, Piotr Szymański.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
