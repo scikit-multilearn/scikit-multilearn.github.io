@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Estimating parameters &mdash; scikit-multilearn 0.0.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
+        <link rel="next" title="skmultilearn" href="api/modules.html"/>
+        <link rel="prev" title="Developing a label space clusterer" href="clusterer.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Estimating parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-data-for-experimentation">Generating data for experimentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estimating-hyper-parameter-k-for-mlknn">Estimating hyper-parameter k for MLkNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estimating-hyper-parameter-k-for-embedded-classifiers">Estimating hyper-parameter k for embedded classifiers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Estimating parameters</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/model_estimation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="estimating-parameters">
+<h1>Estimating parameters<a class="headerlink" href="#estimating-parameters" title="Permalink to this headline">¶</a></h1>
+<p>Scikit-multilearn allows estimating parameters to select best models for multi-label classification using scikit-learn&#8217;s
+model selection <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">GridSearchCV API</a>.
+In the simplest version it can look for the best parameter of a scikit-multilearn&#8217;s classifier, which we&#8217;ll show on the
+example case of estimating parameters for MLkNN, and in the more complicated cases of problem transformation methods it
+can estimate both the method&#8217;s hyper parameters and the base classifiers parameter.</p>
+<div class="section" id="generating-data-for-experimentation">
+<h2>Generating data for experimentation<a class="headerlink" href="#generating-data-for-experimentation" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s start with generating some data</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_multilabel_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_multilabel_classification</span><span class="p">(</span><span class="n">sparse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">n_labels</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">return_indicator</span> <span class="o">=</span> <span class="s1">&#39;sparse&#39;</span><span class="p">,</span> <span class="n">allow_unlabeled</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="estimating-hyper-parameter-k-for-mlknn">
+<h2>Estimating hyper-parameter k for MLkNN<a class="headerlink" href="#estimating-hyper-parameter-k-for-mlknn" title="Permalink to this headline">¶</a></h2>
+<p>In the case of estimating the hyperparameter of a multi-label classifier, we first import the relevant classifier and
+scikit-learn&#8217;s GridSearchCV class. Then we define the values of parameters we want to evaluate. We are interested in which
+combination of <cite>k</cite> - the number of neighbours, <cite>s</cite> - the smoothing parameter works best. We also need to select a measure
+which we want to optimize - we&#8217;ve chosen the <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html">F1 macro score</a>.</p>
+<p>After selecting the parameters we intialize and run the cross validation grid search and print the best hyper parameters.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.adapt</span> <span class="kn">import</span> <span class="n">MLkNN</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}</span>
+<span class="n">score</span> <span class="o">=</span> <span class="s1">&#39;f1-macro</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">MLkNN</span><span class="p">(),</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">clf</span><span class="o">.</span><span class="n">best_score_</span>
+
+<span class="c1"># output</span>
+<span class="p">({</span><span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="mf">0.78988303374297597</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These values can be then used directly with the classifier.</p>
+</div>
+<div class="section" id="estimating-hyper-parameter-k-for-embedded-classifiers">
+<h2>Estimating hyper-parameter k for embedded classifiers<a class="headerlink" href="#estimating-hyper-parameter-k-for-embedded-classifiers" title="Permalink to this headline">¶</a></h2>
+<p>In problem transformation classifiers we often need to estimate not only a hyper parameter, but also the parameter of
+the base classifier, and also - maybe even the problem transformation method. Let&#8217;s take a look at this on a three-layer
+construction of ensemble of problem transformation classifiers starting with - RAkeLD - the random label space partitioner as the
+ensemble classifier, it takes two parameters:
+- k: the size of each label partition (k = number of labels)
+- classifier: takes a parameter -classifier for transforming multi-label classification problem to a single-label classification one
+we will use model search to select which one to use - ClassifierChains or LabelPowerset</p>
+<p>Both Classifier Chains and Label Powerset depend on a single-label classifier to perform classification, we will use scikit-learn&#8217;s
+Multinomial Naive Bayes that asks for a smooting parameter <code class="docutils literal"><span class="pre">alpha</span></code>. In the following code we wish to find a model that
+optimizes parameters of three levels of embedded classifiers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble.rakeld</span> <span class="kn">import</span> <span class="n">RakelD</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span><span class="p">,</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_multilabel_classification</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">n_labels</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                      <span class="n">return_indicator</span><span class="o">=</span><span class="s1">&#39;sparse&#39;</span><span class="p">,</span> <span class="n">allow_unlabeled</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;labelset_size&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">LabelPowerset</span><span class="p">(),</span> <span class="n">BinaryRelevance</span><span class="p">()],</span>
+    <span class="s1">&#39;classifier__classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">MultinomialNB</span><span class="p">()],</span>
+    <span class="s1">&#39;classifier__classifier__alpha&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">RakelD</span><span class="p">(),</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;f1_macro&#39;</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">clf</span><span class="o">.</span><span class="n">best_score_</span>
+
+<span class="c1"># output</span>
+<span class="p">{</span><span class="s1">&#39;labelset_size&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+ <span class="s1">&#39;classifier__classifier&#39;</span><span class="p">:</span> <span class="n">MultinomialNB</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">class_prior</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fit_prior</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+ <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">MultinomialNB</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+  <span class="n">class_prior</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fit_prior</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+  <span class="n">require_dense</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">]),</span> <span class="s1">&#39;classifier__classifier__alpha&#39;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">}</span> <span class="mf">0.690554445761</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="skmultilearn" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clusterer.html" class="btn btn-neutral" title="Developing a label space clusterer" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

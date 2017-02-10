@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.base package &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>skmultilearn.base package &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,9 +33,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/>
-        <link rel="prev" title="skmultilearn package" href="skmultilearn.html"/> 
+        <link rel="next" title="skmultilearn.base.tests package" href="skmultilearn.base.tests.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -91,13 +91,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">skmultilearn</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skmultilearn.html">skmultilearn package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="skmultilearn.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.adapt.html">skmultilearn.adapt package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">skmultilearn.base package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.html">skmultilearn.cluster package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ext.html">skmultilearn.ext package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.neurofuzzy.html">skmultilearn.neurofuzzy package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.html">skmultilearn.problem_transform package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.tests.html">skmultilearn.tests package</a></li>
 </ul>
@@ -162,6 +165,21 @@
             
   <div class="section" id="skmultilearn-base-package">
 <h1>skmultilearn.base package<a class="headerlink" href="#skmultilearn-base-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.base.tests.html">skmultilearn.base.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.tests.html#module-skmultilearn.base.tests.test_base">skmultilearn.base.tests.test_base module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.tests.html#module-skmultilearn.base.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -505,7 +523,7 @@ multi-label instance that the classifier was fit to.</p>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">generate_data_subset</span></code>(y,&nbsp;subset,&nbsp;axis)</td>
 <td>This function subsets the array of binary label vectors to include only certain labels.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.base.problem_transformation.ProblemTransformationBase.get_params" title="skmultilearn.base.problem_transformation.ProblemTransformationBase.get_params"><code class="xref py py-obj docutils literal"><span class="pre">get_params</span></code></a>([deep])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_params</span></code>([deep])</td>
 <td>Introspection of classifier for search models like cross validation and grid search.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code>(X)</td>
@@ -514,35 +532,11 @@ multi-label instance that the classifier was fit to.</p>
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.base.problem_transformation.ProblemTransformationBase.set_params" title="skmultilearn.base.problem_transformation.ProblemTransformationBase.set_params"><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code></a>(**parameters)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="skmultilearn.base.problem_transformation.ProblemTransformationBase.get_params">
-<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/problem_transformation.html#ProblemTransformationBase.get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.problem_transformation.ProblemTransformationBase.get_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Introspection of classifier for search models like cross validation and grid
-search.
-Parameters
-&#8212;&#8212;&#8212;-
-deep : boolean</p>
-<blockquote>
-<div>If true all params will be introspected also and appended to the output dict.</div></blockquote>
-<dl class="docutils">
-<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">dictionary</span></dt>
-<dd>Dictionary of all parameters and their values. If deep=True the dictionary
-also holds the parameters of the parameters.</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="skmultilearn.base.problem_transformation.ProblemTransformationBase.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/problem_transformation.html#ProblemTransformationBase.set_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.problem_transformation.ProblemTransformationBase.set_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set parameters as returned by <cite>get_params</cite>.
-&#64;see <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py#L243">https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py#L243</a></p>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -558,8 +552,8 @@ also holds the parameters of the parameters.</dd>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="skmultilearn.base.tests.html" class="btn btn-neutral float-right" title="skmultilearn.base.tests package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="skmultilearn.html" class="btn btn-neutral" title="skmultilearn package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -568,7 +562,6 @@ also holds the parameters of the parameters.</dd>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -590,7 +583,7 @@ also holds the parameters of the parameters.</dd>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

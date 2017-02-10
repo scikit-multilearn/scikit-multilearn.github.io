@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.problem_transform package &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>skmultilearn.problem_transform package &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/>
         <link rel="next" title="skmultilearn.problem_transform.tests package" href="skmultilearn.problem_transform.tests.html"/> 
 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -91,13 +91,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">skmultilearn</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skmultilearn.html">skmultilearn package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="skmultilearn.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.adapt.html">skmultilearn.adapt package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.base.html">skmultilearn.base package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.html">skmultilearn.cluster package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ext.html">skmultilearn.ext package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.neurofuzzy.html">skmultilearn.neurofuzzy package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">skmultilearn.problem_transform package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.tests.html">skmultilearn.tests package</a></li>
 </ul>
@@ -221,10 +224,13 @@
 <tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.problem_transform.br.BinaryRelevance.predict" title="skmultilearn.problem_transform.br.BinaryRelevance.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
 <td>Predict labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.problem_transform.br.BinaryRelevance.predict_proba" title="skmultilearn.problem_transform.br.BinaryRelevance.predict_proba"><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code></a>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
@@ -249,6 +255,12 @@
 <dt id="skmultilearn.problem_transform.br.BinaryRelevance.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.br.BinaryRelevance.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for <cite>X</cite>, see base method&#8217;s documentation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.problem_transform.br.BinaryRelevance.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.br.BinaryRelevance.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</p>
 </dd></dl>
 
 </dd></dl>
@@ -286,10 +298,13 @@
 <tr class="row-even"><td><a class="reference internal" href="#skmultilearn.problem_transform.cc.ClassifierChain.predict" title="skmultilearn.problem_transform.cc.ClassifierChain.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.problem_transform.cc.ClassifierChain.predict_proba" title="skmultilearn.problem_transform.cc.ClassifierChain.predict_proba"><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code></a>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
@@ -308,6 +323,12 @@
 <dt id="skmultilearn.problem_transform.cc.ClassifierChain.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.cc.ClassifierChain.predict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.problem_transform.cc.ClassifierChain.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.cc.ClassifierChain.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -350,13 +371,16 @@
 <tr class="row-even"><td><a class="reference internal" href="#skmultilearn.problem_transform.lp.LabelPowerset.predict" title="skmultilearn.problem_transform.lp.LabelPowerset.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
 <td>Predict labels for X, see base method&#8217;s documentation.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.problem_transform.lp.LabelPowerset.predict_proba" title="skmultilearn.problem_transform.lp.LabelPowerset.predict_proba"><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code></a>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.problem_transform.lp.LabelPowerset.transform" title="skmultilearn.problem_transform.lp.LabelPowerset.transform"><code class="xref py py-obj docutils literal"><span class="pre">transform</span></code></a>(y)</td>
+<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.problem_transform.lp.LabelPowerset.transform" title="skmultilearn.problem_transform.lp.LabelPowerset.transform"><code class="xref py py-obj docutils literal"><span class="pre">transform</span></code></a>(y)</td>
 <td>Transform the label set to a multi-class problem</td>
 </tr>
 </tbody>
@@ -386,6 +410,12 @@
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X, see base method&#8217;s documentation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.problem_transform.lp.LabelPowerset.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</p>
 </dd></dl>
 
 <dl class="method">
@@ -422,7 +452,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -444,7 +473,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

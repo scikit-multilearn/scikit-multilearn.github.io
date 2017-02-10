@@ -28,3 +28,12 @@ footer {
 	text-align:center;
 	margin: 1em 0;
 }
+
+.install {
+    margin: 0 auto;
+    display: inline-block;
+    padding: 1ex 3em;
+    border: 1px dashed black;
+    font-size: 18px;
+    font-family: monospace !important;
+}

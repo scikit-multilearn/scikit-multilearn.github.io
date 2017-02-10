@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to scikit-multilearn’s documentation! &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>Welcome to scikit-multilearn’s documentation! &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="#"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="#"/>
         <link rel="next" title="Concepts guide" href="concepts.html"/> 
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
 </ul>
@@ -170,6 +171,7 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="meka.html#setting-up-meka">Setting up MEKA</a></li>
 <li class="toctree-l2"><a class="reference internal" href="meka.html#using-the-wrapper">Using the wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#handling-errors">Handling errors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a><ul>
@@ -183,6 +185,12 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="clusterer.html#example-classifier">Example classifier</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clusterer.html#label-co-occurence-graph">Label co-occurence graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#generating-data-for-experimentation">Generating data for experimentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-mlknn">Estimating hyper-parameter k for MLkNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-embedded-classifiers">Estimating hyper-parameter k for embedded classifiers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a><ul>
@@ -223,7 +231,6 @@ is built on top of the well-known <a class="reference external" href="http://sci
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -245,7 +252,7 @@ is built on top of the well-known <a class="reference external" href="http://sci
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.tests package &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>skmultilearn.tests package &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/> 
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">skmultilearn</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skmultilearn.html">skmultilearn package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="skmultilearn.html#subpackages">Subpackages</a><ul class="current">
@@ -192,176 +193,184 @@
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertAlmostEquals</span></code>(first,&nbsp;second[,&nbsp;places,&nbsp;...])</td>
 <td>Fail if the two objects are unequal as determined by their difference rounded to the given number of decimal places (default 7) and comparing to zero, or by comparing that the between the two objects is more than the given delta.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithCV" title="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithCV"><code class="xref py py-obj docutils literal"><span class="pre">assertClassifierWorksWithCV</span></code></a>(classifier)</td>
+<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierPredictsProbabilities" title="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierPredictsProbabilities"><code class="xref py py-obj docutils literal"><span class="pre">assertClassifierPredictsProbabilities</span></code></a>(classifier)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithSparsity" title="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithSparsity"><code class="xref py py-obj docutils literal"><span class="pre">assertClassifierWorksWithSparsity</span></code></a>(classifier)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithCV" title="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithCV"><code class="xref py py-obj docutils literal"><span class="pre">assertClassifierWorksWithCV</span></code></a>(classifier)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertDictContainsSubset</span></code>(expected,&nbsp;actual[,&nbsp;msg])</td>
+<tr class="row-even"><td><a class="reference internal" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithSparsity" title="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithSparsity"><code class="xref py py-obj docutils literal"><span class="pre">assertClassifierWorksWithSparsity</span></code></a>(classifier)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertDictContainsSubset</span></code>(expected,&nbsp;actual[,&nbsp;msg])</td>
 <td>Checks whether actual is a superset of expected.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertDictEqual</span></code>(d1,&nbsp;d2[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertDictEqual</span></code>(d1,&nbsp;d2[,&nbsp;msg])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertEqual</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertEqual</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
 <td>Fail if the two objects are unequal as determined by the &#8216;==&#8217; operator.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertEquals</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertEquals</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
 <td>Fail if the two objects are unequal as determined by the &#8216;==&#8217; operator.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertFalse</span></code>(expr[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertFalse</span></code>(expr[,&nbsp;msg])</td>
 <td>Check that the expression is false.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertGreater</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertGreater</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a &gt; b), but with a nicer default message.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertGreaterEqual</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertGreaterEqual</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a &gt;= b), but with a nicer default message.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIn</span></code>(member,&nbsp;container[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIn</span></code>(member,&nbsp;container[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a in b), but with a nicer default message.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIs</span></code>(expr1,&nbsp;expr2[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIs</span></code>(expr1,&nbsp;expr2[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a is b), but with a nicer default message.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsInstance</span></code>(obj,&nbsp;cls[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsInstance</span></code>(obj,&nbsp;cls[,&nbsp;msg])</td>
 <td>Same as self.assertTrue(isinstance(obj, cls)), with a nicer default message.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsNone</span></code>(obj[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsNone</span></code>(obj[,&nbsp;msg])</td>
 <td>Same as self.assertTrue(obj is None), with a nicer default message.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsNot</span></code>(expr1,&nbsp;expr2[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsNot</span></code>(expr1,&nbsp;expr2[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a is not b), but with a nicer default message.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsNotNone</span></code>(obj[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertIsNotNone</span></code>(obj[,&nbsp;msg])</td>
 <td>Included for symmetry with assertIsNone.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertItemsEqual</span></code>(expected_seq,&nbsp;actual_seq[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertItemsEqual</span></code>(expected_seq,&nbsp;actual_seq[,&nbsp;msg])</td>
 <td>An unordered sequence specific comparison.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertLess</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertLess</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a &lt; b), but with a nicer default message.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertLessEqual</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertLessEqual</span></code>(a,&nbsp;b[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a &lt;= b), but with a nicer default message.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertListEqual</span></code>(list1,&nbsp;list2[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertListEqual</span></code>(list1,&nbsp;list2[,&nbsp;msg])</td>
 <td>A list-specific equality assertion.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertMultiLineEqual</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertMultiLineEqual</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
 <td>Assert that two multi-line strings are equal.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotAlmostEqual</span></code>(first,&nbsp;second[,&nbsp;...])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotAlmostEqual</span></code>(first,&nbsp;second[,&nbsp;...])</td>
 <td>Fail if the two objects are equal as determined by their difference rounded to the given number of decimal places (default 7) and comparing to zero, or by comparing that the between the two objects is less than the given delta.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotAlmostEquals</span></code>(first,&nbsp;second[,&nbsp;...])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotAlmostEquals</span></code>(first,&nbsp;second[,&nbsp;...])</td>
 <td>Fail if the two objects are equal as determined by their difference rounded to the given number of decimal places (default 7) and comparing to zero, or by comparing that the between the two objects is less than the given delta.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotEqual</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotEqual</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
 <td>Fail if the two objects are equal as determined by the &#8216;!=&#8217; operator.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotEquals</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotEquals</span></code>(first,&nbsp;second[,&nbsp;msg])</td>
 <td>Fail if the two objects are equal as determined by the &#8216;!=&#8217; operator.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotIn</span></code>(member,&nbsp;container[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotIn</span></code>(member,&nbsp;container[,&nbsp;msg])</td>
 <td>Just like self.assertTrue(a not in b), but with a nicer default message.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotIsInstance</span></code>(obj,&nbsp;cls[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotIsInstance</span></code>(obj,&nbsp;cls[,&nbsp;msg])</td>
 <td>Included for symmetry with assertIsInstance.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotRegexpMatches</span></code>(text,&nbsp;unexpected_regexp)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertNotRegexpMatches</span></code>(text,&nbsp;unexpected_regexp)</td>
 <td>Fail the test if the text matches the regular expression.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertRaises</span></code>(excClass[,&nbsp;callableObj])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertRaises</span></code>(excClass[,&nbsp;callableObj])</td>
 <td>Fail unless an exception of class excClass is raised by callableObj when invoked with arguments args and keyword arguments kwargs.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertRaisesRegexp</span></code>(expected_exception,&nbsp;...)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertRaisesRegexp</span></code>(expected_exception,&nbsp;...)</td>
 <td>Asserts that the message in a raised exception matches a regexp.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertRegexpMatches</span></code>(text,&nbsp;expected_regexp[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertRegexpMatches</span></code>(text,&nbsp;expected_regexp[,&nbsp;msg])</td>
 <td>Fail the test unless the text matches the regular expression.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertSequenceEqual</span></code>(seq1,&nbsp;seq2[,&nbsp;msg,&nbsp;seq_type])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertSequenceEqual</span></code>(seq1,&nbsp;seq2[,&nbsp;msg,&nbsp;seq_type])</td>
 <td>An equality assertion for ordered sequences (like lists and tuples).</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertSetEqual</span></code>(set1,&nbsp;set2[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertSetEqual</span></code>(set1,&nbsp;set2[,&nbsp;msg])</td>
 <td>A set-specific equality assertion.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertTrue</span></code>(expr[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertTrue</span></code>(expr[,&nbsp;msg])</td>
 <td>Check that the expression is true.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assertTupleEqual</span></code>(tuple1,&nbsp;tuple2[,&nbsp;msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assertTupleEqual</span></code>(tuple1,&nbsp;tuple2[,&nbsp;msg])</td>
 <td>A tuple-specific equality assertion.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assert_</span></code>(expr[,&nbsp;msg])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">assert_</span></code>(expr[,&nbsp;msg])</td>
 <td>Check that the expression is true.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">countTestCases</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">countTestCases</span></code>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">debug</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">debug</span></code>()</td>
 <td>Run the test without collecting errors in a TestResult</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">defaultTestResult</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">defaultTestResult</span></code>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">doCleanups</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">doCleanups</span></code>()</td>
 <td>Execute all cleanup functions.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fail</span></code>([msg])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fail</span></code>([msg])</td>
 <td>Fail immediately, with the given message.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failIf</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failIf</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failIfAlmostEqual</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failIfAlmostEqual</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failIfEqual</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failIfEqual</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnless</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnless</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnlessAlmostEqual</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnlessAlmostEqual</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnlessEqual</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnlessEqual</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnlessRaises</span></code>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failUnlessRaises</span></code>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">failureException</span></code></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">failureException</span></code></td>
 <td>alias of <code class="xref py py-class docutils literal"><span class="pre">AssertionError</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">id</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">id</span></code>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">run</span></code>([result])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">run</span></code>([result])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">setUp</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">setUp</span></code>()</td>
 <td>Hook method for setting up the test fixture before exercising it.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">setUpClass</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">setUpClass</span></code>()</td>
 <td>Hook method for setting up class fixture before running tests in the class.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">shortDescription</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">shortDescription</span></code>()</td>
 <td>Returns a one-line description of the test, or None if no description has been provided.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">skipTest</span></code>(reason)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">skipTest</span></code>(reason)</td>
 <td>Skip this test.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">tearDown</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">tearDown</span></code>()</td>
 <td>Hook method for deconstructing the test fixture after testing it.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">tearDownClass</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">tearDownClass</span></code>()</td>
 <td>Hook method for deconstructing the class fixture after running all tests in the class.</td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierPredictsProbabilities">
+<code class="descname">assertClassifierPredictsProbabilities</code><span class="sig-paren">(</span><em>classifier</em>, <em>sparsity_indicator='sparse'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/tests/classifier_basetest.html#ClassifierBaseTest.assertClassifierPredictsProbabilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierPredictsProbabilities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithCV">
 <code class="descname">assertClassifierWorksWithCV</code><span class="sig-paren">(</span><em>classifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/tests/classifier_basetest.html#ClassifierBaseTest.assertClassifierWorksWithCV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.tests.classifier_basetest.ClassifierBaseTest.assertClassifierWorksWithCV" title="Permalink to this definition">¶</a></dt>
@@ -1004,7 +1013,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -1026,7 +1034,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

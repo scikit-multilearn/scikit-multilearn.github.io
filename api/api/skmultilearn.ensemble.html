@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.ensemble package &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>skmultilearn.ensemble package &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,10 +33,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/>
-        <link rel="next" title="skmultilearn.ensemble.tests package" href="skmultilearn.ensemble.tests.html"/>
-        <link rel="prev" title="skmultilearn.cluster.tests package" href="skmultilearn.cluster.tests.html"/> 
+        <link rel="next" title="skmultilearn.ensemble.tests package" href="skmultilearn.ensemble.tests.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -64,7 +63,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -92,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">skmultilearn</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skmultilearn.html">skmultilearn package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="skmultilearn.html#subpackages">Subpackages</a><ul class="current">
@@ -172,7 +172,9 @@
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests.test_fixed">skmultilearn.ensemble.tests.test_fixed module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.tests.html#skmultilearn-ensemble-tests-test-partition-module">skmultilearn.ensemble.tests.test_partition module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests.test_partition">skmultilearn.ensemble.tests.test_partition module</a><ul class="simple">
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests.test_rakeld">skmultilearn.ensemble.tests.test_rakeld module</a><ul class="simple">
 </ul>
 </li>
@@ -223,10 +225,13 @@
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code>(X)</td>
 <td>Predict labels for X, see base method&#8217;s documentation.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
@@ -291,10 +296,13 @@
 <tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.ensemble.partition.LabelSpacePartitioningClassifier.predict" title="skmultilearn.ensemble.partition.LabelSpacePartitioningClassifier.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
 <td>Predict labels for X, see base method&#8217;s documentation.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
@@ -348,10 +356,13 @@
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code>(X)</td>
 <td>Predict labels for X, see base method&#8217;s documentation.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
@@ -400,10 +411,13 @@
 <tr class="row-odd"><td><a class="reference internal" href="#skmultilearn.ensemble.rakelo.RakelO.predict" title="skmultilearn.ensemble.rakelo.RakelO.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
 <td>Predict labels for X, see base method&#8217;s documentation.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">predict_proba</span></code>(X)</td>
+<td>Predict probabilities for labels for <cite>X</cite>, see base method&#8217;s documentation.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">score</span></code>(X,&nbsp;y[,&nbsp;sample_weight])</td>
 <td>Returns the mean accuracy on the given test data and labels.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_params</span></code>(**parameters)</td>
 <td>Set parameters as returned by <cite>get_params</cite>.</td>
 </tr>
 </tbody>
@@ -438,8 +452,6 @@
         <a href="skmultilearn.ensemble.tests.html" class="btn btn-neutral float-right" title="skmultilearn.ensemble.tests package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="skmultilearn.cluster.tests.html" class="btn btn-neutral" title="skmultilearn.cluster.tests package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
     </div>
   
 
@@ -447,7 +459,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -469,7 +480,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

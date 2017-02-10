@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn package &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>skmultilearn package &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,9 +33,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn" href="modules.html"/>
-        <link rel="next" title="skmultilearn.base package" href="skmultilearn.base.html"/>
+        <link rel="next" title="skmultilearn.adapt package" href="skmultilearn.adapt.html"/>
         <link rel="prev" title="skmultilearn" href="modules.html"/> 
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -92,13 +92,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">skmultilearn</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">skmultilearn package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.adapt.html">skmultilearn.adapt package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.base.html">skmultilearn.base package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.html">skmultilearn.cluster package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ext.html">skmultilearn.ext package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.neurofuzzy.html">skmultilearn.neurofuzzy package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.problem_transform.html">skmultilearn.problem_transform package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.tests.html">skmultilearn.tests package</a></li>
 </ul>
@@ -169,7 +172,31 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.adapt.html">skmultilearn.adapt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.adapt.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.adapt.html#module-skmultilearn.adapt.brknn">skmultilearn.adapt.brknn module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.adapt.html#module-skmultilearn.adapt.mlknn">skmultilearn.adapt.mlknn module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.adapt.html#module-skmultilearn.adapt">Module contents</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="skmultilearn.base.html">skmultilearn.base package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skmultilearn.base.tests.html">skmultilearn.base.tests package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.base.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.base.tests.html#module-skmultilearn.base.tests.test_base">skmultilearn.base.tests.test_base module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.base.tests.html#module-skmultilearn.base.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.base.html#module-skmultilearn.base.base">skmultilearn.base.base module</a><ul class="simple">
 </ul>
@@ -187,19 +214,33 @@
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="skmultilearn.cluster.tests.html">skmultilearn.cluster.tests package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#skmultilearn-cluster-tests-test-base-module">skmultilearn.cluster.tests.test_base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#skmultilearn-cluster-tests-test-graphtool-module">skmultilearn.cluster.tests.test_graphtool module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#skmultilearn-cluster-tests-test-igraph-module">skmultilearn.cluster.tests.test_igraph module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#module-skmultilearn.cluster.tests.test_base">skmultilearn.cluster.tests.test_base module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#module-skmultilearn.cluster.tests.test_graphtool">skmultilearn.cluster.tests.test_graphtool module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#module-skmultilearn.cluster.tests.test_igraph">skmultilearn.cluster.tests.test_igraph module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.cluster.tests.html#module-skmultilearn.cluster.tests">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#skmultilearn-cluster-base-module">skmultilearn.cluster.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#skmultilearn-cluster-graphtool-module">skmultilearn.cluster.graphtool module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#skmultilearn-cluster-igraph-module">skmultilearn.cluster.igraph module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.base">skmultilearn.cluster.base module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.graphtool">skmultilearn.cluster.graphtool module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.igraph">skmultilearn.cluster.igraph module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster">Module contents</a><ul class="simple">
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a><ul>
@@ -209,7 +250,9 @@
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests.test_fixed">skmultilearn.ensemble.tests.test_fixed module</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#skmultilearn-ensemble-tests-test-partition-module">skmultilearn.ensemble.tests.test_partition module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests.test_partition">skmultilearn.ensemble.tests.test_partition module</a><ul class="simple">
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="skmultilearn.ensemble.tests.html#module-skmultilearn.ensemble.tests.test_rakeld">skmultilearn.ensemble.tests.test_rakeld module</a><ul class="simple">
 </ul>
 </li>
@@ -243,6 +286,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.ext.html#module-skmultilearn.ext">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="skmultilearn.neurofuzzy.html">skmultilearn.neurofuzzy package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.neurofuzzy.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.neurofuzzy.html#module-skmultilearn.neurofuzzy.MLARAMfast">skmultilearn.neurofuzzy.MLARAMfast module</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.neurofuzzy.html#module-skmultilearn.neurofuzzy">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="skmultilearn.problem_transform.html">skmultilearn.problem_transform package</a><ul>
@@ -554,7 +605,7 @@ then the input vector has label no. 5)</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="skmultilearn.base.html" class="btn btn-neutral float-right" title="skmultilearn.base package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="skmultilearn.adapt.html" class="btn btn-neutral float-right" title="skmultilearn.adapt package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="modules.html" class="btn btn-neutral" title="skmultilearn" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -566,7 +617,6 @@ then the input vector has label no. 5)</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -588,7 +638,7 @@ then the input vector has label no. 5)</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

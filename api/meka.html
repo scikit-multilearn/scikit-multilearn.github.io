@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using the meka wrapper &mdash; scikit-multilearn 0.0.2 documentation</title>
+  <title>Using the meka wrapper &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.2 documentation" href="index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
         <link rel="next" title="Implementing a multi-label classifier" href="base.html"/>
         <link rel="prev" title="Classify your dataset" href="classify.html"/> 
 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.4
               </div>
             
           
@@ -91,10 +91,12 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using the meka wrapper</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-meka">Setting up MEKA</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-wrapper">Using the wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-errors">Handling errors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
 </ul>
@@ -145,17 +147,22 @@
 <h1>Using the meka wrapper<a class="headerlink" href="#using-the-meka-wrapper" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="setting-up-meka">
 <h2>Setting up MEKA<a class="headerlink" href="#setting-up-meka" title="Permalink to this headline">¶</a></h2>
-<p>In order to use the python interface to <a class="reference external" href="http://meka.sourceforge.net/">MEKA</a>  you need to have JAVA and MEKA installed. Paths to both are passed to the class&#8217;s constructor. To set up MEKA download the <code class="docutils literal"><span class="pre">meka-&lt;version&gt;-realease.zip</span></code> from <a class="reference external" href="https://sourceforge.net/projects/meka/">MEKA&#8217;s sourceforge page</a>, unzip it to <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;</span></code> and use <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;/lib</span></code> as the MEKA classpath for the constructor.</p>
-<p>An example path to java might be: <code class="docutils literal"><span class="pre">/usr/bin/java</span></code>, an example classpath to meka can be: <code class="docutils literal"><span class="pre">/opt/meka-1.9/lib/</span></code>.</p>
-<p><strong>The current version supports meka 1.9</strong></p>
+<p>In order to use the python interface to <a class="reference external" href="http://meka.sourceforge.net/">MEKA</a>  you need to have JAVA and MEKA installed. Paths to both are passed to the class&#8217;s constructor.</p>
+<p><strong>The current version supports meka 1.9.1+</strong></p>
+<p>The currently officially released MEKA version is 1.9.0 from 2015 and has a <a class="reference external" href="https://github.com/Waikato/meka/issues/1">bug</a>
+that prevents the wrapper from working. Please <a class="reference external" href="https://adams.cms.waikato.ac.nz/snapshots/meka/">download a compiled 1.9.1+ snapshot</a>
+instead of using the 1.9.0 version, unzip it to <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;</span></code> and use <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;/lib/</span></code> as the MEKA classpath for the constructor.</p>
 <p>Note that you will need to have <code class="docutils literal"><span class="pre">liac-arff</span></code> installed if you want to use the MEKA wrapper, you can get them using: <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">liac-arff</span></code>.</p>
+<p>An example path to java might be: <code class="docutils literal"><span class="pre">/usr/bin/java</span></code>, an example classpath to meka can be: <code class="docutils literal"><span class="pre">/opt/meka-1.9.1-SNAPSHOT/lib/</span></code>.
+In Python 2.7 the pip package <code class="docutils literal"><span class="pre">whichcraft</span></code> is used to detect the location of java executables if no path is provided to the constructor.
+You can install it via <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">whichcraft</span></code>. In Python 3 <code class="docutils literal"><span class="pre">whichcraft</span></code> is not used.</p>
 </div>
 <div class="section" id="using-the-wrapper">
 <h2>Using the wrapper<a class="headerlink" href="#using-the-wrapper" title="Permalink to this headline">¶</a></h2>
-<p>Starting from scikit-multilearn <code class="docutils literal"><span class="pre">0.0.2</span></code> the meka wrapper is available from <code class="docutils literal"><span class="pre">skmultilearn.ext</span></code> (ext as in external) and is a fully scikit-compatible multi-label classifier.</p>
+<p>Starting from scikit-multilearn <code class="docutils literal"><span class="pre">0.0.2</span></code> the meka wrapper is available from <code class="docutils literal"><span class="pre">skmultilearn.ext</span></code> (ext as in external) and is a fully scikit-compatible multi-label classifier. Please note that rel</p>
 <p>To use the interface class start with importing skmultilearn&#8217;s module, then create an object of the <code class="docutils literal"><span class="pre">Meka</span></code> class using the constructor and run the interface such as in the example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_multilabel_classification</span>
-<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">hamming_loss</span>
 <span class="kn">from</span> <span class="nn">skmultilearn.ext</span> <span class="kn">import</span> <span class="n">Meka</span>
 
@@ -221,6 +228,10 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="handling-errors">
+<h2>Handling errors<a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h2>
+<p>MEKA is handled through a subprocess and while MEKA is a wonderful library, its error reporting system is more targeted at reading output in the terminal. In case of error we wull issue an exception with the output MEKA provided. You can always check the output / errors of MEKA as they are stored in the classes&#8217;s <code class="docutils literal"><span class="pre">output</span></code> and <code class="docutils literal"><span class="pre">error</span></code> properties. For example in the above example where the MEKA classifier instance is named <code class="docutils literal"><span class="pre">meka</span></code> - you can access the properties under <code class="docutils literal"><span class="pre">meka.output``or</span> <span class="pre">``meka.error</span></code>.</p>
+</div>
 </div>
 
 
@@ -242,7 +253,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2016, Piotr Szymański.
 
     </p>
   </div>
@@ -264,7 +274,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.2',
+            VERSION:'0.0.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

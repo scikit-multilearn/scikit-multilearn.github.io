@@ -24,12 +24,21 @@
   <li><a href="./api/index.html">API</a></li>
   <li><a href="https://pypi.python.org/pypi/scikit-multilearn/">Python Package Index</a></li>
   <li><a href="#classifiers">Supported Classifiers</a></li>
-  <li><a href="#classifiers">Junior Tasks</a></li>
+  <li><a href="#tasks">Junior Tasks</a></li>
 
-  <li><a class="success" href="https://pypi.python.org/packages/d9/28/41c2f376b315f740ecd386106727636a1f10cffb0dfc00f29acea0ccb0b1/scikit-multilearn-0.0.3.tar.gz">Download 0.0.3</a></li>
+  <li><a class="success" href="https://pypi.python.org/packages/31/ae/b1206c9cc7555858664e78eee035767100bb4b5e0dadb8ac4f209c71b1d0/scikit-multilearn-0.0.4.tar.gz">Download 0.0.4</a></li>
 
   </ul>
 </header>
+
+
+<div class="row main">
+<div class="large-12" style="text-align:center">
+
+<code class="install">pip install scikit-multilearn</code>
+
+</div>
+</div>
 
 <div class="row main">
 <div class="large-4 columns">
@@ -58,6 +67,18 @@
 <p>This project has been started by <a href="http://github.com/niedakh"><i class="fi-social-github"></i>niedakh</a> for the purpose of experiments for his PhD with lots of <i class="fi-heart"></i> to <a href="http://datasciencegroup.pl/">Data Science Group</a> at the <a href="http://www.pwr.edu.pl">Wrocław University of Technology</a>. The Python world needs a multi-label classification library, help build one &amp; join our team!</p>
 
 <p>If you want to help - join us at <a href="https://groups.google.com/d/forum/scikit-multilearn-dev">scikit-multilearn-dev</a>.</p>
+
+<h4>What's new in 0.0.4? (released 2017-02-10)</h4>
+<ul>
+<li> *kNN classifiers support sparse matrices properly</li>
+<li>support for the new model_selection API from scikit-learn</li>
+<li>extended graph-based label space clusteres to allow taking probability of a label occuring alone into consideration</li>
+<li>compatible with newest graphtool</li>
+<li>support the case when meka decides that an observation doesn't have any labels assigned</li>
+<li>HARAM classifier provided by Fernando Benitez from University of Konstanz</li>
+<li>predict_proba added to problem transformation classifiers</li>
+<li>ported to python 3 </li>
+</ul>
 </div>
 <div class="large-6 columns">
 
@@ -67,7 +88,7 @@
 <blockquote>
 <tt style="font-family: monospace !important">
 @ARTICLE{2017arXiv170201460S, <br />
-  author = {{Szyma{\'n}ski}, P.}, <br />
+  author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.}, <br />
   title = "{A scikit-based Python environment for performing multi-label classification}",<br />
   journal = {ArXiv e-prints},<br />
   archivePrefix = "arXiv",<br />
@@ -83,6 +104,152 @@
 </div>
 
 
+
+<div class="row main" id="classifiers">
+<div class="large-12 columns">
+<h4>Supported classifiers</h4>
+<table>
+  <tr>
+    <th>Classifier name</th>
+    <th>Module</th>
+    <th>Class name</th>
+    <th>Relevant paper</th>
+    <th>Available since version</th>
+  </tr>
+  <tr>
+    <td>Binary Relevance kNN</td>
+    <td>skmultilearn.adapt</td>
+    <td><a href="api/skmultilearn.adapt.html#skmultilearn.adapt.brknn.BRkNNaClassifier">BinaryRelevanceKNN</a></td>
+    <td><a href="http://link.springer.com/chapter/10.1007/978-3-540-87881-0_40">An Empirical Study of Lazy Multilabel Classification Algorithms</a></td>
+    <td>0.0.4</td>
+  </tr>
+  <tr>
+    <td>k Nearest Neighbours multi-label classifier</td>
+    <td>skmultilearn.adapt</td>
+    <td><a href="api/skmultilearn.adapt.html#skmultilearn.adapt.mlknn.MLkNN">MLkNN</a></td>
+    <td><a href="http://www.sciencedirect.com/science/article/pii/S0031320307000027">ML-KNN: A lazy learning approach to multi-label learning</a></td>
+    <td>0.0.4</td>
+  </tr>
+  <tr>
+    <td>Binary Relevance</td>
+    <td>skmultilearn.problem_transform</td>
+    <td><a href="api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.br.BinaryRelevance">BinaryRelevance</a></td>
+    <td></td>
+    <td>0.0.1</td>
+  </tr>
+  <tr>
+    <td>Classifier Chains</td>
+    <td>skmultilearn.problem_transform</td>
+    <td><a href="api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.cc.ClassifierChain">ClassifierChains</a></td>
+    <td><a href="http://link.springer.com/article/10.1007/s10994-011-5256-5">Classifier chains for multi-label classification</a></td>
+    <td>0.0.2</td>
+  </tr>
+  <tr>
+    <td>Label Powerset</td>
+    <td>skmultilearn.problem_transform</td>
+    <td><a href="api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.lp.LabelPowerset">LabelPowerset</a></td>
+    <td></td>
+    <td>0.0.1</td>
+  </tr>
+
+  <tr>
+    <td>Stochastic Blockmodel based label space clusterer</td>
+    <td>skmultilearn.cluster</td>
+    <td><a href="api/skmultilearn.cluster.html#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer">GraphToolCooccurenceClusterer</a></td>
+    <td></td>
+    <td>0.0.3</td>
+  </tr>
+  <tr>
+    <td>iGraph community detection based (modularity, walktrap, infomap) label space clusterer</td>
+    <td>skmultilearn.cluster</td>
+    <td><a href="api/skmultilearn.cluster.html#skmultilearn.cluster.igraph.IGraphLabelCooccurenceClusterer">IGraphLabelCooccurenceClusterer</a></td>
+    <td><a href="http://www.mdpi.com/1099-4300/18/8/282">How Is a Data-Driven Approach Better than Random Choice in Label Space Division for Multi-Label Classification?</a></td>
+    <td>0.0.1</td>
+  </tr>
+  <tr>
+    <td>Label space partitioner using a clusterer from skmultilearn.cluster</td>
+    <td>skmultilearn.ensemble</td>
+    <td><a href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.partition.LabelSpacePartitioningClassifier">LabelSpacePartitioningClassifier</a></td>
+    <td><a href="http://www.mdpi.com/1099-4300/18/8/282">How Is a Data-Driven Approach Better than Random Choice in Label Space Division for Multi-Label Classification?</a></td>
+    <td>0.0.3</td>
+  </tr>
+    <tr>
+    <td>Distinct Random k-Labelsets</td>
+    <td>skmultilearn.ensemble</td>
+    <td><a href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.rakeld.RakelD">RakelD</a></td>
+    <td><a href="http://ieeexplore.ieee.org/document/5567103/">Random k-Labelsets for Multilabel Classification</a></td>
+    <td>0.0.1</td>
+  </tr>
+  <tr>
+    <td>Overlaping Random k-Labelsets</td>
+    <td>skmultilearn.ensemble</td>
+    <td><a href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.rakelo.RakelO">RakelO</a></td>
+    <td><a href="http://ieeexplore.ieee.org/document/5567103/">Random k-Labelsets for Multilabel Classification</a></td>
+    <td>0.0.1</td>
+  </tr>
+    <tr>
+    <td>Wrapper for <a href="http://meka.sf.net">MEKA</a></td>
+    <td>skmultilearn.ext</td>
+    <td><a href="api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka">MEKA</a></td>
+    <td><a href="http://jmlr.org/papers/v17/12-164.html">MEKA: A Multi-label/Multi-target Extension to WEKA</a></td>
+    <td>0.0.1</td>
+  </tr>
+  <tr>
+    <td>Hierarchical ARAM Neural Network (HARAM)</td>
+    <td>skmultilearn.neurofuzzy</td>
+    <td><a href="api/skmultilearn.neurofuzzy.html">MLARAM</a></td>
+    <td><a href="http://dx.doi.org/10.1109/ICDMW.2015.14">HARAM: A Hierarchical ARAM Neural Network for Large-Scale Text Classification</a></td>
+    <td>0.0.4</td>
+  </tr>
+</table>
+</div>
+</div>
+<div class="row main" id="tasks">
+
+<div class="large-12 columns">
+<h4>Junior tasks</h4>
+
+<p>These are the tasks, links to github issues and papers that are related to classifier implementation and needs/plans, that have not been undertaken yet. If you want to take them, write a comment on a relevant issue.</p>
+
+<table>
+  <tr>
+    <th>Classifier name</th>
+    <th>Relevant paper</th>
+    <th>Github issue in scikit-multilearn</th>
+  </tr>
+  <tr>
+    <td>Bayes Optimal Probabilistic Classifier Chains</td>
+    <td><a href="http://icml2010.haifa.il.ibm.com/papers/589.pdf">Bayes Optimal Multilabel Classification via Probabilistic Classifier Chains</a></td>
+    <td><a href="https://github.com/scikit-multilearn/scikit-multilearn/issues/20">#20</a></td>
+  </tr>
+  <tr>
+    <td>Selective Ensemble of Classifier Chains</td>
+    <td><a href="http://link.springer.com/chapter/10.1007/978-3-642-38067-9_13">Selective Ensemble of Classifier Chains</a></td>
+    <td><a href="https://github.com/scikit-multilearn/scikit-multilearn/issues/13">#13</a></td>
+  </tr>
+  <tr>
+    <td>ML-c4.5</td>
+    <td><a href="http://dl.acm.org/citation.cfm?id=670013">Knowledge Discovery in Multi-label Phenotype Data</a></td>
+    <td><a href="https://github.com/scikit-multilearn/scikit-multilearn/issues/10">#10</a></td>
+  </tr>
+  <tr>
+    <td>QWML</td>
+    <td><a href="http://www.sciencedirect.com/science/article/pii/S092523121000024X">Efficient voting prediction for pairwise multilabel classification</a></td>
+    <td><a href="https://github.com/scikit-multilearn/scikit-multilearn/issues/9">#9</a></td>
+  </tr>
+  <tr>
+    <td>Calibrated Label Ranking</td>
+    <td><a href="http://link.springer.com/article/10.1007/s10994-008-5064-8">Multilabel classification via calibrated label ranking</a></td>
+    <td><a href="https://github.com/scikit-multilearn/scikit-multilearn/issues/8">#8</a></td>
+  </tr>
+    <tr>
+    <td>Hierarchy Of Mul-tilabel classifiERs (HOMER)</td>
+    <td><a href="http://lpis.csd.auth.gr/publications/tsoumakas-mmd08.pdf">Effective and Efficient Multilabel Classification in Domains with Large Number of Labels</a></td>
+    <td><a href="https://github.com/scikit-multilearn/scikit-multilearn/issues/8">#2</a></td>
+  </tr>
+</table>
+</div>
+</div>
 
 <footer>
   <p>Powered by: <i class="fi-html5"></i> <i class="fi-css3"></i> <i class="fi-foundation"></i> <i class="fi-social-github"></i></p>

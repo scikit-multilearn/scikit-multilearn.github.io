@@ -4574,8 +4574,8 @@ a.thumbnail {
       .header-subnav li a.success.is-active {
         background: rgba(255, 215, 0, 0.15); }
       .header-subnav li a.success:hover {
-        background: rgba(255, 215, 0, 0.15) !important;
-        transition: all 0.35s ease-in-out; }
+        background: rgba(255, 224, 51, 1);
+        transition: none}
     .header-subnav li a {
       padding: 0.9rem 1rem;
       font-size: 0.75rem;
@@ -4588,8 +4588,7 @@ a.thumbnail {
       .header-subnav li a.is-active {
         background: rgba(250, 250, 250, 0.15); }
       .header-subnav li a:hover {
-        background: rgba(250, 250, 250, 0.15);
-        transition: all 0.35s ease-in-out; }
+        background: rgba(250, 250, 250, 0.15); }
 
 
 @media only screen and (min-device-width: 1500px) {
