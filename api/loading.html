@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Loading and generating multi-label datasets &mdash; scikit-multilearn 0.0.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
+        <link rel="next" title="Selecting a multi-label classifier" href="classify.html"/>
+        <link rel="prev" title="The data format for multi-label classification" href="datasets.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> scikit-multilearn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Loading and generating multi-label datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-artificial-data">Generating artificial data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-real-world-data-sets">Getting real-world data sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scikit-multilearn-data-set-helpers">Scikit-multilearn data set helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-validation-and-train-test-splits">Cross-validation and train-test splits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">scikit-multilearn</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Loading and generating multi-label datasets</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/loading.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="loading-and-generating-multi-label-datasets">
+<span id="loading"></span><h1>Loading and generating multi-label datasets<a class="headerlink" href="#loading-and-generating-multi-label-datasets" title="Permalink to this headline">¶</a></h1>
+<p>In this section you will learn how to generate multi-label classification, where to find real world data and how to load it, and how to prepare your data for classification.</p>
+<p>The multi-label classification can be performed on different kinds of data - usually it is done on either artificially generated data for analytical purposes or on real-world data sets stored in <code class="docutils literal"><span class="pre">ARFF</span></code> files.</p>
+<div class="section" id="generating-artificial-data">
+<h2>Generating artificial data<a class="headerlink" href="#generating-artificial-data" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-learn&#8217;s <code class="xref py py-mod docutils literal"><span class="pre">sklearn.model_selection</span></code> framework can be used to generate artificial multi-label classification data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_multilabel_classification</span>
+
+<span class="c1"># this will generate a</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_multilabel_classification</span><span class="p">(</span><span class="n">sparse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">n_labels</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="n">return_indicator</span> <span class="o">=</span> <span class="s1">&#39;sparse&#39;</span><span class="p">,</span> <span class="n">allow_unlabeled</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-real-world-data-sets">
+<h2>Getting real-world data sets<a class="headerlink" href="#getting-real-world-data-sets" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://mulan.sourceforge.net/datasets-mlc.html">http://mulan.sourceforge.net/datasets-mlc.html</a></p>
+</div>
+<div class="section" id="loading-from-arff">
+<h2>Loading from ARFF<a class="headerlink" href="#loading-from-arff" title="Permalink to this headline">¶</a></h2>
+<p>The class <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.dataset.Dataset</span></code></a> allows loading data from <code class="docutils literal"><span class="pre">WEKA</span></code>, <code class="docutils literal"><span class="pre">MULAN</span></code> or <code class="docutils literal"><span class="pre">MEKA</span></code> provided data sets in <a class="reference external" href="http://www.cs.waikato.ac.nz/ml/weka/arff.html">ARFF</a> format. The module depends on <a class="reference external" href="https://pypi.python.org/pypi/liac-arff">liac-arff</a> and is capable of loading sparse and dense represented ARFF data, the <cite>X</cite>, <cite>y</cite> are returned as sparse matrices. See the <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="skmultilearn.dataset.Dataset.load_arff_to_numpy"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset.load_arff_to_numpy()</span></code></a> for more information.</p>
+<p>Example code for converting ARFF file to data dumps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="c1">## some information about the data set</span>
+<span class="c1"># number of labels</span>
+<span class="n">labelcount</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="c1"># where the labels are located,</span>
+<span class="c1"># big = at the beginning of the file</span>
+<span class="n">endianness</span> <span class="o">=</span> <span class="s1">&#39;big&#39;</span>
+
+<span class="c1"># dtype used in the feature space</span>
+<span class="n">feature_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+
+<span class="c1"># whether the nominal attributes should be encoded as integers</span>
+<span class="n">encode_nominal</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># if True - use the sparse loading mechanism from liac-arff</span>
+<span class="c1"># if False - load dense representation and convert to sparse</span>
+<span class="n">load_sparse</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># load data</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to_data/dataset-train.dump.bz2&quot;</span><span class="p">,</span>
+    <span class="n">labelcount</span> <span class="o">=</span> <span class="n">labelcount</span><span class="p">,</span>
+    <span class="n">endian</span> <span class="o">=</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span>
+    <span class="n">input_feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+    <span class="n">encode_nominal</span> <span class="o">=</span> <span class="n">encode_nominal</span><span class="p">,</span>
+    <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
+
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to_data/dataset-train.dump.bz2&quot;</span><span class="p">,</span>
+    <span class="n">labelcount</span> <span class="o">=</span> <span class="n">labelcount</span><span class="p">,</span>
+    <span class="n">endian</span> <span class="o">=</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span>
+    <span class="n">input_feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+    <span class="n">encode_nominal</span> <span class="o">=</span> <span class="n">encode_nominal</span><span class="p">,</span>
+    <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> provided data sets are produced using <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code></a> class and contain a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing a data set in the format described above. The data sets are <code class="docutils literal"><span class="pre">pickle</span></code> dumps compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
+</div>
+<div class="section" id="scikit-multilearn-data-set-helpers">
+<h2>Scikit-multilearn data set helpers<a class="headerlink" href="#scikit-multilearn-data-set-helpers" title="Permalink to this headline">¶</a></h2>
+<p>For experimental purposes we provide a helper function to quickly load compressed data sources for multi-label classification. The <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code></a> class can load and save <cite>X</cite> and <cite>y</cite> to a compressed file containing a <code class="docutils literal"><span class="pre">pickle</span></code> of a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing the input and output matrices. The data sets are dumped using <code class="docutils literal"><span class="pre">pickle</span></code> module and compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
+<p>Example use case of  saving and loading data sets:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="n">Dataset</span><span class="o">.</span><span class="n">save_dataset_dump</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;path/filename.dump.bz2&quot;</span><span class="p">)</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_dataset_dump</span><span class="p">(</span><span class="s2">&quot;path/filename.dump.bz2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cross-validation-and-train-test-splits">
+<h2>Cross-validation and train-test splits<a class="headerlink" href="#cross-validation-and-train-test-splits" title="Permalink to this headline">¶</a></h2>
+<p>As Tsoumakas et. al <a class="reference external" href="http://lpis.csd.auth.gr/publications/sechidis-ecmlpkdd-2011.pdf">note</a>: in supervised learning, experiments typically involve a first step of distributing the examples of a dataset into two or more disjoint subsets. When training data abound, the holdout method is used to distribute the examples into a training and a test set, and sometimes also into a validation set. When training data are limited, cross-validation is used, which starts by splitting the dataset into a number of disjoint subsets of approximately equal size.</p>
+<p>To perform a train-test split for multi-label classification - having <cite>X</cite> and <cite>y</cite> - we can use scikit-learn&#8217;s <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html">sklearn.model_selection.train_test_split</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">)</span>
+
+<span class="c1"># learn the classifier</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># predict labels for test data</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As there is no established stratified folding procedure for multi-label classification and scikit-learn&#8217;s StratifiedFold will fail on multi-label data. We are left to use a traditional k-fold cross-validation approach with <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html">sklearn.model_selection.KFold</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
+
+<span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># assuming classifier object exists</span>
+
+        <span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
+
+        <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
+
+        <span class="c1"># learn the classifier</span>
+        <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+        <span class="c1"># predict labels for test data</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the next section you will learn what classification methods are available in scikit-multilearn.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classify.html" class="btn btn-neutral float-right" title="Selecting a multi-label classifier" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datasets.html" class="btn btn-neutral" title="The data format for multi-label classification" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
