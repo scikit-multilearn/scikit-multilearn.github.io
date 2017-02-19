@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets: loading data sets for scikit-multilearn &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>The data format for multi-label classification &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
-        <link rel="next" title="Classify your dataset" href="classify.html"/>
+        <link rel="next" title="Loading and generating multi-label datasets" href="loading.html"/>
         <link rel="prev" title="Concepts guide" href="concepts.html"/> 
 
   
@@ -84,20 +84,25 @@
           
             
             
-                <ul class="current">
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Datasets: loading data sets for scikit-multilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#loading-from-arff">Loading from ARFF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The data format for multi-label classification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-does-scikit-multilearn-expect">What does scikit-multilearn expect?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#converting-from-array-of-arrays">Converting from array of arrays</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -128,7 +133,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Datasets: loading data sets for scikit-multilearn</li>
+    <li>The data format for multi-label classification</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -142,39 +147,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="datasets-loading-data-sets-for-scikit-multilearn">
-<h1>Datasets: loading data sets for scikit-multilearn<a class="headerlink" href="#datasets-loading-data-sets-for-scikit-multilearn" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="loading-from-arff">
-<h2>Loading from ARFF<a class="headerlink" href="#loading-from-arff" title="Permalink to this headline">¶</a></h2>
-<p>The class <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code></a> allows loading data from <code class="docutils literal"><span class="pre">WEKA</span></code>, <code class="docutils literal"><span class="pre">MULAN</span></code> or <code class="docutils literal"><span class="pre">MEKA</span></code> provided data sets in <cite>ARFF</cite> format. The module depends on <a class="reference external" href="https://pypi.python.org/pypi/liac-arff">liac-arff</a> and apart from the file path it takes two arguments:</p>
+  <div class="section" id="the-data-format-for-multi-label-classification">
+<span id="datasets"></span><h1>The data format for multi-label classification<a class="headerlink" href="#the-data-format-for-multi-label-classification" title="Permalink to this headline">¶</a></h1>
+<p>In this section you will learn about the data format scikit-multilearn expects.</p>
+<p>In order to train a classification model, i.e. a classifier, we need data about a phenomenon that the classifier is supposed to generalize, this data usually comes in two parts:</p>
 <ul class="simple">
-<li>labelcount: integer, the number of labels in the data set</li>
-<li>endian: enum{&#8220;big&#8221;, &#8220;little&#8221;}: defiens whether to look for labels at the beginning of attributes in the ARFF file (&#8220;big&#8221; endian) such as the files used by MEKA or at the end (&#8220;little&#8221;) endian such as the MULAN files.</li>
+<li>data about the objects that are being classified, an input space, which we will denote as <cite>X</cite></li>
+<li>data about an output space which we will denote as <cite>y</cite></li>
 </ul>
-<p>Example code for converting ARFF file to data dumps:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<div class="section" id="what-does-scikit-multilearn-expect">
+<h2>What does scikit-multilearn expect?<a class="headerlink" href="#what-does-scikit-multilearn-expect" title="Permalink to this headline">¶</a></h2>
+<p>In a given multi-label classification problem it is very rare for the output space matrix of label assignments  <code class="docutils literal"><span class="pre">y</span></code> to be dense. Usually the number of labels assigned per instance is just a small portion of all labels. The average percentage of labels assigned per instance is called <cite>label density</cite> and in established data sets it <a class="reference external" href="http://mulan.sourceforge.net/datasets-mlc.html">tends to be really small for most data sets</a>.</p>
+<p>For this reason by default scikit-multilearn expects the <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> data to be provided as sparse matrices. Please note that while dense matrices are supported as well, they will be converted to sparse matrices for internal use in scikit-multilearn classifiers and only sparse matrices will be returned.</p>
+<p>The output matrix <code class="docutils literal"><span class="pre">y</span></code> is expected to be a binary indicator matrix, thus if <code class="docutils literal"><span class="pre">X</span></code> has a shape of <code class="docutils literal"><span class="pre">n_samples</span></code> with <code class="docutils literal"><span class="pre">n_features</span></code>, then <code class="docutils literal"><span class="pre">y</span></code> should have the shape of <code class="docutils literal"><span class="pre">n_samples</span></code> rows and <code class="docutils literal"><span class="pre">n_labels</span></code> columns, each column with values <code class="docutils literal"><span class="pre">1</span></code> if label <code class="docutils literal"><span class="pre">j</span></code> is assigned to a given row and <code class="docutils literal"><span class="pre">0</span></code> if not.</p>
+<p>The sparse matrices should be compatible with the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html">numpy.matrix</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy-0.18.1/reference/sparse.html">scipy.sparse</a> classes, especially in terms of providing two-argument operator to access elements, i.e. the element of <code class="docutils literal"><span class="pre">i</span></code>-th row, <code class="docutils literal"><span class="pre">j</span></code>-th column of matrix <code class="docutils literal"><span class="pre">A</span></code> should be available via <code class="docutils literal"><span class="pre">A[i,j]</span></code> and not <code class="docutils literal"><span class="pre">A[i][j]</span></code>.</p>
+<p>If a non-scikit multilearn base classifiers if used (from scikit-learn, tensorflow or similar), for example in problem transformation, it should support matrix arguments, as described above API. A dense matrix representation of <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> will be passed to non scikit-multilearn base classifier&#8217;s <code class="docutils literal"><span class="pre">fit(X,y)</span></code> and <code class="docutils literal"><span class="pre">predict(X)</span></code> methods. A <code class="docutils literal"><span class="pre">require_dense</span></code> argument is provided in case a base classifier accepts a sparse matrix representation for <code class="docutils literal"><span class="pre">X</span></code> or <code class="docutils literal"><span class="pre">y</span></code>.</p>
+<p>If you pass <code class="docutils literal"><span class="pre">require_dense</span> <span class="pre">=</span> <span class="pre">[False,</span> <span class="pre">False]</span></code> to a constructor of a class which takes a <code class="docutils literal"><span class="pre">classifier</span></code> argument, it will cause the <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> to be passed as sparse matrices to the base classifier cloned <cite>classifier</cite> objects. In this two-element array of booleans the first one is responsible for the representation of <code class="docutils literal"><span class="pre">X</span></code> and the second for <code class="docutils literal"><span class="pre">y</span></code>.</p>
+</div>
+<div class="section" id="converting-from-array-of-arrays">
+<h2>Converting from array of arrays<a class="headerlink" href="#converting-from-array-of-arrays" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-learn and numpy sometimes expect an array of array&#8217;s representation, ex. in case of three labels and two samples, <code class="docutils literal"><span class="pre">y</span></code> would look as follows: <code class="docutils literal"><span class="pre">[[0,</span> <span class="pre">1,</span> <span class="pre">1],</span> <span class="pre">[1,0</span> <span class="pre">,1]]</span></code>. The expected format is described <a class="reference external" href="http://scikit-learn.org/stable/modules/multiclass.html#multilabel-classification-format">in the scikit-learn docs</a> and assumes that:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">X</span></code> is provided as array of arays (vectors) of features, i.e. the array of row vectors that consist of input features (same length, i.e. feature/attribute count), ex. a two-object set with each row being a small 1px x 1px image with rgb channels (three <code class="docutils literal"><span class="pre">int8</span></code> values describing red, blue, green colors per pixel): <code class="docutils literal"><span class="pre">[[128,10,10,20,30,128],</span> <span class="pre">[10,155,30,10,155,10]]</span></code> - scikit-multilearn will expect a matrix representation</li>
+<li><code class="docutils literal"><span class="pre">y</span></code> in case of multi-label problems is provided as binary indicator array of arrays</li>
+</ul>
+<p>To convert from scikit-learn 1D representation of array of arrays to matrices, use a relevant scipy matrix/numpy matrix constructor, ex.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="kn">as</span> <span class="nn">sp</span>
 
-<span class="n">input_features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to/file.arff&quot;</span><span class="p">,</span> <span class="n">labelcount</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">)</span>
-
-<span class="c1"># will be saved to &quot;path_to/output.dump.bz2&quot;</span>
-<span class="n">Dataset</span><span class="o">.</span><span class="n">save_dataset_dump</span><span class="p">(</span><span class="s2">&quot;path_to/output.dump&quot;</span><span class="p">,</span> <span class="n">input_features</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="c1"># assume X is array of arrays</span>
+<span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># yields a dense matrix</span>
+<span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># yields a row-oriented sparse matrix</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="scikit-multilearn-data-set-format">
-<h2>Scikit-multilearn data set format<a class="headerlink" href="#scikit-multilearn-data-set-format" title="Permalink to this headline">¶</a></h2>
-<p>Following <code class="docutils literal"><span class="pre">scikit-learn</span></code>&#8216;s <a class="reference external" href="http://scikit-learn.org/stable/modules/multiclass.html#multilabel-classification-format">approach</a> we assume multilabel data to be divided into two sets:</p>
-<ul class="simple">
-<li><cite>X</cite>: the array-like of vector-likes, i.e. the array of row vectors that consist of input features (same length, i.e. feature/attribute count), ex. a two-object set with each row being a small 1px x 1px image with rgb channels (3 int8 describing red,blue,green colors per pixel): <code class="docutils literal"><span class="pre">[[128,10,10,20,30,128],</span> <span class="pre">[10,155,30,10,155,10]]</span></code></li>
-<li><cite>y</cite>: the array-like of vector-likes, i.e. the array of binary label vectors of the same length (i.e. the label count) ex, for 3 labels: <code class="docutils literal"><span class="pre">[[1,0,1],</span> <span class="pre">[0,1,0]]</span></code></li>
-</ul>
-<p>The <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> provided data sets are produced using <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code></a> class and contain a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing a data set in the format described above. The data sets are <code class="docutils literal"><span class="pre">pickle</span></code> dumps compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
-<p>Example use case of loading data sets:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-
-<span class="n">train_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_dataset_dump</span><span class="p">(</span><span class="s2">&quot;data/scene-train.dump.bz2&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Note. that scikit-learn estimators should support 2D matrix representations, yet they may return array of array representations.</p>
+<p>In the next section we explain how to generate and where to get data for multi-label classification.</p>
 </div>
 </div>
 
@@ -185,7 +192,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="classify.html" class="btn btn-neutral float-right" title="Classify your dataset" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="loading.html" class="btn btn-neutral float-right" title="Loading and generating multi-label datasets" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="concepts.html" class="btn btn-neutral" title="Concepts guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

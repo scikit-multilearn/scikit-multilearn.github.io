@@ -34,7 +34,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
-        <link rel="next" title="Datasets: loading data sets for scikit-multilearn" href="datasets.html"/>
+        <link rel="next" title="The data format for multi-label classification" href="datasets.html"/>
         <link rel="prev" title="Welcome to scikit-multilearn’s documentation!" href="index.html"/> 
 
   
@@ -84,16 +84,25 @@
           
             
             
-                <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Concepts guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#aim">Aim</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-label-vs-multi-label-classification">Single-label vs multi-label classification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -140,22 +149,31 @@
             
   <div class="section" id="concepts-guide">
 <span id="concepts"></span><h1>Concepts guide<a class="headerlink" href="#concepts-guide" title="Permalink to this headline">¶</a></h1>
+<p>In this section you will learn the basic concepts behind multi-label classification.</p>
+<div class="section" id="aim">
+<h2>Aim<a class="headerlink" href="#aim" title="Permalink to this headline">¶</a></h2>
 <p>Classification aims to assign classes/labels to objects. Objects usually represent things we come across in daily life: photos, audio recordings, text documents, videos, but can also include complicated biological systems.</p>
 <p>Objects are usually represented by their selected features (its count denoted as <cite>n_features</cite> in the documentation). Features are the characteristics of objects that distinguish them from others. For example text documents can be represented by words that are present in them.</p>
 <p>The output of classification for a given object is either a class or a set of classes. Traditional classification, usually due to computational limits, aimed at solving only single-label scenarios in which at most one class had been assigned to an object.</p>
+</div>
+<div class="section" id="single-label-vs-multi-label-classification">
+<h2>Single-label vs multi-label classification<a class="headerlink" href="#single-label-vs-multi-label-classification" title="Permalink to this headline">¶</a></h2>
 <p>One can identify two types of single-label classification problems:</p>
 <ul class="simple">
 <li>a single-class one, where the decision is whether to assign the class or not, for ex. having a photo sample from someones pancreas, deciding if it is a photo of cancer sample or not. This is also sometimes called binary classification, as the output values of the predictions are always <cite>0</cite> or <cite>1</cite></li>
 <li>a multi-class problem where the class, if assigned, is selected from a number of available classes: for example, assigning a brand to a photo of a car</li>
 </ul>
 <p>In multi-label classification one can assign more than one label/class out of the available <cite>n_labels</cite> to a given object.</p>
+<p><cite>Madjarov et al. &lt;http://kt.ijs.si/DragiKocev/wikipage/lib/exe/fetch.php?media=2012pr_ml_comparison.pdf&gt;</cite> divide approaches to multi-label classification into three categories, you should select a scikit-multilearn base class according to the philosophy behind your classifier:</p>
+<ul class="simple">
+<li>algorithm adaptation, currently none in <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> in the future they will be placed in <code class="docutils literal"><span class="pre">skmultilearn.adapt</span></code></li>
+<li>problem transformation, such as Binary Relevance, Label Powerset &amp; more, are now available from <code class="docutils literal"><span class="pre">skmultilearn.problem_transformation</span></code></li>
+<li>ensemble classification, such as <code class="docutils literal"><span class="pre">RAkEL</span></code> or label space partitioning classifiers, are now available from <code class="docutils literal"><span class="pre">skmultilearn.ensemble</span></code></li>
+</ul>
 <p>A single-label classifier is a function that given an object represented as a feature vector of length <cite>n_features</cite> assigns a class (a number, or None). A multi-label classifier outputs a set of assigned labels, either in a form of a list of numbers or as a binary indicator vector.</p>
-<p>To learn a classifier we use a training set that provides <cite>n_samples</cite> of sampled objects with their labels.</p>
-<p>To perform multi-label classification we need a training set.</p>
-<p>Madjarov et al. divide approaches to multi-label classification into three categories, you should select a scikit-multilearn base class according to the philosophy behind your classifier:
-- algorithm adaptation, currently none in <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> in the future they will be placed in <code class="docutils literal"><span class="pre">skmultilearn.adapt</span></code>
-- problem transformation, such as Binary Relevance, Label Powerset &amp; more, are now available from <code class="docutils literal"><span class="pre">skmultilearn.problem_transformation</span></code>
-- ensemble classification, such as <code class="docutils literal"><span class="pre">RAkEL</span></code> or label space partitioning classifiers, are now available from <code class="docutils literal"><span class="pre">skmultilearn.ensemble</span></code></p>
+<p>To learn a classifier we use a training set that provides <cite>n_samples</cite> of sampled objects with their labels. To perform multi-label classification we need a training set.</p>
+<p>In the next section you will learn about the data format scikit-multilearn expects.</p>
+</div>
 </div>
 
 
@@ -165,7 +183,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="datasets.html" class="btn btn-neutral float-right" title="Datasets: loading data sets for scikit-multilearn" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="datasets.html" class="btn btn-neutral float-right" title="The data format for multi-label classification" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to scikit-multilearn’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

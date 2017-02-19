@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -138,7 +143,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for skmultilearn.repeat_classifier</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">MLClassifierBase</span>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">MLClassifierBase</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -155,7 +161,7 @@
         <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="RepeatClassifier.predict"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.repeat_classifier.RepeatClassifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value_to_repeat</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))])</span></div></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value_to_repeat</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))])</span></div></div>
 </pre></div>
 
            </div>

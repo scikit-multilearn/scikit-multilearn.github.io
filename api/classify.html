@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Classify your dataset &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>Selecting a multi-label classifier &mdash; scikit-multilearn 0.0.4 documentation</title>
   
 
   
@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
-        <link rel="next" title="Using the meka wrapper" href="meka.html"/>
-        <link rel="prev" title="Datasets: loading data sets for scikit-multilearn" href="datasets.html"/> 
+        <link rel="next" title="Estimating parameters" href="model_estimation.html"/>
+        <link rel="prev" title="Loading and generating multi-label datasets" href="loading.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,23 +84,27 @@
           
             
             
-                <ul class="current">
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Classify your dataset</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#loading-the-data-set">Loading the data set</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#loading-from-arff">Loading from arff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Selecting a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#adapted-algorithms">Adapted algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problem-transformation">Problem transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ensemble-approaches">Ensemble approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#meka-classifiers">MEKA classifiers</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#classifying-input-using-scikit-multilearn">Classifying input using scikit-multilearn</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -131,7 +135,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Classify your dataset</li>
+    <li>Selecting a multi-label classifier</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -145,103 +149,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="classify-your-dataset">
-<h1>Classify your dataset<a class="headerlink" href="#classify-your-dataset" title="Permalink to this headline">¶</a></h1>
-<p>To classify data with a multi-label classifier, you need to have:</p>
+  <div class="section" id="selecting-a-multi-label-classifier">
+<span id="classify"></span><h1>Selecting a multi-label classifier<a class="headerlink" href="#selecting-a-multi-label-classifier" title="Permalink to this headline">¶</a></h1>
+<p>In this document you will learn:</p>
 <ul class="simple">
-<li>selected a base classifier, ex. a naive bayes one</li>
-<li>selected the multi-label classification method, ex. Binary Relevance</li>
-<li>an array or (dense/sparse) matrix with feature vectors to classify</li>
-<li><dl class="first docutils">
-<dt>a training data set:</dt>
-<dd><ul class="first last">
-<li><code class="docutils literal"><span class="pre">X</span></code>: array of input feature vectors</li>
-<li><code class="docutils literal"><span class="pre">y</span></code> arary of binary label indicator vectors associated with each row</li>
+<li>what classifier approaches are available in scikit-multilearn</li>
+<li>how to perform classification</li>
 </ul>
-</dd>
-</dl>
-</li>
+<p>This section assumes that you have prepared a data set for classification and:</p>
+<ul class="simple">
+<li><cite>x_train</cite>, <cite>x_test</cite> variables contain input feature train and test matrices</li>
+<li><cite>y_train</cite>, <cite>y_test</cite> variables contain output label train and test matrices</li>
 </ul>
-<div class="section" id="loading-the-data-set">
-<h2>Loading the data set<a class="headerlink" href="#loading-the-data-set" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">scikit-multilearn</span></code> lets you load two formats of data, one of them is the traditional ARFF format, using <a class="reference external" href="https://pythonhosted.org/liac-arff/">liac-arff</a> package. The other uses scikit-multilearn format that is a BZ2-pped pickle of a dict containing two sparse matrices.</p>
-<div class="section" id="loading-from-arff">
-<h3>Loading from arff<a class="headerlink" href="#loading-from-arff" title="Permalink to this headline">¶</a></h3>
-<p>This approach uses the <code class="docutils literal"><span class="pre">liac-arff</span></code> library to load ARFF files into <code class="docutils literal"><span class="pre">scikit-multilearn</span></code>. Many benchmark ARFF data sets can be found in <a class="reference external" href="http://mulan.sourceforge.net/datasets-mlc.html">MULAN&#8217;s collection</a>. This can be done using the <code class="xref py py-class docutils literal"><span class="pre">Dataset</span></code> static method <code class="xref py py-func docutils literal"><span class="pre">Dataset::load_arff_to_numpy()</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<p>As we noted in <a class="reference internal" href="concepts.html#concepts"><span class="std std-ref">Concepts guide</span></a> multi-label classification can be performed under three approaches:</p>
+<ul class="simple">
+<li>algorithm adaption approach</li>
+<li>problem transformation approach</li>
+<li>ensemble of multi-label classifiers approach</li>
+</ul>
+<div class="section" id="adapted-algorithms">
+<h2>Adapted algorithms<a class="headerlink" href="#adapted-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>The algorithm adaptation approach is based on a single-label classification method adapted for multi-label classification problem. Scikit-multilearn provides:</p>
+<ul class="simple">
+<li>k-NearestNeighbours classifiers adapted to multi-label purposes by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0031320307000027">Zhang et, al.</a>: <code class="docutils literal"><span class="pre">BrkNN</span></code>, <code class="docutils literal"><span class="pre">MLkNN</span></code> available from <a class="reference internal" href="api/skmultilearn.adapt.html#module-skmultilearn.adapt" title="skmultilearn.adapt"><code class="xref py py-mod docutils literal"><span class="pre">skmultilearn.adapt</span></code></a></li>
+<li>a hierarchical neurofuzzy classifier HARAM adapted to multi-label purposes by <a class="reference external" href="https://kops.uni-konstanz.de/handle/123456789/33471">Benites et. al.</a> <code class="docutils literal"><span class="pre">ML-ARAM</span></code> available in <a class="reference internal" href="api/skmultilearn.neurofuzzy.html#module-skmultilearn.neurofuzzy" title="skmultilearn.neurofuzzy"><code class="xref py py-mod docutils literal"><span class="pre">skmultilearn.neurofuzzy</span></code></a>.</li>
+</ul>
+<p>Algorithm adaption methods methods usually require parameter estimation.  Selecting best parameters of algorithm adaptation classifiers is discussed in <a class="reference internal" href="model_estimation.html#model-estimation"><span class="std std-ref">Estimating parameters</span></a>.</p>
+<p>An example code for using <a class="reference internal" href="api/skmultilearn.adapt.html#skmultilearn.adapt.MLkNN" title="skmultilearn.adapt.MLkNN"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.adapt.MLkNN</span></code></a> looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.adapt</span> <span class="kn">import</span> <span class="n">MLkNN</span>
 
-<span class="c1">## some information about the data set</span>
-<span class="c1"># number of labels</span>
-<span class="n">labelcount</span> <span class="o">=</span> <span class="mi">16</span>
-
-<span class="c1"># where the labels are located,</span>
-<span class="c1"># big = at the beginning of the file</span>
-<span class="n">endianness</span> <span class="o">=</span> <span class="s1">&#39;big&#39;</span>
-
-<span class="c1"># dtype used in the feature space</span>
-<span class="n">feature_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
-
-<span class="c1"># whether the nominal attributes should be encoded as integers</span>
-<span class="n">encode_nominal</span> <span class="o">=</span> <span class="bp">True</span>
-
-<span class="c1"># if True - use the sparse loading mechanism from liac-arff</span>
-<span class="c1"># if False - load dense representation and convert to sparse</span>
-<span class="n">load_sparse</span> <span class="o">=</span> <span class="bp">True</span>
-
-<span class="c1"># load data</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to_data/dataset-train.dump.bz2&quot;</span><span class="p">,</span>
-    <span class="n">labelcount</span> <span class="o">=</span> <span class="n">labelcount</span><span class="p">,</span>
-    <span class="n">endian</span> <span class="o">=</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span>
-    <span class="n">input_feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
-    <span class="n">encode_nominal</span> <span class="o">=</span> <span class="n">encode_nominal</span><span class="p">,</span>
-    <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
-
-<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_arff_to_numpy</span><span class="p">(</span><span class="s2">&quot;path_to_data/dataset-train.dump.bz2&quot;</span><span class="p">,</span>
-    <span class="n">labelcount</span> <span class="o">=</span> <span class="n">labelcount</span><span class="p">,</span>
-    <span class="n">endian</span> <span class="o">=</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span>
-    <span class="n">input_feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
-    <span class="n">encode_nominal</span> <span class="o">=</span> <span class="n">encode_nominal</span><span class="p">,</span>
-    <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="classifying-input-using-scikit-multilearn">
-<h2>Classifying input using scikit-multilearn<a class="headerlink" href="#classifying-input-using-scikit-multilearn" title="Permalink to this headline">¶</a></h2>
-<p>The easiest way to perform multi-label classification is to transform it to a single-label classification task and then use scikit classifiers for that new job. There is a variety of such classifiers available in the <a href="#id1"><span class="problematic" id="id2">:module:`skmultilearn.problem_transformation`</span></a> module. <code class="xref py py-class docutils literal"><span class="pre">Binary</span> <span class="pre">Relevance</span></code> is an example of such approach.</p>
-<p>Binary Relevance requires a base classifier to use in the single-label problem. It clones a new one for each label and performs per label classification, summing the results together in the end. It can be done using scikit-multilearn as follows.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
-<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
-<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
-
-<span class="c1"># assume data is loaded using</span>
-<span class="c1"># and is available in X_train/X_test, y_train/y_test</span>
-
-<span class="c1"># initialize Binary Relevance multi-label classifier</span>
-<span class="c1"># with gaussian naive bayes base classifier</span>
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span><span class="n">GaussianNB</span><span class="p">(),</span> <span class="n">require_dense</span><span class="p">)</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">MLkNN</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="c1"># train</span>
 <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
 <span class="c1"># predict</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-
-<span class="c1"># measure</span>
-<span class="k">print</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>As described in <code class="xref py py-class docutils literal"><span class="pre">ProblemTransformationBase</span></code>, the <code class="docutils literal"><span class="pre">requires_dense</span></code> parameter can be used to make scikit-multilearn pass sparse representations of data down to scikit-learn (only a few classifiers support this). While <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> uses sparse matrices everywhere, <code class="docutils literal"><span class="pre">scikit-learn</span></code> is still in transition - to enable this (and a large speed up) use the following example:</p>
+</div>
+<div class="section" id="problem-transformation">
+<h2>Problem transformation<a class="headerlink" href="#problem-transformation" title="Permalink to this headline">¶</a></h2>
+<p>Problem transformation approaches are provided in the <a class="reference internal" href="api/skmultilearn.problem_transform.html#module-skmultilearn.problem_transform" title="skmultilearn.problem_transform"><code class="xref py py-mod docutils literal"><span class="pre">skmultilearn.problem_transform</span></code></a> module and they require a selection of a scikit-learn compatible single-label base classificatier that will be cloned one or more times during the problem transformation. Scikit-learn provides a variety of base classifiers such as:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/tree.html">decision trees</a></li>
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/svm.html">Support Vector Machines</a></li>
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/sgd.html">Stochastic Gradient Descent</a></li>
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">Nearest Neighbors</a></li>
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/naive_bayes.html">Naive Bayesian Classifiers</a></li>
+</ul>
+<p>Scikit-multilearn provides three problem transformation approaches:</p>
+<ul class="simple">
+<li><a class="reference internal" href="api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.BinaryRelevance" title="skmultilearn.problem_transform.BinaryRelevance"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.problem_transform.BinaryRelevance</span></code></a> -  treats each label as a separate single-class classification problem</li>
+<li><a class="reference internal" href="api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.ClassifierChain" title="skmultilearn.problem_transform.ClassifierChain"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.problem_transform.ClassifierChain</span></code></a>-  treats each label as a part of a conditioned chain of single-class classification problems</li>
+<li><a class="reference internal" href="api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset" title="skmultilearn.problem_transform.LabelPowerset"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.problem_transform.LabelPowerset</span></code></a> - treats each label combination as a separate class with one multi-class classification problem</li>
+</ul>
+<p>Problem transformation classifiers take two arguments:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">classifier</span></code> - an instance of a base classifier object, to be cloned and refitted upon the multi-label classifiers <code class="docutils literal"><span class="pre">fit</span></code> stage</li>
+<li><code class="docutils literal"><span class="pre">require_dense</span></code> - a <code class="docutils literal"><span class="pre">[boolean,</span> <span class="pre">boolean]</span></code> parameter explained in <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a></li>
+</ul>
+<p>An example of a Label Powerset transformation from multi-label classification to a single-label multi-class problem to be solved using a Gaussian Naive Bayes classifier:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+
+<span class="c1"># initialize Label Powerset multi-label classifier</span>
+<span class="c1"># with a gaussian naive bayes base classifier</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">GaussianNB</span><span class="p">())</span>
+
+<span class="c1"># train</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># predict</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default the base classifier will be provided with a dense representation, but some scikit-learn classifiers also support sparse representations. This is an example use of a Binary Relevance classifier with a single-class SVM classifier that does can handle sparse input matrix:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
-<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
-
-<span class="c1"># assume data is loaded using</span>
-<span class="c1"># and is available in X_train/X_test, y_train/y_test</span>
 
 <span class="c1"># initialize Binary Relevance multi-label classifier</span>
 <span class="c1"># with an SVM classifier</span>
 <span class="c1"># SVM in scikit only supports the X matrix in sparse representation</span>
+
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(),</span> <span class="n">require_dense</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">])</span>
 
 <span class="c1"># train</span>
@@ -249,11 +239,52 @@
 
 <span class="c1"># predict</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-
-<span class="c1"># measure</span>
-<span class="k">print</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 </pre></div>
 </div>
+<p>As described in <code class="xref py py-class docutils literal"><span class="pre">ProblemTransformationBase</span></code>, the <code class="docutils literal"><span class="pre">requires_dense</span></code> parameter can be used to make scikit-multilearn pass sparse representations of data down to scikit-learn (only a few classifiers support this). While <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> uses sparse matrices everywhere, <code class="docutils literal"><span class="pre">scikit-learn</span></code> is still in transition - to enable this (and a large speed up) use the following example.</p>
+</div>
+<div class="section" id="ensemble-approaches">
+<h2>Ensemble approaches<a class="headerlink" href="#ensemble-approaches" title="Permalink to this headline">¶</a></h2>
+<p>It is often useful to train more than one model for a subset of labels in multi-label classification, especially for large label spaces - a well-selected smaller label subspace <a class="reference external" href="http://www.mdpi.com/1099-4300/18/8/282">can allow more efficient classification</a>. For this purpose the module implements ensemble classification schemes that construct an ensemble of base multi-label classifiers.</p>
+<p>Currently the following ensemble classification schemes are available in scikit-multilearn:</p>
+<ul class="simple">
+<li><a class="reference internal" href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.RakelD" title="skmultilearn.ensemble.RakelD"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.ensemble.RakelD</span></code></a> - Distinct RAndom k-labELsets multi-label classifier</li>
+<li><a class="reference internal" href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.RakelO" title="skmultilearn.ensemble.RakelO"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.ensemble.RakelO</span></code></a> - Overlapping RAndom k-labELsets multi-label classifier.</li>
+<li><a class="reference internal" href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier" title="skmultilearn.ensemble.LabelSpacePartitioningClassifier"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.ensemble.LabelSpacePartitioningClassifier</span></code></a> - a label space partitioning classifier that trains a classifier per label subspace as clustered using methods from <a class="reference internal" href="api/skmultilearn.cluster.html#module-skmultilearn.cluster" title="skmultilearn.cluster"><code class="xref py py-mod docutils literal"><span class="pre">skmultilearn.cluster</span></code></a>.</li>
+<li><a class="reference internal" href="api/skmultilearn.ensemble.html#skmultilearn.ensemble.FixedLabelPartitionClassifier" title="skmultilearn.ensemble.FixedLabelPartitionClassifier"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.ensemble.FixedLabelPartitionClassifier</span></code></a> - a classifier that trains a classifier per label subspace for a given fixed partition</li>
+</ul>
+<p>An example code for an ensemble of RandomForests under a Label Powerset multi-label classifiers trained for each label subspace - partitioned using fast greedy community detection methods on a label co-occurrence graph looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">IGraphLabelCooccurenceClusterer</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">LabelSpacePartitioningClassifier</span>
+
+<span class="c1"># construct base forest classifier</span>
+<span class="n">base_classifier</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+
+<span class="c1"># setup problem transformation approach with sparse matrices for random forest</span>
+<span class="n">problem_transform_classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">base_classifier</span><span class="p">,</span>
+    <span class="n">require_dense</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">])</span>
+
+<span class="c1"># setup the label space cluster using fastgreedy community detection</span>
+<span class="c1"># on a weighted label co-occurrence graph with self-loops allowed</span>
+<span class="n">clusterer</span> <span class="o">=</span> <span class="n">IGraphLabelCooccurenceClusterer</span><span class="p">(</span><span class="s1">&#39;fastgreedy&#39;</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">include_self_edges</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># setup ensemble classifier</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span><span class="n">problem_transform_classifier</span><span class="p">,</span> <span class="n">clusterer</span><span class="p">)</span>
+
+<span class="c1"># train</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># predict</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="meka-classifiers">
+<h2>MEKA classifiers<a class="headerlink" href="#meka-classifiers" title="Permalink to this headline">¶</a></h2>
+<p>In a situation when one needs a method not yet implemented in scikit-multilearn - a MEKA/MULAN wrapper is provided and described in section <a class="reference internal" href="meka.html#mekawrapper"><span class="std std-ref">Using the meka wrapper</span></a>.</p>
 </div>
 </div>
 
@@ -264,10 +295,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="meka.html" class="btn btn-neutral float-right" title="Using the meka wrapper" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="model_estimation.html" class="btn btn-neutral float-right" title="Estimating parameters" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="datasets.html" class="btn btn-neutral" title="Datasets: loading data sets for scikit-multilearn" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="loading.html" class="btn btn-neutral" title="Loading and generating multi-label datasets" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

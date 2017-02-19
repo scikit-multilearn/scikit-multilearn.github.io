@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -138,7 +143,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for skmultilearn.ext.meka</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">subprocess</span>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">map</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">filter</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">shlex</span>
 <span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sparse</span>
@@ -149,8 +158,10 @@
 <span class="kn">from</span> <span class="nn">..dataset</span> <span class="k">import</span> <span class="n">Dataset</span>
 
 
-<div class="viewcode-block" id="Meka"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka">[docs]</a><span class="k">class</span> <span class="nc">Meka</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Runs the MEKA classifier</span>
+<div class="viewcode-block" id="Meka"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka">[docs]</a><span class="k">class</span> <span class="nc">Meka</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Wrapper for the MEKA classifier</span>
+
+<span class="sd">        For more information on how to use this class see the tutorial: :doc:`../meka`</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -199,7 +210,7 @@
                                <span class="s1">&#39;weka_classifier&#39;</span><span class="p">,</span> <span class="s1">&#39;java_command&#39;</span><span class="p">,</span> <span class="s1">&#39;meka_classpath&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Meka.clean"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Meka.clean"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="kc">None</span>
@@ -207,7 +218,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Meka.remove_temporary_files"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.remove_temporary_files">[docs]</a>    <span class="k">def</span> <span class="nf">remove_temporary_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temporary_files</span><span class="p">):</span>
+<div class="viewcode-block" id="Meka.remove_temporary_files"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.remove_temporary_files">[docs]</a>    <span class="k">def</span> <span class="nf">remove_temporary_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temporary_files</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Internal function for cleaning temporary files&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">temporary_files</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_name</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
@@ -215,7 +227,7 @@
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">arff_file_name</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">arff_file_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Meka.run_meka_command"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.run_meka_command">[docs]</a>    <span class="k">def</span> <span class="nf">run_meka_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="Meka.run_meka_command"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.run_meka_command">[docs]</a>    <span class="k">def</span> <span class="nf">run_meka_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="n">command_args</span> <span class="o">=</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">java_command</span><span class="p">,</span>
             <span class="s1">&#39;-cp&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">*&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meka_classpath</span><span class="p">),</span>
@@ -234,9 +246,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">pipes</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span></div>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Meka.fit"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="Meka.fit"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit classifier with training data</span>
+
+<span class="sd">        Internally this method dumps X and y to temporary arff files and </span>
+<span class="sd">        runs MEKA with relevant arguments using :func:`run`. It uses a </span>
+<span class="sd">        sparse DOK representation (:py:class:`scipy.sparse.dok_matrix`) </span>
+<span class="sd">        of the X matrix.</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_features)</span>
+<span class="sd">        :param y: binary indicator matrix with label assignments</span>
+<span class="sd">        :type y: dense or sparse matrix of {0, 1} (n_samples, n_labels)</span>
+<span class="sd">        :returns: Fitted instance of self</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
             <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;dok&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -272,13 +298,26 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Meka.predict"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="Meka.predict"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict label assignments for X</span>
+
+<span class="sd">        Internally this method dumps X to temporary arff files and </span>
+<span class="sd">        runs MEKA with relevant arguments using :func:`run`. It uses a </span>
+<span class="sd">        sparse DOK representation (:py:class:`scipy.sparse.dok_matrix`) </span>
+<span class="sd">        of the X matrix.</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_features)</span>
+<span class="sd">        :returns: binary indicator matrix with label assignments</span>
+<span class="sd">        :rtype: sparse matrix of int (n_samples, n_labels)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
             <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;dok&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier_dump</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">,</span> <span class="s1">&#39;Not classified&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Not classified&#39;</span><span class="p">)</span>
 
         <span class="n">sparse_y</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
@@ -309,7 +348,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span></div>
 
-<div class="viewcode-block" id="Meka.run"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">additional_arguments</span><span class="o">=</span><span class="p">[]):</span>
+<div class="viewcode-block" id="Meka.run"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">additional_arguments</span><span class="o">=</span><span class="p">[]):</span>
         <span class="sd">&quot;&quot;&quot; Runs the meka classifiers</span>
 
 <span class="sd">        Parameters</span>
@@ -344,21 +383,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">run_meka_command</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Meka.parse_output"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.meka.Meka.parse_output">[docs]</a>    <span class="k">def</span> <span class="nf">parse_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Meka.parse_output"><a class="viewcode-back" href="../../../api/skmultilearn.ext.html#skmultilearn.ext.Meka.parse_output">[docs]</a>    <span class="k">def</span> <span class="nf">parse_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Internal function for parsing MEKA output.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="nb">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span>
-
         <span class="n">predictions_split_head</span> <span class="o">=</span> <span class="s1">&#39;==== PREDICTIONS&#39;</span>
         <span class="n">predictions_split_foot</span> <span class="o">=</span> <span class="s1">&#39;|===========&#39;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="nb">filter</span><span class="p">(</span>
-                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;Number of labels&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;Number of labels&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;==== PREDICTIONS (N=&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
@@ -366,30 +402,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">predictions_split_head</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
             <span class="n">predictions_split_foot</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;] [&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))),</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">z</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;] [&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="p">[[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">z</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">z</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">]</span>
 
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">==</span> <span class="mi">5</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_count</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="n">row</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
-        <span class="n">statistics</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="s1">&#39;==&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
-            <span class="s1">&#39;== Evaluation Info&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
-        <span class="n">statistics</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="s1">&#39;  &#39;</span> <span class="ow">in</span> <span class="n">y</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">statistics</span><span class="p">))</span>
-        <span class="n">array_data</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">z</span><span class="p">,</span> <span class="n">statistics</span><span class="p">)</span>
-        <span class="n">non_array_data</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="s1">&#39;[&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">z</span><span class="p">,</span> <span class="n">statistics</span><span class="p">)</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+            <span class="s1">&#39;== Evaluation Info&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="s1">&#39;==&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="p">[</span><span class="n">z</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">statistics</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;  &#39;</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span>
+        <span class="n">array_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">z</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">statistics</span> <span class="k">if</span> <span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">z</span><span class="p">]</span>
+        <span class="n">non_array_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">z</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">statistics</span> <span class="k">if</span> <span class="s1">&#39;[&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">z</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">non_array_data</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">)</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">r</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">z</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">z</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">r</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">try</span><span class="p">:</span>
@@ -402,10 +437,10 @@
 
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">array_data</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">)</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">r</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">z</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">r</span><span class="p">]</span>
             <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
                 <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-            <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span></div></div>

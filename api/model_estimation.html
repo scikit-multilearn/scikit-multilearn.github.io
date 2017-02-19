@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
-        <link rel="next" title="skmultilearn" href="api/modules.html"/>
-        <link rel="prev" title="Developing a label space clusterer" href="clusterer.html"/> 
+        <link rel="next" title="Using the meka wrapper" href="meka.html"/>
+        <link rel="prev" title="Selecting a multi-label classifier" href="classify.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,21 +84,26 @@
           
             
             
-                <ul class="current">
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Estimating parameters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generating-data-for-experimentation">Generating data for experimentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#estimating-hyper-parameter-k-for-mlknn">Estimating hyper-parameter k for MLkNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#estimating-hyper-parameter-k-for-embedded-classifiers">Estimating hyper-parameter k for embedded classifiers</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -144,7 +149,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="estimating-parameters">
-<h1>Estimating parameters<a class="headerlink" href="#estimating-parameters" title="Permalink to this headline">¶</a></h1>
+<span id="model-estimation"></span><h1>Estimating parameters<a class="headerlink" href="#estimating-parameters" title="Permalink to this headline">¶</a></h1>
 <p>Scikit-multilearn allows estimating parameters to select best models for multi-label classification using scikit-learn&#8217;s
 model selection <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">GridSearchCV API</a>.
 In the simplest version it can look for the best parameter of a scikit-multilearn&#8217;s classifier, which we&#8217;ll show on the
@@ -235,10 +240,10 @@ optimizes parameters of three levels of embedded classifiers.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api/modules.html" class="btn btn-neutral float-right" title="skmultilearn" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="meka.html" class="btn btn-neutral float-right" title="Using the meka wrapper" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="clusterer.html" class="btn btn-neutral" title="Developing a label space clusterer" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="classify.html" class="btn btn-neutral" title="Selecting a multi-label classifier" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

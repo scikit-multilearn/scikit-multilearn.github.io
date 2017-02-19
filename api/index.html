@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -145,27 +150,53 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <h2>How do I start?<a class="headerlink" href="#how-do-i-start" title="Permalink to this headline">¶</a></h2>
 <p>If you are new to multi-label classification alltogether, start with the
 <a class="reference internal" href="concepts.html#concepts"><span class="std std-ref">Concepts</span></a> chapter which goes through the concepts and shows where different methods fit.</p>
-<p>If you&#8217;ve already performed multi-label classification, you&#8217;re probably interested in some
-<a class="reference internal" href="classify.html#classify"><span class="std std-ref">examples of how to use scikit-multilearn</span></a> and find out how to: load a data set, learn a classifier and test the results using scikit measures.</p>
-<p>If you came here to use the wrapper around the well known <a class="reference external" href="http://meka.sf.net">meka library</a>, there&#8217;s an example of how to do it in: <a class="reference internal" href="meka.html#mekawrapper"><span class="std std-ref">Using the meka wrapper</span></a>.</p>
+<p>If you&#8217;ve already performed multi-label classification or you&#8217;ve used scikit-learn before, you should:</p>
+<ol class="arabic simple">
+<li>read about <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a> in scikit-multilearn</li>
+<li>learn about <a class="reference internal" href="loading.html#loading"><span class="std std-ref">Loading and generating multi-label datasets</span></a></li>
+<li>start the fun with classification by <a class="reference internal" href="classify.html#classify"><span class="std std-ref">Selecting a multi-label classifier</span></a></li>
+<li>see how you can improve your results by <a class="reference internal" href="model_estimation.html#model-estimation"><span class="std std-ref">Estimating parameters</span></a></li>
+</ol>
+<p>If you came here to use the wrapper around the well known <a class="reference external" href="http://meka.sf.net">meka library</a>, there&#8217;s an example of how to do this in: <a class="reference internal" href="meka.html#mekawrapper"><span class="std std-ref">Using the meka wrapper</span></a>.</p>
 <p>If you are a developer and want to join scikit-multilearn, here you can find out how to:</p>
 <ul class="simple">
 <li><a class="reference internal" href="base.html#implementing-classifier"><span class="std std-ref">implement a classifier</span></a></li>
 <li><a class="reference internal" href="clusterer.html#implementclusterer"><span class="std std-ref">implement a new clusterer for ensemble methods based on label space division</span></a></li>
 </ul>
+<p>Some candidates for implementation are listed in the <a class="reference external" href="http://scikit.ml/#tasks">Junior Jobs section of the website</a> if you&#8217;d like to help.</p>
 <p>If you used previous versions of the library, you might want to <a class="reference internal" href="changes.html#changes"><span class="std std-ref">document goes through the changes</span></a>.</p>
-<p>Contents:</p>
 <div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#loading-from-arff">Loading from ARFF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#scikit-multilearn-data-set-format">Scikit-multilearn data set format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#aim">Aim</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#single-label-vs-multi-label-classification">Single-label vs multi-label classification</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="classify.html#loading-the-data-set">Loading the data set</a></li>
-<li class="toctree-l2"><a class="reference internal" href="classify.html#classifying-input-using-scikit-multilearn">Classifying input using scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#what-does-scikit-multilearn-expect">What does scikit-multilearn expect?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#converting-from-array-of-arrays">Converting from array of arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loading.html#generating-artificial-data">Generating artificial data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading.html#getting-real-world-data-sets">Getting real-world data sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading.html#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading.html#scikit-multilearn-data-set-helpers">Scikit-multilearn data set helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading.html#cross-validation-and-train-test-splits">Cross-validation and train-test splits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classify.html#adapted-algorithms">Adapted algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classify.html#problem-transformation">Problem transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classify.html#ensemble-approaches">Ensemble approaches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classify.html#meka-classifiers">MEKA classifiers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#generating-data-for-experimentation">Generating data for experimentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-mlknn">Estimating hyper-parameter k for MLkNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-embedded-classifiers">Estimating hyper-parameter k for embedded classifiers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a><ul>
@@ -174,10 +205,28 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li class="toctree-l2"><a class="reference internal" href="meka.html#handling-errors">Handling errors</a></li>
 </ul>
 </li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="base.html#scikit-learn-base-classses">Scikit-learn base classses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="base.html#mlclassifierbase">MLClassifierBase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="base.html#selecting-the-base-class">Selecting the base class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="base.html#scikit-learn-base-classses">Scikit-learn base classses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base.html#baseestimator">BaseEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#classifiermixin">ClassifierMixin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="base.html#mlclassifierbase">MLClassifierBase</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base.html#copyable-fields">Copyable fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#the-fit-method">The fit method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#the-predict-method">The predict method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="base.html#selecting-the-base-class">Selecting the base class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base.html#problem-transformation">Problem transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base.html#ensemble-classification">Ensemble classification</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="base.html#unit-testing">Unit testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="base.html#implement-your-classifier-checklist">Implement your classifier checklist</a></li>
 </ul>
@@ -187,18 +236,70 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li class="toctree-l2"><a class="reference internal" href="clusterer.html#label-co-occurence-graph">Label co-occurence graph</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#generating-data-for-experimentation">Generating data for experimentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-mlknn">Estimating hyper-parameter k for MLkNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-embedded-classifiers">Estimating hyper-parameter k for embedded classifiers</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html">skmultilearn package</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changes.html#id1">0.0.1 -&gt; 0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#id1">0.0.1 -&gt; 0.0.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changes.html#sparse-representation">Sparse representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changes.html#meka-is-scikit-compatible">Meka is scikit-compatible</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changes.html#problem-transformations-changed">Problem transformations changed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#machine-learning-module-for-python">Machine learning module for Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.adapt.html">skmultilearn.adapt package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.adapt.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.adapt.html#module-skmultilearn.adapt.brknn">skmultilearn.adapt.brknn module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.adapt.html#module-skmultilearn.adapt.mlknn">skmultilearn.adapt.mlknn module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.base.html">skmultilearn.base package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.base.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.base.html#module-skmultilearn.base.base">skmultilearn.base.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.base.html#module-skmultilearn.base.mock">skmultilearn.base.mock module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.base.html#module-skmultilearn.base.problem_transformation">skmultilearn.base.problem_transformation module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.cluster.html">skmultilearn.cluster package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.cluster.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.cluster.html#module-skmultilearn.cluster.base">skmultilearn.cluster.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.cluster.html#module-skmultilearn.cluster.graphtool">skmultilearn.cluster.graphtool module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.cluster.html#module-skmultilearn.cluster.igraph">skmultilearn.cluster.igraph module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.ensemble.html">skmultilearn.ensemble package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ensemble.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ensemble.html#module-skmultilearn.ensemble.fixed">skmultilearn.ensemble.fixed module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ensemble.html#module-skmultilearn.ensemble.majorityvote">skmultilearn.ensemble.majorityvote module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ensemble.html#module-skmultilearn.ensemble.partition">skmultilearn.ensemble.partition module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ensemble.html#module-skmultilearn.ensemble.rakeld">skmultilearn.ensemble.rakeld module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ensemble.html#module-skmultilearn.ensemble.rakelo">skmultilearn.ensemble.rakelo module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.ext.html">skmultilearn.ext package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ext.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.ext.html#module-skmultilearn.ext.meka">skmultilearn.ext.meka module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.neurofuzzy.html">skmultilearn.neurofuzzy package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.neurofuzzy.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.neurofuzzy.html#module-skmultilearn.neurofuzzy.MLARAMfast">skmultilearn.neurofuzzy.MLARAMfast module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/skmultilearn.problem_transform.html">skmultilearn.problem_transform package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.problem_transform.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.problem_transform.html#module-skmultilearn.problem_transform.br">skmultilearn.problem_transform.br module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.problem_transform.html#module-skmultilearn.problem_transform.cc">skmultilearn.problem_transform.cc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/skmultilearn.problem_transform.html#module-skmultilearn.problem_transform.lp">skmultilearn.problem_transform.lp module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#module-skmultilearn.dataset">skmultilearn.dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#module-skmultilearn.repeat_classifier">skmultilearn.repeat_classifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#module-skmultilearn.utils">skmultilearn.utils module</a></li>
 </ul>
 </li>
 </ul>

@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -138,20 +143,32 @@
            <div itemprop="articleBody">
             
   <h1>Source code for skmultilearn.cluster.base</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">get_matrix_in_format</span>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">get_matrix_in_format</span>
 
 
-<div class="viewcode-block" id="LabelSpaceClustererBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.base.LabelSpaceClustererBase">[docs]</a><span class="k">class</span> <span class="nc">LabelSpaceClustererBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;docstring for LabelSpaceClustererBase&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LabelSpaceClustererBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.LabelSpaceClustererBase">[docs]</a><span class="k">class</span> <span class="nc">LabelSpaceClustererBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract base class for Label Space clustering</span>
+
+<span class="sd">    Implement it in your classifier according to :doc:`../clusterer`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="LabelSpaceClustererBase.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.base.LabelSpaceClustererBase.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="LabelSpaceClustererBase.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.LabelSpaceClustererBase.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Abstract method for clustering label space</span>
+
+<span class="sd">        Implement it in your classifier according to :doc:`../clusterer`.</span>
+
+<span class="sd">        :raises NotImplementedError: this is just an abstract method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;LabelSpaceClustererBase::fit_predict()&quot;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="LabelCooccurenceClustererBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.base.LabelCooccurenceClustererBase">[docs]</a><span class="k">class</span> <span class="nc">LabelCooccurenceClustererBase</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">):</span>
+<div class="viewcode-block" id="LabelCooccurenceClustererBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.LabelCooccurenceClustererBase">[docs]</a><span class="k">class</span> <span class="nc">LabelCooccurenceClustererBase</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class providing API and common functions for all label cooccurence based multi-label classifiers.</span>
 
 <span class="sd">    Parameters</span>
@@ -178,12 +195,14 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Decision about whether to include self edges needs to be a boolean&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.base.LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">generate_coocurence_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This function generates a weighted or unweighted cooccurence graph based on input binary label vectors </span>
+<div class="viewcode-block" id="LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">generate_coocurence_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate adjacency matrix from label matrix</span>
+
+<span class="sd">        This function generates a weighted or unweighted cooccurence graph based on input binary label vectors </span>
 <span class="sd">        and sets it to self.coocurence_graph</span>
 
-<span class="sd">        y : array-like of edges</span>
-<span class="sd">            An array-like of binary label vectors.</span>
+<span class="sd">        :param y: binary indicator matrix with label assignments</span>
+<span class="sd">        :type y: dense or sparse matrix of {0, 1} (n_samples, n_labels)</span>
 
 
 <span class="sd">        Returns</span>
@@ -191,6 +210,7 @@
 
 <span class="sd">        edge_map: dict{ (int, int) : float }</span>
 <span class="sd">            Returns a dict of weights</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">label_data</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;lil&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="n">label_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>

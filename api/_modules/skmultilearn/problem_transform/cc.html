@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -138,21 +143,52 @@
            <div itemprop="articleBody">
             
   <h1>Source code for skmultilearn.problem_transform.cc</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">..base.problem_transformation</span> <span class="k">import</span> <span class="n">ProblemTransformationBase</span>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">..base.problem_transformation</span> <span class="k">import</span> <span class="n">ProblemTransformationBase</span>
 <span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="k">import</span> <span class="n">hstack</span><span class="p">,</span> <span class="n">coo_matrix</span><span class="p">,</span> <span class="n">issparse</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
 
-<div class="viewcode-block" id="ClassifierChain"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.cc.ClassifierChain">[docs]</a><span class="k">class</span> <span class="nc">ClassifierChain</span><span class="p">(</span><span class="n">ProblemTransformationBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Classifier Chains multi-label classifier.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ClassifierChain"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.ClassifierChain">[docs]</a><span class="k">class</span> <span class="nc">ClassifierChain</span><span class="p">(</span><span class="n">ProblemTransformationBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Classifier Chains Multi-Label Classifier.</span>
+
+<span class="sd">    This class provides implementation of Jesse Read&#39;s problem transformation</span>
+<span class="sd">    method called Classifier Chains. For L labels it trains L classifiers</span>
+<span class="sd">    ordered in a chain according to the </span>
+<span class="sd">    `Bayesian chain rule &lt;https://en.wikipedia.org/wiki/Chain_rule_(probability)&gt;`_.</span>
+<span class="sd">    The first classifier is trained just on the input space, and then each next </span>
+<span class="sd">    classifier is trained on the input space and all previous classifiers in the</span>
+<span class="sd">    chain. </span>
+
+<span class="sd">    The default classifier chains follow the same ordering as provided in the</span>
+<span class="sd">    training set, i.e. label in column 0, then 1, etc.</span>
+
+<span class="sd">    You can find more information about this method in Jesse Read&#39;s </span>
+<span class="sd">    `ECML presentation &lt;https://users.ics.aalto.fi/jesse/talks/chains-ECML-2009-presentation.pdf&gt;`_</span>
+<span class="sd">    or `journal paper &lt;http://www.cs.waikato.ac.nz/~eibe/pubs/ccformlc.pdf&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">BRIEFNAME</span> <span class="o">=</span> <span class="s2">&quot;CC&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_dense</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ClassifierChain</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">require_dense</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ClassifierChain.fit"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.cc.ClassifierChain.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="ClassifierChain.fit"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.ClassifierChain.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit classifier with training data</span>
+
+<span class="sd">        Internally this method uses a sparse CSC representation </span>
+<span class="sd">        (:py:class:`scipy.sparse.csc_matrix`) of the X &amp; y matrices.</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_features)</span>
+<span class="sd">        :param y: binary indicator matrix with label assignments</span>
+<span class="sd">        :type y: dense or sparse matrix of {0, 1} (n_samples, n_labels)</span>
+<span class="sd">        :returns: Fitted instance of self</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
         <span class="c1"># fit L = len(y[0]) BR classifiers h_i</span>
         <span class="c1"># on X + y[:i] as input space and y[i+1] as output</span>
         <span class="c1">#</span>
@@ -161,9 +197,9 @@
         <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span>
             <span class="n">y</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">)]</span>
 
-        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">):</span>
             <span class="n">classifier</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">)</span>
             <span class="n">y_subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_data_subset</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -173,11 +209,21 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="ClassifierChain.predict"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.cc.ClassifierChain.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="ClassifierChain.predict"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.ClassifierChain.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
+
+<span class="sd">        Internally this method uses a sparse CSC representation (:py:class:`scipy.sparse.csc_matrix`) of the X matrix.</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_features)</span>
+<span class="sd">        :returns: binary indicator matrix with label assignments</span>
+<span class="sd">        :rtype: sparse matrix of int (n_samples, n_labels)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X_extended</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
             <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">prediction</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">):</span>
             <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X_extended</span><span class="p">))</span>
             <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span>
@@ -186,12 +232,21 @@
 
         <span class="k">return</span> <span class="n">X_extended</span><span class="p">[:,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">:]</span></div>
 
-<div class="viewcode-block" id="ClassifierChain.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.cc.ClassifierChain.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Predict probabilities for labels for `X`, see base method&#39;s documentation.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ClassifierChain.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.ClassifierChain.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
+
+<span class="sd">        Internally this method uses a sparse CSC representation (:py:class:`scipy.sparse.csc_matrix`) of the X matrix.</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_labels)</span>
+<span class="sd">        :returns: matrix with label assignment probabilities</span>
+<span class="sd">        :rtype: sparse matrix of float (n_samples, n_labels)</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X_extended</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">prediction</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">):</span>
             <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X_extended</span><span class="p">))</span>
 

@@ -33,7 +33,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/> 
+    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
+        <link rel="next" title="skmultilearn package" href="api/skmultilearn.html"/>
+        <link rel="prev" title="Developing a label space clusterer" href="clusterer.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,15 +84,19 @@
           
             
             
-                <ul class="current">
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changes from previous releases</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">0.0.1 -&gt; 0.0.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sparse-representation">Sparse representation</a></li>
@@ -100,6 +106,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -145,21 +152,21 @@
            <div itemprop="articleBody">
             
   <div class="section" id="changes-from-previous-releases">
-<h1>Changes from previous releases<a class="headerlink" href="#changes-from-previous-releases" title="Permalink to this headline">¶</a></h1>
-<p>To implement a multi-label classifier you need to subclass <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase()</span></code>. The constructor takes the underlying base classifier and sets it to <code class="docutils literal"><span class="pre">self.classifier</span></code> for future deep copying and access. In order to implement a new classifier you should implement the <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase.fit()</span></code> and <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase.predict()</span></code> methods.</p>
+<span id="changes"></span><h1>Changes from previous releases<a class="headerlink" href="#changes-from-previous-releases" title="Permalink to this headline">¶</a></h1>
+<p>To implement a multi-label classifier you need to subclass <a class="reference internal" href="api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase" title="skmultilearn.base.MLClassifierBase"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase()</span></code></a>. The constructor takes the underlying base classifier and sets it to <code class="docutils literal"><span class="pre">self.classifier</span></code> for future deep copying and access. In order to implement a new classifier you should implement the <a class="reference internal" href="api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase.fit" title="skmultilearn.base.MLClassifierBase.fit"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase.fit()</span></code></a> and <a class="reference internal" href="api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase.predict" title="skmultilearn.base.MLClassifierBase.predict"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase.predict()</span></code></a> methods.</p>
 <div class="section" id="id1">
 <h2>0.0.1 -&gt; 0.0.2<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="sparse-representation">
 <h3>Sparse representation<a class="headerlink" href="#sparse-representation" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">fit(self,</span> <span class="pre">X,</span> <span class="pre">y)</span></code> expects classifier training data represented as an array-like of input feature vectors (rows) <code class="docutils literal"><span class="pre">X</span></code> and an array-like of binary label vectors as described in <span class="xref std std-ref">datasets</span>. It should return <code class="docutils literal"><span class="pre">self</span></code> after the classifier has been fitted to training data.</p>
+<p>The <code class="docutils literal"><span class="pre">fit(self,</span> <span class="pre">X,</span> <span class="pre">y)</span></code> expects classifier training data represented as an array-like of input feature vectors (rows) <code class="docutils literal"><span class="pre">X</span></code> and an array-like of binary label vectors as described in <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a>. It should return <code class="docutils literal"><span class="pre">self</span></code> after the classifier has been fitted to training data.</p>
 </div>
 <div class="section" id="meka-is-scikit-compatible">
 <h3>Meka is scikit-compatible<a class="headerlink" href="#meka-is-scikit-compatible" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">predict(self</span> <span class="pre">,X)</span></code> expects an array-like of input feature vectors (rows) <code class="docutils literal"><span class="pre">X</span></code> that are to be classified. It should return an array-like of binary label vectors as described in <span class="xref std std-ref">datasets</span>.</p>
+<p>The <code class="docutils literal"><span class="pre">predict(self</span> <span class="pre">,X)</span></code> expects an array-like of input feature vectors (rows) <code class="docutils literal"><span class="pre">X</span></code> that are to be classified. It should return an array-like of binary label vectors as described in <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a>.</p>
 </div>
 <div class="section" id="problem-transformations-changed">
 <h3>Problem transformations changed<a class="headerlink" href="#problem-transformations-changed" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">predict(self</span> <span class="pre">,X)</span></code> expects an array-like of input feature vectors (rows) <code class="docutils literal"><span class="pre">X</span></code> that are to be classified. It should return an array-like of binary label vectors as described in <span class="xref std std-ref">datasets</span>.</p>
+<p>The <code class="docutils literal"><span class="pre">predict(self</span> <span class="pre">,X)</span></code> expects an array-like of input feature vectors (rows) <code class="docutils literal"><span class="pre">X</span></code> that are to be classified. It should return an array-like of binary label vectors as described in <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a>.</p>
 </div>
 </div>
 </div>
@@ -168,6 +175,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/skmultilearn.html" class="btn btn-neutral float-right" title="skmultilearn package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clusterer.html" class="btn btn-neutral" title="Developing a label space clusterer" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

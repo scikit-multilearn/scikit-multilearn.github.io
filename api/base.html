@@ -84,11 +84,17 @@
           
             
             
-                <ul class="current">
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Implementing a multi-label classifier</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#scikit-learn-base-classses">Scikit-learn base classses</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#baseestimator">BaseEstimator</a></li>
@@ -111,9 +117,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -159,11 +164,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="implementing-a-multi-label-classifier">
-<h1>Implementing a multi-label classifier<a class="headerlink" href="#implementing-a-multi-label-classifier" title="Permalink to this headline">¶</a></h1>
+<span id="implementing-classifier"></span><h1>Implementing a multi-label classifier<a class="headerlink" href="#implementing-a-multi-label-classifier" title="Permalink to this headline">¶</a></h1>
 <p>To implement a multi-label classifier you need to subclass a classifier base class, Currently you can select of a few classifier base classes depending on which approach to multi-label classification you follow.</p>
 <p>Scikit-multilearn inheritance tree for classiffier is shown on figure below.</p>
 <img alt="_images/inheritance.png" src="_images/inheritance.png" />
-<p>To implement a scikit-learn&#8217;s ecosystem compatible classifier we need to subclass two classes from sklearn.base: BaseEstimator and ClassifierMixin. For that we provide <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase</span></code> base class. We further extend this class with properties specific to the problem transformation approach in multi-label classification in <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.ProblemTransformationBase</span></code>.</p>
+<p>To implement a scikit-learn&#8217;s ecosystem compatible classifier we need to subclass two classes from sklearn.base: BaseEstimator and ClassifierMixin. For that we provide <a class="reference internal" href="api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase" title="skmultilearn.base.MLClassifierBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase</span></code></a> base class. We further extend this class with properties specific to the problem transformation approach in multi-label classification in <a class="reference internal" href="api/skmultilearn.base.html#skmultilearn.base.ProblemTransformationBase" title="skmultilearn.base.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.ProblemTransformationBase</span></code></a>.</p>
 <div class="section" id="scikit-learn-base-classses">
 <h2>Scikit-learn base classses<a class="headerlink" href="#scikit-learn-base-classses" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="baseestimator">
@@ -178,7 +183,7 @@
 </div>
 <div class="section" id="mlclassifierbase">
 <h2>MLClassifierBase<a class="headerlink" href="#mlclassifierbase" title="Permalink to this headline">¶</a></h2>
-<p>The base multi-label classifier in scikit-multilearn is <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase</span></code>. It provides two abstract methods: fit(X, y) to train the classifier and predict(X) to predict labels for a set of samplese. These functions are expected from every classifier. It also provides a default implementation of get_params/set_params that works for multi-label classifiers.</p>
+<p>The base multi-label classifier in scikit-multilearn is <a class="reference internal" href="api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase" title="skmultilearn.base.MLClassifierBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.MLClassifierBase</span></code></a>. It provides two abstract methods: fit(X, y) to train the classifier and predict(X) to predict labels for a set of samplese. These functions are expected from every classifier. It also provides a default implementation of get_params/set_params that works for multi-label classifiers.</p>
 <div class="section" id="copyable-fields">
 <h3>Copyable fields<a class="headerlink" href="#copyable-fields" title="Permalink to this headline">¶</a></h3>
 <p>One of the most important concepts in scikit-learn&#8217;s <code class="docutils literal"><span class="pre">BaseEstimator</span></code>, is the concept of cloning. Scikit-learn provides a plethora of experiment performing methods, among others cross validation, which require the ability to clone a classifier. Scikit-multilearn&#8217;s base multi-label class - <code class="docutils literal"><span class="pre">MLClassifierBase</span></code> - provides infrastructure for automatic cloning support.</p>

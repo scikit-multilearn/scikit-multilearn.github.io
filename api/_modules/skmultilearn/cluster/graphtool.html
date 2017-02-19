@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -139,12 +144,13 @@
             
   <h1>Source code for skmultilearn.cluster.graphtool</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">LabelCooccurenceClustererBase</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">graph_tool.all</span> <span class="k">as</span> <span class="nn">gt</span>
 
 
-<div class="viewcode-block" id="GraphToolCooccurenceClusterer"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer">[docs]</a><span class="k">class</span> <span class="nc">GraphToolCooccurenceClusterer</span><span class="p">(</span><span class="n">LabelCooccurenceClustererBase</span><span class="p">):</span>
+<div class="viewcode-block" id="GraphToolCooccurenceClusterer"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.GraphToolCooccurenceClusterer">[docs]</a><span class="k">class</span> <span class="nc">GraphToolCooccurenceClusterer</span><span class="p">(</span><span class="n">LabelCooccurenceClustererBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Clusters the label space using graph tool&#39;s stochastic block modelling community detection method</span>
 
 <span class="sd">        Parameters</span>
@@ -156,6 +162,10 @@
 <span class="sd">        allow_overlap: boolean</span>
 <span class="sd">                Allow overlapping of clusters or not.</span>
 
+<span class="sd">        include_self_edges : boolean</span>
+<span class="sd">            Decide whether to include self-edge i.e. label 1 - label 1 in co-occurrence graph</span>
+
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_self_edges</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_overlap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -166,26 +176,27 @@
         <span class="k">if</span> <span class="n">allow_overlap</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;allow_overlap needs to be a boolean&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="GraphToolCooccurenceClusterer.generate_coocurence_graph"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer.generate_coocurence_graph">[docs]</a>    <span class="k">def</span> <span class="nf">generate_coocurence_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Constructs a graph tool Graph object representing the label coocurence_graph</span>
+<div class="viewcode-block" id="GraphToolCooccurenceClusterer.generate_coocurence_graph"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.GraphToolCooccurenceClusterer.generate_coocurence_graph">[docs]</a>    <span class="k">def</span> <span class="nf">generate_coocurence_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Constructs the label coocurence graph</span>
 
-<span class="sd">            Run after self.edge_map has been populated using :func:`LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix` on `y` in `fit_predict`.</span>
+<span class="sd">        This function constructs a graph-tool :py:class:`graphtool.Graph` object representing the label cooccurence graph. Run after self.edge_map has been populated using :func:`LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix` on `y` in `fit_predict`.</span>
 
-<span class="sd">            The graph is available as self.coocurence_graph, and a weight `double` graphtool.PropertyMap on edges is set as self.weights.</span>
+<span class="sd">        The graph is available as self.coocurence_graph, and a weight `double` graphtool.PropertyMap on edges is set as self.weights.</span>
 
-<span class="sd">            Edge weights are all 1.0 if self.weighted is false, otherwise they contain the number of samples that are labelled with the two labels present in the edge.</span>
+<span class="sd">        Edge weights are all 1.0 if self.weighted is false, otherwise they contain the number of samples that are labelled with the two labels present in the edge.</span>
 
-<span class="sd">            Returns</span>
-<span class="sd">            -------</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
 
-<span class="sd">            g : graphtool.Graph object representing a label co-occurence graph</span>
+<span class="sd">        g : graphtool.Graph object representing a label co-occurence graph</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">new_edge_property</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">edge</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_map</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">edge</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">e</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_weighted</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight</span>
@@ -196,19 +207,20 @@
 
         <span class="k">return</span> <span class="n">g</span></div>
 
-<div class="viewcode-block" id="GraphToolCooccurenceClusterer.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="GraphToolCooccurenceClusterer.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.GraphToolCooccurenceClusterer.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Performs clustering on y and returns list of label lists</span>
 
-<span class="sd">            Builds a label coocurence_graph using :func:`LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix` on `y` and then detects communities using graph tool&#39;s stochastic block modeling.</span>
+<span class="sd">        Builds a label coocurence_graph using :func:`LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix` on `y` and then detects communities using graph tool&#39;s stochastic block modeling.</span>
 
-<span class="sd">            Parameters</span>
-<span class="sd">            ----------</span>
-<span class="sd">            X : sparse matrix (n_samples, n_features), feature space, not used in this clusterer</span>
-<span class="sd">            y : sparse matrix (n_samples, n_labels), label space</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : sparse matrix (n_samples, n_features), feature space, not used in this clusterer</span>
+<span class="sd">        y : sparse matrix (n_samples, n_labels), label space</span>
 
-<span class="sd">            Returns</span>
-<span class="sd">            -------</span>
-<span class="sd">            partition: list of lists : list of lists label indexes, each sublist represents labels that are in that community</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        partition: list of lists : list of lists label indexes, each sublist represents labels that are in that community</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_coocurence_adjacency_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_coocurence_graph</span><span class="p">()</span>
@@ -217,8 +229,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span><span class="p">)</span> <span class="c1">#, ec=self.weights), broken in graphtool for now</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get_blocks</span><span class="p">()</span><span class="o">.</span><span class="n">a</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">B</span><span class="p">)]</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">B</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span><span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span><span class="p">)</span>

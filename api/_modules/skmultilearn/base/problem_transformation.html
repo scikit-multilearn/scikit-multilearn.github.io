@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -146,16 +151,16 @@
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span>
 
 
-<div class="viewcode-block" id="ProblemTransformationBase"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase">[docs]</a><span class="k">class</span> <span class="nc">ProblemTransformationBase</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
+<div class="viewcode-block" id="ProblemTransformationBase"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.ProblemTransformationBase">[docs]</a><span class="k">class</span> <span class="nc">ProblemTransformationBase</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class providing common functions for multi-label classifiers that follow the problem transformation approach.</span>
 
-<span class="sd">    Problem transformation is the approach in which the original multi-label classification problem     is transformed into one or more single-label problems, which are then solved by single-class or multi-class classifiers.</span>
+<span class="sd">    Problem transformation is the approach in which the original multi-label classification problem is transformed into one or more single-label problems, which are then solved by single-class or multi-class classifiers.</span>
 
 <span class="sd">    Scikit-multilearn provides a number of such methods:</span>
 
-<span class="sd">    - Binary Relevance - which performs a single-label single-class classification for each label and sums the results :class:`BinaryRelevance`</span>
-<span class="sd">    - Classifier Chains - which performs a single-label single-class classification for each label and sums the results :class:`ClassifierChain`</span>
-<span class="sd">    - Label Powerset - which performs a single-label single-class classification for each label and sums the results :class:`LabelPowerset`</span>
+<span class="sd">    - :class:`BinaryRelevance` - which performs a single-label single-class classification for each label and sums the results :class:`BinaryRelevance`</span>
+<span class="sd">    - :class:`ClassifierChains` - which performs a single-label single-class classification for each label and sums the results :class:`ClassifierChain`</span>
+<span class="sd">    - :class:`LabelPowerset` - which performs a single-label single-class classification for each label and sums the results :class:`LabelPowerset`</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

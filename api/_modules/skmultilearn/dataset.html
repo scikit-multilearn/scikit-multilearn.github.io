@@ -83,16 +83,21 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Concepts guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../datasets.html">Datasets: loading data sets for scikit-multilearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../classify.html">Classify your dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../datasets.html">The data format for multi-label classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../loading.html">Loading and generating multi-label datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classify.html">Selecting a multi-label classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../meka.html">Using the meka wrapper</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer&#8217;s Guide</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../model_estimation.html">Estimating parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">skmultilearn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
             
@@ -138,7 +143,10 @@
            <div itemprop="articleBody">
             
   <h1>Source code for skmultilearn.dataset</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">arff</span>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">import</span> <span class="nn">arff</span>
 <span class="kn">import</span> <span class="nn">bz2</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -178,10 +186,8 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 
-<span class="sd">        data: dictionary {&#39;X&#39;: scipy sparse matrix with input_feature_type elements, &#39;y&#39;: scipy sparse matrix of binary (int8) label vectors }</span>
-<span class="sd">            The dictionary containing the data frame, with &#39;X&#39; key storing the input space array-like of input feature vectors</span>
-<span class="sd">            and &#39;y&#39; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1</span>
-<span class="sd">            then the input vector has label no. 5)</span>
+<span class="sd">        X: scipy sparse matrix with ``input_feature_type`` elements,</span>
+<span class="sd">        y: scipy sparse matrix of binary label indicator matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="kc">None</span>
@@ -215,7 +221,7 @@
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Dataset.save_to_arff"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.save_to_arff">[docs]</a>    <span class="k">def</span> <span class="nf">save_to_arff</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;little&quot;</span><span class="p">,</span> <span class="n">save_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method for loading ARFF files as numpy array</span>
+        <span class="sd">&quot;&quot;&quot;Method for dumping data to ARFF files</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -230,23 +236,13 @@
 <span class="sd">            Whether the ARFF file contains labels at the beginning of the attributes list (&quot;big&quot; endianness, MEKA format) </span>
 <span class="sd">            or at the end (&quot;little&quot; endianness, MULAN format)</span>
 
-<span class="sd">        input_feature_type: numpy.type as string</span>
-<span class="sd">            The desire type of the contents of the return &#39;X&#39; array-likes, default &#39;i8&#39;, </span>
-<span class="sd">            should be a numpy type, see http://docs.scipy.org/doc/numpy/user/basics.types.html</span>
-
-<span class="sd">        encode_nominal: boolean</span>
-<span class="sd">            Whether convert categorical data into numeric factors - required for some scikit classifiers that can&#39;t handle non-numeric input featuers.</span>
-
 <span class="sd">        save_sparse: boolean</span>
 <span class="sd">            Whether to read arff file as a sparse file format, liac-arff breaks if sparse reading is enabled for non-sparse ARFFs.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 
-<span class="sd">        data: dictionary {&#39;X&#39;: scipy sparse matrix with input_feature_type elements, &#39;y&#39;: scipy sparse matrix of binary (int8) label vectors }</span>
-<span class="sd">            The dictionary containing the data frame, with &#39;X&#39; key storing the input space array-like of input feature vectors</span>
-<span class="sd">            and &#39;y&#39; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1</span>
-<span class="sd">            then the input vector has label no. 5)</span>
+<span class="sd">        string: the ARFF dump string</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">todok</span><span class="p">()</span>
@@ -256,9 +252,9 @@
         <span class="n">y_prefix</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="n">x_attributes</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;X</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="sa">u</span><span class="s1">&#39;NUMERIC&#39;</span><span class="p">)</span>
-                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
-        <span class="n">y_attributes</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;y</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="p">[</span><span class="n">unicode</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">unicode</span><span class="p">(</span><span class="mi">1</span><span class="p">)])</span>
-                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">y_attributes</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;y</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)])</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
 
         <span class="k">if</span> <span class="n">endian</span> <span class="o">==</span> <span class="s2">&quot;big&quot;</span><span class="p">:</span>
             <span class="n">y_prefix</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -274,15 +270,15 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Endian not in {big, little}&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">save_sparse</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="p">[{}</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[{}</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
-                    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 
-        <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">data</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">x_prefix</span> <span class="o">+</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
 
-        <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">data</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">y_prefix</span> <span class="o">+</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
 
         <span class="n">dataset</span> <span class="o">=</span> <span class="p">{</span>
