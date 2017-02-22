@@ -170,34 +170,6 @@
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">makedirs</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
 
-
-<span class="c1"># borrowing this from scikit-learn</span>
-<div class="viewcode-block" id="get_data_home"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.get_data_home">[docs]</a><span class="k">def</span> <span class="nf">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return the path of the scikit-learn data dir.</span>
-<span class="sd">    This folder is used by some large dataset loaders to avoid</span>
-<span class="sd">    downloading the data several times.</span>
-<span class="sd">    By default the data dir is set to a folder named &#39;scikit_learn_data&#39;</span>
-<span class="sd">    in the user home folder.</span>
-<span class="sd">    Alternatively, it can be set by the &#39;SCIKIT_LEARN_DATA&#39; environment</span>
-<span class="sd">    variable or programmatically by giving an explicit folder path. The</span>
-<span class="sd">    &#39;~&#39; symbol is expanded to the user home folder.</span>
-<span class="sd">    If the folder does not already exist, it is automatically created.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">data_home</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">data_home</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SCIKIT_ML_LEARN_DATA&#39;</span><span class="p">,</span>
-                                <span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;scikit_ml_learn_data&#39;</span><span class="p">))</span>
-    <span class="n">data_home</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">data_home</span><span class="p">):</span>
-        <span class="n">makedirs</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">data_home</span></div>
-
-
-<div class="viewcode-block" id="clear_data_home"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.clear_data_home">[docs]</a><span class="k">def</span> <span class="nf">clear_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Delete all the content of the data home cache.&quot;&quot;&quot;</span>
-    <span class="n">data_home</span> <span class="o">=</span> <span class="n">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
-    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="nd">@classmethod</span>

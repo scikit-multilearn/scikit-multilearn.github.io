@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -96,6 +98,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#meka-classifiers">MEKA classifiers</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -103,7 +108,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
@@ -158,8 +163,8 @@
 </ul>
 <p>This section assumes that you have prepared a data set for classification and:</p>
 <ul class="simple">
-<li><cite>x_train</cite>, <cite>x_test</cite> variables contain input feature train and test matrices</li>
-<li><cite>y_train</cite>, <cite>y_test</cite> variables contain output label train and test matrices</li>
+<li><code class="docutils literal"><span class="pre">x_train</span></code>, <code class="docutils literal"><span class="pre">x_test</span></code> variables contain input feature train and test matrices</li>
+<li><code class="docutils literal"><span class="pre">y_train</span></code>, <code class="docutils literal"><span class="pre">y_test</span></code> variables contain output label train and test matrices</li>
 </ul>
 <p>As we noted in <a class="reference internal" href="concepts.html#concepts"><span class="std std-ref">Concepts guide</span></a> multi-label classification can be performed under three approaches:</p>
 <ul class="simple">
@@ -207,7 +212,7 @@
 <p>Problem transformation classifiers take two arguments:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">classifier</span></code> - an instance of a base classifier object, to be cloned and refitted upon the multi-label classifiers <code class="docutils literal"><span class="pre">fit</span></code> stage</li>
-<li><code class="docutils literal"><span class="pre">require_dense</span></code> - a <code class="docutils literal"><span class="pre">[boolean,</span> <span class="pre">boolean]</span></code> parameter explained in <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a></li>
+<li><code class="docutils literal"><span class="pre">require_dense</span></code> - a <code class="docutils literal"><span class="pre">[boolean,</span> <span class="pre">boolean]</span></code> governing whether the base classifier receives dense or sparse arguments. It is explained in detail in <a class="reference internal" href="datasets.html#datasets"><span class="std std-ref">The data format for multi-label classification</span></a></li>
 </ul>
 <p>An example of a Label Powerset transformation from multi-label classification to a single-label multi-class problem to be solved using a Gaussian Naive Bayes classifier:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
@@ -241,7 +246,6 @@
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As described in <code class="xref py py-class docutils literal"><span class="pre">ProblemTransformationBase</span></code>, the <code class="docutils literal"><span class="pre">requires_dense</span></code> parameter can be used to make scikit-multilearn pass sparse representations of data down to scikit-learn (only a few classifiers support this). While <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> uses sparse matrices everywhere, <code class="docutils literal"><span class="pre">scikit-learn</span></code> is still in transition - to enable this (and a large speed up) use the following example.</p>
 </div>
 <div class="section" id="ensemble-approaches">
 <h2>Ensemble approaches<a class="headerlink" href="#ensemble-approaches" title="Permalink to this headline">¶</a></h2>
@@ -266,12 +270,12 @@
 <span class="n">problem_transform_classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">base_classifier</span><span class="p">,</span>
     <span class="n">require_dense</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">])</span>
 
-<span class="c1"># setup the label space cluster using fastgreedy community detection</span>
+<span class="c1"># partition the label space using fastgreedy community detection</span>
 <span class="c1"># on a weighted label co-occurrence graph with self-loops allowed</span>
 <span class="n">clusterer</span> <span class="o">=</span> <span class="n">IGraphLabelCooccurenceClusterer</span><span class="p">(</span><span class="s1">&#39;fastgreedy&#39;</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
     <span class="n">include_self_edges</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="c1"># setup ensemble classifier</span>
+<span class="c1"># setup the ensemble metaclassifier</span>
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span><span class="n">problem_transform_classifier</span><span class="p">,</span> <span class="n">clusterer</span><span class="p">)</span>
 
 <span class="c1"># train</span>
