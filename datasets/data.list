@@ -43,9 +43,9 @@ b2c69f099486b0f39ed8630f20eba2d5;rcv1subset5-train.scikitml.bz2
 627fad77dd17b7b236b6561c18457e5e;scene.scikitml.bz2
 7e03886ed1c8a49cdb552c89ecb7185f;scene-test.scikitml.bz2
 49a1866da9a56125dd32fc3ce0eeacf9;scene-train.scikitml.bz2
-963b8594395f5c0eec128b029dd2035a;tmc2007-500.scikitml.bz2
-1a17737bfe8cb24a9a8b487a443e68f2;tmc2007-500-test.scikitml.bz2
-93d50cff83fecade6991b2882ced553a;tmc2007-500-train.scikitml.bz2
+963b8594395f5c0eec128b029dd2035a;tmc2007_500.scikitml.bz2
+1a17737bfe8cb24a9a8b487a443e68f2;tmc2007_500-test.scikitml.bz2
+93d50cff83fecade6991b2882ced553a;tmc2007_500-train.scikitml.bz2
 81996c76ec858ae4343f6f33ea1f0504;yeast.scikitml.bz2
 d868f6ea5f0c2b78a96477c6722fee13;yeast-test.scikitml.bz2
 90be9e0e636b624269794865e82c2667;yeast-train.scikitml.bz2
