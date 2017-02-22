@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -89,6 +91,9 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -96,7 +101,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
@@ -164,7 +169,6 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li><a class="reference internal" href="clusterer.html#implementclusterer"><span class="std std-ref">implement a new clusterer for ensemble methods based on label space division</span></a></li>
 </ul>
 <p>Some candidates for implementation are listed in the <a class="reference external" href="http://scikit.ml/#tasks">Junior Jobs section of the website</a> if you&#8217;d like to help.</p>
-<p>If you used previous versions of the library, you might want to <a class="reference internal" href="changes.html#changes"><span class="std std-ref">document goes through the changes</span></a>.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
@@ -174,14 +178,17 @@ is built on top of the well-known <a class="reference external" href="http://sci
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets.html#what-does-scikit-multilearn-expect">What does scikit-multilearn expect?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#the-multi-label-data-representation">The multi-label data representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#single-label-representations-in-problem-transfortion">Single-label representations in problem transfortion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets.html#converting-from-array-of-arrays">Converting from array of arrays</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="loading.html#generating-artificial-data">Generating artificial data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="loading.html#getting-real-world-data-sets">Getting real-world data sets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="loading.html#loading-from-arff">Loading from ARFF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading.html#getting-real-world-data-sets">Getting real-world data sets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading.html#loading-from-arff">Loading from ARFF</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="loading.html#scikit-multilearn-data-set-helpers">Scikit-multilearn data set helpers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loading.html#cross-validation-and-train-test-splits">Cross-validation and train-test splits</a></li>
 </ul>
@@ -193,6 +200,11 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li class="toctree-l2"><a class="reference internal" href="classify.html#meka-classifiers">MEKA classifiers</a></li>
 </ul>
 </li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="model_estimation.html#generating-data-for-experimentation">Generating data for experimentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model_estimation.html#estimating-hyper-parameter-k-for-mlknn">Estimating hyper-parameter k for MLkNN</a></li>
@@ -236,15 +248,7 @@ is built on top of the well-known <a class="reference external" href="http://sci
 <li class="toctree-l2"><a class="reference internal" href="clusterer.html#label-co-occurence-graph">Label co-occurence graph</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changes.html#id1">0.0.1 -&gt; 0.0.2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="changes.html#sparse-representation">Sparse representation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="changes.html#meka-is-scikit-compatible">Meka is scikit-compatible</a></li>
-<li class="toctree-l3"><a class="reference internal" href="changes.html#problem-transformations-changed">Problem transformations changed</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#machine-learning-module-for-python">Machine learning module for Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/skmultilearn.html#subpackages">Subpackages</a><ul>

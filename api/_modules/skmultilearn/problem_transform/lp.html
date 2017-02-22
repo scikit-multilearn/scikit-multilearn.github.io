@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -89,6 +91,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -96,7 +101,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
@@ -206,6 +211,8 @@
                 <span class="n">last_id</span> <span class="o">+=</span> <span class="mi">1</span>
 
             <span class="n">train_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_combinations</span><span class="p">[</span><span class="n">label_string</span><span class="p">])</span>
+
+        <span class="n">train_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_vector</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">train_vector</span><span class="p">)</span>
 

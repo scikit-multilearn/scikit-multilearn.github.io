@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -91,6 +93,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -98,7 +103,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="skmultilearn.html">API documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.html#machine-learning-module-for-python">Machine learning module for Python</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="skmultilearn.html#subpackages">Subpackages</a><ul class="current">
@@ -237,14 +242,14 @@ possible - without cloning.</p>
 
 <dl class="method">
 <dt id="skmultilearn.base.MLClassifierBase.ensure_output_format">
-<code class="descname">ensure_output_format</code><span class="sig-paren">(</span><em>y</em>, <em>sparse_format='csr'</em>, <em>enforce_sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/base.html#MLClassifierBase.ensure_output_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.MLClassifierBase.ensure_output_format" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ensure_output_format</code><span class="sig-paren">(</span><em>matrix</em>, <em>sparse_format='csr'</em>, <em>enforce_sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/base.html#MLClassifierBase.ensure_output_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.MLClassifierBase.ensure_output_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ensure the desired output format</p>
 <p>This function ensures that output format follows the density/sparsity requirements of base classifier.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>y</strong> : array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>matrix</strong> : array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
 <blockquote>
 <div><p>An input feature matrix</p>
 </div></blockquote>
@@ -258,7 +263,7 @@ possible - without cloning.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transformed y: array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transformed matrix: array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
 <blockquote class="last">
 <div><p>If require_dense was set to True for input features in the constructor, 
 the returned value is an array-like of array-likes. If require_dense is 
@@ -419,6 +424,12 @@ also holds the parameters of the parameters.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="skmultilearn.base.ProblemTransformationBase.ensure_multi_label_from_single_class">
+<code class="descname">ensure_multi_label_from_single_class</code><span class="sig-paren">(</span><em>matrix</em>, <em>matrix_format='csr'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/problem_transformation.html#ProblemTransformationBase.ensure_multi_label_from_single_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.ProblemTransformationBase.ensure_multi_label_from_single_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform single class outputs to a 2D sparse matrix</p>
+</dd></dl>
+
 </dd></dl>
 
 <div class="section" id="submodules">
@@ -485,14 +496,14 @@ possible - without cloning.</p>
 
 <dl class="method">
 <dt id="skmultilearn.base.base.MLClassifierBase.ensure_output_format">
-<code class="descname">ensure_output_format</code><span class="sig-paren">(</span><em>y</em>, <em>sparse_format='csr'</em>, <em>enforce_sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/base.html#MLClassifierBase.ensure_output_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.base.MLClassifierBase.ensure_output_format" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ensure_output_format</code><span class="sig-paren">(</span><em>matrix</em>, <em>sparse_format='csr'</em>, <em>enforce_sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/base.html#MLClassifierBase.ensure_output_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.base.MLClassifierBase.ensure_output_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ensure the desired output format</p>
 <p>This function ensures that output format follows the density/sparsity requirements of base classifier.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>y</strong> : array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>matrix</strong> : array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
 <blockquote>
 <div><p>An input feature matrix</p>
 </div></blockquote>
@@ -506,7 +517,7 @@ possible - without cloning.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transformed y: array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transformed matrix: array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]</p>
 <blockquote class="last">
 <div><p>If require_dense was set to True for input features in the constructor, 
 the returned value is an array-like of array-likes. If require_dense is 
@@ -690,6 +701,12 @@ also holds the parameters of the parameters.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="skmultilearn.base.problem_transformation.ProblemTransformationBase.ensure_multi_label_from_single_class">
+<code class="descname">ensure_multi_label_from_single_class</code><span class="sig-paren">(</span><em>matrix</em>, <em>matrix_format='csr'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/base/problem_transformation.html#ProblemTransformationBase.ensure_multi_label_from_single_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.base.problem_transformation.ProblemTransformationBase.ensure_multi_label_from_single_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform single class outputs to a 2D sparse matrix</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>

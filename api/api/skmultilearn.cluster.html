@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -91,6 +93,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -98,7 +103,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="skmultilearn.html">API documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.html#machine-learning-module-for-python">Machine learning module for Python</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="skmultilearn.html#subpackages">Subpackages</a><ul class="current">
@@ -259,8 +264,32 @@ and sets it to self.coocurence_graph</p>
 <div><p>Allow overlapping of clusters or not.</p>
 </div></blockquote>
 <p><strong>include_self_edges</strong> : boolean</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Decide whether to include self-edge i.e. label 1 - label 1 in co-occurrence graph</p>
+</div></blockquote>
+<p><strong>n_iters</strong> : int</p>
+<blockquote>
+<div><p>Number of iterations to perform in sweeping</p>
+</div></blockquote>
+<p><strong>n_init_iters: int</strong></p>
+<blockquote>
+<div><p>Number of iterations to perform</p>
+</div></blockquote>
+<p><strong>collect_community_statistics: bool</strong></p>
+<blockquote>
+<div><p>Whether to collect statistics related to detected community</p>
+</div></blockquote>
+<p><strong>use_degree_corr: &#8216;auto&#8217; or bool</strong></p>
+<blockquote>
+<div><p>Whether to use a degree correlated stochastic blockmodel, or not - if auto, it is selected based on selection criterium</p>
+</div></blockquote>
+<p><strong>model_selection_criterium: &#8216;mean_field&#8217; or &#8216;bethe&#8217;</strong></p>
+<blockquote>
+<div><p>Approach to use in case</p>
+</div></blockquote>
+<p><strong>verbose: bool</strong></p>
+<blockquote class="last">
+<div><p>Be verbose about the output</p>
 </div></blockquote>
 </td>
 </tr>
@@ -302,6 +331,11 @@ and sets it to self.coocurence_graph</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.cluster.GraphToolCooccurenceClusterer.predict_communities">
+<code class="descname">predict_communities</code><span class="sig-paren">(</span><em>deg_corr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#GraphToolCooccurenceClusterer.predict_communities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.GraphToolCooccurenceClusterer.predict_communities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -452,8 +486,32 @@ and sets it to self.coocurence_graph</p>
 <div><p>Allow overlapping of clusters or not.</p>
 </div></blockquote>
 <p><strong>include_self_edges</strong> : boolean</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Decide whether to include self-edge i.e. label 1 - label 1 in co-occurrence graph</p>
+</div></blockquote>
+<p><strong>n_iters</strong> : int</p>
+<blockquote>
+<div><p>Number of iterations to perform in sweeping</p>
+</div></blockquote>
+<p><strong>n_init_iters: int</strong></p>
+<blockquote>
+<div><p>Number of iterations to perform</p>
+</div></blockquote>
+<p><strong>collect_community_statistics: bool</strong></p>
+<blockquote>
+<div><p>Whether to collect statistics related to detected community</p>
+</div></blockquote>
+<p><strong>use_degree_corr: &#8216;auto&#8217; or bool</strong></p>
+<blockquote>
+<div><p>Whether to use a degree correlated stochastic blockmodel, or not - if auto, it is selected based on selection criterium</p>
+</div></blockquote>
+<p><strong>model_selection_criterium: &#8216;mean_field&#8217; or &#8216;bethe&#8217;</strong></p>
+<blockquote>
+<div><p>Approach to use in case</p>
+</div></blockquote>
+<p><strong>verbose: bool</strong></p>
+<blockquote class="last">
+<div><p>Be verbose about the output</p>
 </div></blockquote>
 </td>
 </tr>
@@ -495,6 +553,11 @@ and sets it to self.coocurence_graph</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer.predict_communities">
+<code class="descname">predict_communities</code><span class="sig-paren">(</span><em>deg_corr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#GraphToolCooccurenceClusterer.predict_communities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer.predict_communities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

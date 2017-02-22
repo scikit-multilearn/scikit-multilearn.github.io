@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -89,6 +91,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -96,7 +101,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
@@ -241,7 +246,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span><span class="n">sparse_format</span><span class="p">)(</span><span class="n">X</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MLClassifierBase.ensure_output_format"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase.ensure_output_format">[docs]</a>    <span class="k">def</span> <span class="nf">ensure_output_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="MLClassifierBase.ensure_output_format"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase.ensure_output_format">[docs]</a>    <span class="k">def</span> <span class="nf">ensure_output_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Ensure the desired output format</span>
 
 <span class="sd">        This function ensures that output format follows the density/sparsity requirements of base classifier. </span>
@@ -249,7 +254,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 
-<span class="sd">        y : array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]  </span>
+<span class="sd">        matrix : array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]  </span>
 <span class="sd">            An input feature matrix</span>
 
 <span class="sd">        sparse_format: string</span>
@@ -261,34 +266,34 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 
-<span class="sd">        transformed y: array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]  </span>
+<span class="sd">        transformed matrix: array-like with shape = [n_samples] or [n_samples, n_outputs]; or sparse matrix, shape = [n_samples, n_outputs]  </span>
 <span class="sd">            If require_dense was set to True for input features in the constructor, </span>
 <span class="sd">            the returned value is an array-like of array-likes. If require_dense is </span>
 <span class="sd">            set to False, a sparse matrix of format sparse_format is returned, if </span>
 <span class="sd">            possible - without cloning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">is_sparse</span> <span class="o">=</span> <span class="n">issparse</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">is_sparse</span> <span class="o">=</span> <span class="n">issparse</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">is_sparse</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enforce_sparse</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-                <span class="k">elif</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">sparse_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">y</span>
+                    <span class="k">return</span> <span class="n">matrix</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enforce_sparse</span><span class="p">:</span>
                 <span class="c1"># ensuring 1d</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">y</span>
+                    <span class="k">return</span> <span class="n">matrix</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span><span class="n">sparse_format</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span></div>
+                <span class="k">return</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span><span class="n">sparse_format</span><span class="p">)(</span><span class="n">matrix</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MLClassifierBase.fit"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.MLClassifierBase.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Abstract method to fit classifier with training data</span>

@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -89,6 +91,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -96,7 +101,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/skmultilearn.html">API documentation</a></li>
 </ul>
 
@@ -150,14 +155,53 @@
 <span class="kn">import</span> <span class="nn">bz2</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">environ</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">dirname</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">exists</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">expanduser</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">splitext</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">makedirs</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
+
+
+<span class="c1"># borrowing this from scikit-learn</span>
+<div class="viewcode-block" id="get_data_home"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.get_data_home">[docs]</a><span class="k">def</span> <span class="nf">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the path of the scikit-learn data dir.</span>
+<span class="sd">    This folder is used by some large dataset loaders to avoid</span>
+<span class="sd">    downloading the data several times.</span>
+<span class="sd">    By default the data dir is set to a folder named &#39;scikit_learn_data&#39;</span>
+<span class="sd">    in the user home folder.</span>
+<span class="sd">    Alternatively, it can be set by the &#39;SCIKIT_LEARN_DATA&#39; environment</span>
+<span class="sd">    variable or programmatically by giving an explicit folder path. The</span>
+<span class="sd">    &#39;~&#39; symbol is expanded to the user home folder.</span>
+<span class="sd">    If the folder does not already exist, it is automatically created.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data_home</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_home</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SCIKIT_ML_LEARN_DATA&#39;</span><span class="p">,</span>
+                                <span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;scikit_ml_learn_data&#39;</span><span class="p">))</span>
+    <span class="n">data_home</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">data_home</span><span class="p">):</span>
+        <span class="n">makedirs</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_home</span></div>
+
+
+<div class="viewcode-block" id="clear_data_home"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.clear_data_home">[docs]</a><span class="k">def</span> <span class="nf">clear_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Delete all the content of the data home cache.&quot;&quot;&quot;</span>
+    <span class="n">data_home</span> <span class="o">=</span> <span class="n">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Dataset.load_arff_to_numpy"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.load_arff_to_numpy">[docs]</a>    <span class="k">def</span> <span class="nf">load_arff_to_numpy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">labelcount</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">input_feature_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">encode_nominal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">load_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Dataset.load_arff_to_numpy"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.load_arff_to_numpy">[docs]</a>    <span class="k">def</span> <span class="nf">load_arff_to_numpy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">labelcount</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">input_feature_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">encode_nominal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">load_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_attribute_definitions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for loading ARFF files as numpy array</span>
 
 <span class="sd">        Parameters</span>
@@ -170,11 +214,11 @@
 <span class="sd">            Number of labels in the ARFF file</span>
 
 <span class="sd">        endian: string{&quot;big&quot;, &quot;little&quot;}</span>
-<span class="sd">            Whether the ARFF file contains labels at the beginning of the attributes list (&quot;big&quot; endianness, MEKA format) </span>
+<span class="sd">            Whether the ARFF file contains labels at the beginning of the attributes list (&quot;big&quot; endianness, MEKA format)</span>
 <span class="sd">            or at the end (&quot;little&quot; endianness, MULAN format)</span>
 
 <span class="sd">        input_feature_type: numpy.type as string</span>
-<span class="sd">            The desire type of the contents of the return &#39;X&#39; array-likes, default &#39;i8&#39;, </span>
+<span class="sd">            The desire type of the contents of the return &#39;X&#39; array-likes, default &#39;i8&#39;,</span>
 <span class="sd">            should be a numpy type, see http://docs.scipy.org/doc/numpy/user/basics.types.html</span>
 
 <span class="sd">        encode_nominal: boolean</span>
@@ -217,7 +261,10 @@
             <span class="c1"># unknown endian</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div>
+        <span class="k">if</span> <span class="n">return_attribute_definitions</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Dataset.save_to_arff"><a class="viewcode-back" href="../../api/skmultilearn.html#skmultilearn.dataset.Dataset.save_to_arff">[docs]</a>    <span class="k">def</span> <span class="nf">save_to_arff</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;little&quot;</span><span class="p">,</span> <span class="n">save_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -233,7 +280,7 @@
 <span class="sd">            Number of labels in the ARFF file</span>
 
 <span class="sd">        endian: string{&quot;big&quot;, &quot;little&quot;}</span>
-<span class="sd">            Whether the ARFF file contains labels at the beginning of the attributes list (&quot;big&quot; endianness, MEKA format) </span>
+<span class="sd">            Whether the ARFF file contains labels at the beginning of the attributes list (&quot;big&quot; endianness, MEKA format)</span>
 <span class="sd">            or at the end (&quot;little&quot; endianness, MULAN format)</span>
 
 <span class="sd">        save_sparse: boolean</span>
@@ -329,7 +376,7 @@
 <span class="sd">        data: dictionary {&#39;X&#39;: array-like of array-likes, &#39;y&#39;: array-like of binary label vectors }</span>
 <span class="sd">            The dictionary containing the data frame, with &#39;X&#39; key storing the input space array-like of input feature vectors</span>
 <span class="sd">            and &#39;y&#39; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1</span>
-<span class="sd">            then the input vector has label no. 5) </span>
+<span class="sd">            then the input vector has label no. 5)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
@@ -340,7 +387,7 @@
         <span class="k">with</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">data</span></div></div>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div></div>
 </pre></div>
 
            </div>

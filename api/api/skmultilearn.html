@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -35,7 +37,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
         <link rel="next" title="skmultilearn.adapt package" href="skmultilearn.adapt.html"/>
-        <link rel="prev" title="Changes from previous releases" href="../changes.html"/> 
+        <link rel="prev" title="Developing a label space clusterer" href="../clusterer.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -90,6 +92,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -97,7 +102,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#machine-learning-module-for-python">Machine learning module for Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
@@ -236,7 +241,7 @@ See <a class="reference external" href="http://scikit-learn.org">http://scikit-l
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
 <dl class="classmethod">
 <dt id="skmultilearn.dataset.Dataset.load_arff_to_numpy">
-<em class="property">classmethod </em><code class="descname">load_arff_to_numpy</code><span class="sig-paren">(</span><em>filename</em>, <em>labelcount</em>, <em>endian='big'</em>, <em>input_feature_type='float'</em>, <em>encode_nominal=True</em>, <em>load_sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_arff_to_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">load_arff_to_numpy</code><span class="sig-paren">(</span><em>filename</em>, <em>labelcount</em>, <em>endian='big'</em>, <em>input_feature_type='float'</em>, <em>encode_nominal=True</em>, <em>load_sparse=False</em>, <em>return_attribute_definitions=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_arff_to_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for loading ARFF files as numpy array</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -252,12 +257,12 @@ See <a class="reference external" href="http://scikit-learn.org">http://scikit-l
 </div></blockquote>
 <p><strong>endian: string{&#8220;big&#8221;, &#8220;little&#8221;}</strong></p>
 <blockquote>
-<div><p>Whether the ARFF file contains labels at the beginning of the attributes list (&#8220;big&#8221; endianness, MEKA format) 
+<div><p>Whether the ARFF file contains labels at the beginning of the attributes list (&#8220;big&#8221; endianness, MEKA format)
 or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
 </div></blockquote>
 <p><strong>input_feature_type: numpy.type as string</strong></p>
 <blockquote>
-<div><p>The desire type of the contents of the return &#8216;X&#8217; array-likes, default &#8216;i8&#8217;, 
+<div><p>The desire type of the contents of the return &#8216;X&#8217; array-likes, default &#8216;i8&#8217;,
 should be a numpy type, see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">http://docs.scipy.org/doc/numpy/user/basics.types.html</a></p>
 </div></blockquote>
 <p><strong>encode_nominal: boolean</strong></p>
@@ -349,7 +354,7 @@ then the input vector has label no. 5)</p>
 </div></blockquote>
 <p><strong>endian: string{&#8220;big&#8221;, &#8220;little&#8221;}</strong></p>
 <blockquote>
-<div><p>Whether the ARFF file contains labels at the beginning of the attributes list (&#8220;big&#8221; endianness, MEKA format) 
+<div><p>Whether the ARFF file contains labels at the beginning of the attributes list (&#8220;big&#8221; endianness, MEKA format)
 or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
 </div></blockquote>
 <p><strong>save_sparse: boolean</strong></p>
@@ -365,6 +370,26 @@ or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
 </table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.clear_data_home">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">clear_data_home</code><span class="sig-paren">(</span><em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#clear_data_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.clear_data_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all the content of the data home cache.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.get_data_home">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">get_data_home</code><span class="sig-paren">(</span><em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#get_data_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.get_data_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the path of the scikit-learn data dir.
+This folder is used by some large dataset loaders to avoid
+downloading the data several times.
+By default the data dir is set to a folder named &#8216;scikit_learn_data&#8217;
+in the user home folder.
+Alternatively, it can be set by the &#8216;SCIKIT_LEARN_DATA&#8217; environment
+variable or programmatically by giving an explicit folder path. The
+&#8216;~&#8217; symbol is expanded to the user home folder.
+If the folder does not already exist, it is automatically created.</p>
 </dd></dl>
 
 </div>
@@ -413,7 +438,7 @@ or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
         <a href="skmultilearn.adapt.html" class="btn btn-neutral float-right" title="skmultilearn.adapt package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../changes.html" class="btn btn-neutral" title="Changes from previous releases" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../clusterer.html" class="btn btn-neutral" title="Developing a label space clusterer" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

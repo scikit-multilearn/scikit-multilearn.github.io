@@ -28,6 +28,8 @@
   
 
   
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
@@ -94,6 +96,9 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">The data format for multi-label classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="loading.html">Loading and generating multi-label datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classify.html">Selecting a multi-label classifier</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="model_estimation.html">Estimating parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meka.html">Using the meka wrapper</a></li>
 </ul>
@@ -101,7 +106,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">Implementing a multi-label classifier</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterer.html">Developing a label space clusterer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes from previous releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/scikit-multilearn/scikit-multilearn/blob/master/CHANGES.md">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/skmultilearn.html">API documentation</a></li>
 </ul>
 
@@ -153,26 +158,26 @@
 <div class="section" id="aim">
 <h2>Aim<a class="headerlink" href="#aim" title="Permalink to this headline">¶</a></h2>
 <p>Classification aims to assign classes/labels to objects. Objects usually represent things we come across in daily life: photos, audio recordings, text documents, videos, but can also include complicated biological systems.</p>
-<p>Objects are usually represented by their selected features (its count denoted as <cite>n_features</cite> in the documentation). Features are the characteristics of objects that distinguish them from others. For example text documents can be represented by words that are present in them.</p>
+<p>Objects are usually represented by their selected features (its count denoted as <code class="docutils literal"><span class="pre">n_features</span></code> in the documentation). Features are the characteristics of objects that distinguish them from others. For example text documents can be represented by words that are present in them.</p>
 <p>The output of classification for a given object is either a class or a set of classes. Traditional classification, usually due to computational limits, aimed at solving only single-label scenarios in which at most one class had been assigned to an object.</p>
 </div>
 <div class="section" id="single-label-vs-multi-label-classification">
 <h2>Single-label vs multi-label classification<a class="headerlink" href="#single-label-vs-multi-label-classification" title="Permalink to this headline">¶</a></h2>
 <p>One can identify two types of single-label classification problems:</p>
 <ul class="simple">
-<li>a single-class one, where the decision is whether to assign the class or not, for ex. having a photo sample from someones pancreas, deciding if it is a photo of cancer sample or not. This is also sometimes called binary classification, as the output values of the predictions are always <cite>0</cite> or <cite>1</cite></li>
+<li>a single-class one, where the decision is whether to assign the class or not, for ex. having a photo sample from someones pancreas, deciding if it is a photo of cancer sample or not. This is also sometimes called binary classification, as the output values of the predictions are always <code class="docutils literal"><span class="pre">0</span></code> or <code class="docutils literal"><span class="pre">1</span></code></li>
 <li>a multi-class problem where the class, if assigned, is selected from a number of available classes: for example, assigning a brand to a photo of a car</li>
 </ul>
 <p>In multi-label classification one can assign more than one label/class out of the available <cite>n_labels</cite> to a given object.</p>
-<p><cite>Madjarov et al. &lt;http://kt.ijs.si/DragiKocev/wikipage/lib/exe/fetch.php?media=2012pr_ml_comparison.pdf&gt;</cite> divide approaches to multi-label classification into three categories, you should select a scikit-multilearn base class according to the philosophy behind your classifier:</p>
+<p><a class="reference external" href="http://kt.ijs.si/DragiKocev/wikipage/lib/exe/fetch.php?media=2012pr_ml_comparison.pdf">Madjarov et al.</a> divide approaches to multi-label classification into three categories, you should select a scikit-multilearn base class according to the philosophy behind your classifier:</p>
 <ul class="simple">
 <li>algorithm adaptation, currently none in <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> in the future they will be placed in <code class="docutils literal"><span class="pre">skmultilearn.adapt</span></code></li>
 <li>problem transformation, such as Binary Relevance, Label Powerset &amp; more, are now available from <code class="docutils literal"><span class="pre">skmultilearn.problem_transformation</span></code></li>
 <li>ensemble classification, such as <code class="docutils literal"><span class="pre">RAkEL</span></code> or label space partitioning classifiers, are now available from <code class="docutils literal"><span class="pre">skmultilearn.ensemble</span></code></li>
 </ul>
-<p>A single-label classifier is a function that given an object represented as a feature vector of length <cite>n_features</cite> assigns a class (a number, or None). A multi-label classifier outputs a set of assigned labels, either in a form of a list of numbers or as a binary indicator vector.</p>
-<p>To learn a classifier we use a training set that provides <cite>n_samples</cite> of sampled objects with their labels. To perform multi-label classification we need a training set.</p>
-<p>In the next section you will learn about the data format scikit-multilearn expects.</p>
+<p>A single-label classifier is a function that given an object represented as a feature vector of length <code class="docutils literal"><span class="pre">n_features</span></code> assigns a class (a number, or None). A multi-label classifier outputs a set of assigned labels, either in a form of a list of assigned labels or as a binary vector in which a <code class="docutils literal"><span class="pre">1</span></code> or <code class="docutils literal"><span class="pre">0</span></code> on <code class="docutils literal"><span class="pre">i</span></code>-th position indicates if an <code class="docutils literal"><span class="pre">i</span></code>-th label is assigned or not.</p>
+<p>To learn a classifier we use a training set that provides <code class="docutils literal"><span class="pre">n_samples</span></code> of sampled objects represented by <code class="docutils literal"><span class="pre">n_features</span></code> with evidence concerning which labels out of <code class="docutils literal"><span class="pre">n_labels</span></code> are assigned to each of the object. The quality of the classifier is tested on a test set that follows the same format.</p>
+<p>In the next section you will learn about the data format scikit-multilearn expects from the training and test sets.</p>
 </div>
 </div>
 
