@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.neurofuzzy package &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn.neurofuzzy package &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/>
         <link rel="next" title="skmultilearn.problem_transform package" href="skmultilearn.problem_transform.html"/>
         <link rel="prev" title="skmultilearn.ext package" href="skmultilearn.ext.html"/> 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -182,7 +182,7 @@ and fuzzy approaches to multi-label classification.</p>
 </ul>
 <dl class="class">
 <dt id="skmultilearn.neurofuzzy.MLARAM">
-<em class="property">class </em><code class="descclassname">skmultilearn.neurofuzzy.</code><code class="descname">MLARAM</code><span class="sig-paren">(</span><em>vigilance=0.9</em>, <em>threshold=0.02</em>, <em>tneurons=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAM" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.neurofuzzy.</code><code class="descname">MLARAM</code><span class="sig-paren">(</span><em>vigilance=0.9</em>, <em>threshold=0.02</em>, <em>neurons=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.base.MLClassifierBase" title="skmultilearn.base.base.MLClassifierBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.base.MLClassifierBase</span></code></a></p>
 <p>HARAM: A Hierarchical ARAM Neural Network for Large-Scale Text Classification</p>
 <p>See <a class="reference external" href="http://dx.doi.org/10.1109/ICDMW.2015.14">http://dx.doi.org/10.1109/ICDMW.2015.14</a></p>
@@ -212,7 +212,7 @@ and fuzzy approaches to multi-label classification.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>dense</em><em> or </em><em>sparse matrix</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em><em></em>) &#8211; input features</li>
+<li><strong>X</strong> (<a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix" title="skmultilearn.cluster.matrix"><em>matrix</em></a><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em><em></em>) &#8211; input features</li>
 <li><strong>y</strong> (<em>dense</em><em> or </em><em>sparse matrix of {0</em><em>, </em><em>1}</em><em> (</em><em>n_samples</em><em>, </em><em>n_labels</em><em>)</em><em></em>) &#8211; binary indicator matrix with label assignments</li>
 </ul>
 </td>
@@ -228,8 +228,6 @@ and fuzzy approaches to multi-label classification.</p>
 <dt id="skmultilearn.neurofuzzy.MLARAM.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAM.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
-(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -248,8 +246,6 @@ and fuzzy approaches to multi-label classification.</p>
 <dt id="skmultilearn.neurofuzzy.MLARAM.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAM.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict probabilities of label assignments for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
-(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -278,7 +274,7 @@ and fuzzy approaches to multi-label classification.</p>
 <span id="skmultilearn-neurofuzzy-mlaramfast-module"></span><h2>skmultilearn.neurofuzzy.MLARAMfast module<a class="headerlink" href="#module-skmultilearn.neurofuzzy.MLARAMfast" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="skmultilearn.neurofuzzy.MLARAMfast.MLARAM">
-<em class="property">class </em><code class="descclassname">skmultilearn.neurofuzzy.MLARAMfast.</code><code class="descname">MLARAM</code><span class="sig-paren">(</span><em>vigilance=0.9</em>, <em>threshold=0.02</em>, <em>tneurons=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAMfast.MLARAM" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.neurofuzzy.MLARAMfast.</code><code class="descname">MLARAM</code><span class="sig-paren">(</span><em>vigilance=0.9</em>, <em>threshold=0.02</em>, <em>neurons=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAMfast.MLARAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.base.MLClassifierBase" title="skmultilearn.base.base.MLClassifierBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.base.MLClassifierBase</span></code></a></p>
 <p>HARAM: A Hierarchical ARAM Neural Network for Large-Scale Text Classification</p>
 <p>See <a class="reference external" href="http://dx.doi.org/10.1109/ICDMW.2015.14">http://dx.doi.org/10.1109/ICDMW.2015.14</a></p>
@@ -308,7 +304,7 @@ and fuzzy approaches to multi-label classification.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>dense</em><em> or </em><em>sparse matrix</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em><em></em>) &#8211; input features</li>
+<li><strong>X</strong> (<a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix" title="skmultilearn.cluster.matrix"><em>matrix</em></a><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em><em></em>) &#8211; input features</li>
 <li><strong>y</strong> (<em>dense</em><em> or </em><em>sparse matrix of {0</em><em>, </em><em>1}</em><em> (</em><em>n_samples</em><em>, </em><em>n_labels</em><em>)</em><em></em>) &#8211; binary indicator matrix with label assignments</li>
 </ul>
 </td>
@@ -324,8 +320,6 @@ and fuzzy approaches to multi-label classification.</p>
 <dt id="skmultilearn.neurofuzzy.MLARAMfast.MLARAM.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAMfast.MLARAM.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
-(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -344,8 +338,6 @@ and fuzzy approaches to multi-label classification.</p>
 <dt id="skmultilearn.neurofuzzy.MLARAMfast.MLARAM.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/neurofuzzy/MLARAMfast.html#MLARAM.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.neurofuzzy.MLARAMfast.MLARAM.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict probabilities of label assignments for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
-(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -416,7 +408,7 @@ and fuzzy approaches to multi-label classification.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

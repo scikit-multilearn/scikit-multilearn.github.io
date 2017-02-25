@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The data format for multi-label classification &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>The data format for multi-label classification &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="index.html"/>
         <link rel="next" title="Loading and generating multi-label datasets" href="loading.html"/>
         <link rel="prev" title="Concepts guide" href="concepts.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -169,7 +169,7 @@
 <li><code class="docutils literal"><span class="pre">y</span></code> to be a matrix of shape <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></li>
 </ul>
 <p>By matrix scikit-multilearn understands following the <code class="docutils literal"><span class="pre">A[i,j]</span></code> element accessing scheme. Sparse matrices are preferred over dense ones. Scikit-multilearn will internally convert dense representations to sparse representations that are most suitable to a given classification procedure. Scikit-multilearn will output</p>
-<p><code class="docutils literal"><span class="pre">X</span></code> can store any type of data a given classification method can handle is allowed, but nominal encoding is always helpful. Nominal encoding is enabled by default when loading data with <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="skmultilearn.dataset.Dataset.load_arff_to_numpy"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset.load_arff_to_numpy()</span></code></a> helper, which also returns sparse representations of <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> loaded from ARFF data file.</p>
+<p><code class="docutils literal"><span class="pre">X</span></code> can store any type of data a given classification method can handle is allowed, but nominal encoding is always helpful. Nominal encoding is enabled by default when loading data with <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset.load_arff_to_numpy()</span></code> helper, which also returns sparse representations of <code class="docutils literal"><span class="pre">X</span></code> and <code class="docutils literal"><span class="pre">y</span></code> loaded from ARFF data file.</p>
 <p><code class="docutils literal"><span class="pre">y</span></code> is expected to be a binary <code class="docutils literal"><span class="pre">integer</span></code> indicator matrix of shape. In the binary indicator matrix each matrix element <code class="docutils literal"><span class="pre">A[i,j]</span></code> should be either <code class="docutils literal"><span class="pre">1</span></code> if label <code class="docutils literal"><span class="pre">j</span></code> is assigned to a object no <code class="docutils literal"><span class="pre">i</span></code>, and <code class="docutils literal"><span class="pre">0</span></code> if not.</p>
 <p>We highly recommend for every multi-label output space to be stored in sparse matrices and expect scikit-multilearn classifiers to operate only on sparse binary label indicator matrices internally. This is also the format of predicted label assignments. Sparse representation is employed as default, because it is very rare for a real world output space <code class="docutils literal"><span class="pre">y</span></code> to be dense. Usually the number of labels assigned per instance is just a small portion of all labels. The average percentage of labels assigned per object is called <cite>label density</cite> and in established data sets it <a class="reference external" href="http://mulan.sourceforge.net/datasets-mlc.html">tends to be really small</a>.</p>
 <p>All matrices should be compatible with the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html">numpy.matrix</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy-0.18.1/reference/sparse.html">scipy.sparse</a> classes, especially in terms of providing two-argument operator to access elements, i.e. the element of <code class="docutils literal"><span class="pre">i</span></code>-th row, <code class="docutils literal"><span class="pre">j</span></code>-th column of matrix <code class="docutils literal"><span class="pre">A</span></code> should be available via <code class="docutils literal"><span class="pre">A[i,j]</span></code> and not <code class="docutils literal"><span class="pre">A[i][j]</span></code>.</p>
@@ -254,7 +254,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.problem_transform.lp &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn.problem_transform.lp &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../../../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -157,14 +157,15 @@
 
 
 <div class="viewcode-block" id="LabelPowerset"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset">[docs]</a><span class="k">class</span> <span class="nc">LabelPowerset</span><span class="p">(</span><span class="n">ProblemTransformationBase</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Label Powerset Multi-Label Classifier.</span>
 
 <span class="sd">    Label Powerset is a problem transformation approach to multi-label</span>
-<span class="sd">    classification that transforms a multi-label problem to a multi-class </span>
-<span class="sd">    problem with 1 multi-class classifier trained on all unique label </span>
-<span class="sd">    combinations found in the training data. </span>
+<span class="sd">    classification that transforms a multi-label problem to a multi-class</span>
+<span class="sd">    problem with 1 multi-class classifier trained on all unique label</span>
+<span class="sd">    combinations found in the training data.</span>
 
-<span class="sd">    More information about this method can be found in an introduction </span>
+<span class="sd">    More information about this method can be found in an introduction</span>
 <span class="sd">    to multi-label classification by Tsoumakas et. al.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -176,6 +177,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
 <div class="viewcode-block" id="LabelPowerset.clean"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset classifier internals before refitting&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unique_combinations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reverse_combinations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="kc">None</span></div>
@@ -183,8 +185,8 @@
 <div class="viewcode-block" id="LabelPowerset.fit"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fit classifier with training data</span>
 
-<span class="sd">        Internally this method uses a sparse CSR representation </span>
-<span class="sd">        (:py:class:`scipy.sparse.csr_matrix`) of the X matrix and </span>
+<span class="sd">        Internally this method uses a sparse CSR representation</span>
+<span class="sd">        (:py:class:`scipy.sparse.csr_matrix`) of the X matrix and</span>
 <span class="sd">        a sparse LIL representation (:py:class:`scipy.sparse.lil_matrix`).</span>
 
 <span class="sd">        :param X: input features</span>
@@ -192,14 +194,80 @@
 <span class="sd">        :param y: binary indicator matrix with label assignments</span>
 <span class="sd">        :type y: dense or sparse matrix of {0, 1} (n_samples, n_labels)</span>
 <span class="sd">        :returns: Fitted instance of self</span>
-<span class="sd">                    </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
             <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">),</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="LabelPowerset.predict"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
+
+<span class="sd">        Internally this method uses a sparse CSR representation for X</span>
+<span class="sd">        (:py:class:`scipy.sparse.csr_matrix`).</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_features)</span>
+<span class="sd">        :returns: binary indicator matrix with label assignments</span>
+<span class="sd">        :rtype: sparse matrix of int (n_samples, n_labels)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># this will be an np.array of integers representing classes</span>
+        <span class="n">lp_prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">lp_prediction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelPowerset.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
+
+<span class="sd">        Internally this method uses a sparse CSR representation for X</span>
+<span class="sd">        (:py:class:`scipy.sparse.csr_matrix`).</span>
+
+<span class="sd">        :param X: input features</span>
+<span class="sd">        :type X: dense or sparse matrix (n_samples, n_labels)</span>
+<span class="sd">        :returns: matrix with label assignment probabilities</span>
+<span class="sd">        :rtype: sparse matrix of float (n_samples, n_labels)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">lp_prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lp_prediction</span><span class="p">)):</span>
+            <span class="n">assignment</span> <span class="o">=</span> <span class="n">lp_prediction</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">combination_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">assignment</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_combinations</span><span class="p">[</span><span class="n">combination_id</span><span class="p">]:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">+=</span> <span class="n">assignment</span><span class="p">[</span><span class="n">combination_id</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="LabelPowerset.transform"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transform multi-label output space to multi-class</span>
+
+<span class="sd">        Transforms a mutli-label problem into a single-label multi-class</span>
+<span class="sd">        problem where each label combination is a separate class.</span>
+
+<span class="sd">        :param matrix y: output space of shape ``(n_samples, n_labels)``</span>
+<span class="sd">         of {0,1} of a multi-label classification problem</span>
+
+<span class="sd">        :returns: a numpy array with multi-class output space problem</span>
+
+<span class="sd">        :rtype: nd.array of size ``n_samples`` of int</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span>
             <span class="n">y</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;lil&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
         <span class="n">last_id</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">train_vector</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">labels_applied</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">rows</span><span class="p">:</span>
@@ -212,64 +280,30 @@
 
             <span class="n">train_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_combinations</span><span class="p">[</span><span class="n">label_string</span><span class="p">])</span>
 
-        <span class="n">train_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_vector</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">train_vector</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span></div>
-
-<div class="viewcode-block" id="LabelPowerset.predict"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
-
-<span class="sd">        Internally this method uses a sparse CSR representation for X </span>
-<span class="sd">        (:py:class:`scipy.sparse.csr_matrix`).</span>
-
-<span class="sd">        :param X: input features</span>
-<span class="sd">        :type X: dense or sparse matrix (n_samples, n_features)</span>
-<span class="sd">        :returns: binary indicator matrix with label assignments</span>
-<span class="sd">        :rtype: sparse matrix of int (n_samples, n_labels)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># this will be an np.array of integers representing classes</span>
-        <span class="n">lp_prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i8&#39;</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lp_prediction</span><span class="p">)):</span>
-            <span class="n">assignment</span> <span class="o">=</span> <span class="n">lp_prediction</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
-            <span class="n">result</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_combinations</span><span class="p">[</span><span class="n">assignment</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
-
-        <span class="k">return</span> <span class="n">result</span></div>
-
-<div class="viewcode-block" id="LabelPowerset.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
-
-<span class="sd">        Internally this method uses a sparse CSR representation for X </span>
-<span class="sd">        (:py:class:`scipy.sparse.csr_matrix`).</span>
-
-<span class="sd">        :param X: input features</span>
-<span class="sd">        :type X: dense or sparse matrix (n_samples, n_labels)</span>
-<span class="sd">        :returns: matrix with label assignment probabilities</span>
-<span class="sd">        :rtype: sparse matrix of float (n_samples, n_labels)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        
-        <span class="n">lp_prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lp_prediction</span><span class="p">)):</span>
-            <span class="n">assignment</span> <span class="o">=</span> <span class="n">lp_prediction</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">combination_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">assignment</span><span class="p">)):</span>
-                <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_combinations</span><span class="p">[</span><span class="n">combination_id</span><span class="p">]:</span>
-                    <span class="n">result</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">+=</span> <span class="n">assignment</span><span class="p">[</span><span class="n">combination_id</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">result</span></div>
-
-
-<div class="viewcode-block" id="LabelPowerset.transform"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">)))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_vector</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelPowerset.inverse_transform"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.LabelPowerset.inverse_transform">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Transforms multi-class assignment to multi-label</span>
+
+<span class="sd">        Transforms a mutli-label problem into a single-label multi-class</span>
+<span class="sd">        problem where each label combination is a separate class.</span>
+
+<span class="sd">        :param nd.array y: of size ``n_samples`` multi-class</span>
+<span class="sd">            output space as transformed by :meth:`transform`</span>
+
+<span class="sd">        :returns: assignments following the label combinations of the</span>
+<span class="sd">            original multi-label classification problem</span>
+
+<span class="sd">        :rtype: sparse indicator matrix of shape ``(n_samples, n_labels)`` of {0,1}</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i8&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+            <span class="n">assignment</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_combinations</span><span class="p">[</span><span class="n">assignment</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
 </pre></div>
 
            </div>
@@ -302,7 +336,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

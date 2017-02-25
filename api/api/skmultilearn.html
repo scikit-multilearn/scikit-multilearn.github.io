@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn package &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn package &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../index.html"/>
         <link rel="next" title="skmultilearn.adapt package" href="skmultilearn.adapt.html"/>
         <link rel="prev" title="Developing a label space clusterer" href="../clusterer.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -199,6 +199,7 @@ See <a class="reference external" href="http://scikit-learn.org">http://scikit-l
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.base">skmultilearn.cluster.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.graphtool">skmultilearn.cluster.graphtool module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.igraph">skmultilearn.cluster.igraph module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix">skmultilearn.cluster.matrix module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a><ul>
@@ -234,13 +235,162 @@ See <a class="reference external" href="http://scikit-learn.org">http://scikit-l
 </div>
 <div class="section" id="module-skmultilearn.dataset">
 <span id="skmultilearn-dataset-module"></span><h2>skmultilearn.dataset module<a class="headerlink" href="#module-skmultilearn.dataset" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="skmultilearn.dataset.Dataset">
-<em class="property">class </em><code class="descclassname">skmultilearn.dataset.</code><code class="descname">Dataset</code><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
-<dl class="classmethod">
-<dt id="skmultilearn.dataset.Dataset.load_arff_to_numpy">
-<em class="property">classmethod </em><code class="descname">load_arff_to_numpy</code><span class="sig-paren">(</span><em>filename</em>, <em>labelcount</em>, <em>endian='big'</em>, <em>input_feature_type='float'</em>, <em>encode_nominal=True</em>, <em>load_sparse=False</em>, <em>return_attribute_definitions=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_arff_to_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="Permalink to this definition">¶</a></dt>
+<dl class="function">
+<dt id="skmultilearn.dataset.available_data_sets">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">available_data_sets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#available_data_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.available_data_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists available data sets and their variants</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of available data sets and their variants</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Rtype dict[set_name] with list of variants:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.clear_data_home">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">clear_data_home</code><span class="sig-paren">(</span><em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#clear_data_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.clear_data_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all the content of the data home cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong><strong> or </strong><strong>None</strong> (<em>data_home</em>) &#8211; the path to the directory in which scikit-multilearn
+data sets should be stored</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.download_dataset">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">download_dataset</code><span class="sig-paren">(</span><em>set_name</em>, <em>variant</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#download_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.download_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads a data set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string</strong> (<em>variant</em>) &#8211; name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>string</strong> &#8211; variant of the data set</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">path to the downloaded data set file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.get_data_home">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">get_data_home</code><span class="sig-paren">(</span><em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#get_data_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.get_data_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the path of the scikit-multilearn data dir.</p>
+<p>This folder is used by some large dataset loaders to avoid
+downloading the data several times.</p>
+<p>By default the data dir is set to a folder named &#8216;scikit_ml_learn_data&#8217;
+in the user home folder.</p>
+<p>Alternatively, it can be set by the &#8216;SCIKIT_ML_LEARN_DATA&#8217; environment
+variable or programmatically by giving an explicit folder path. The
+&#8216;~&#8217; symbol is expanded to the user home folder.</p>
+<p>If the folder does not already exist, it is automatically created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong><strong> or </strong><strong>None</strong> (<em>data_home</em>) &#8211; the path to the directory in which scikit-multilearn
+data sets should be stored, if None the path is generated as stated above</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the path to the data home</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)">string</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.get_dataset_list">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">get_dataset_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#get_dataset_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.get_dataset_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads data set list</p>
+<p>The format of the list is a follows:</p>
+<ul class="simple">
+<li>each row corresponds to a variant of a data set</li>
+<li><dl class="first docutils">
+<dt>variants include: train, test and undivided, note that sometimes data</dt>
+<dd>sets are not provided in train, test division by their authors</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>in each row column 0 is the md5, column 1 is the file name available</dt>
+<dd>under <a class="reference internal" href="#skmultilearn.dataset.get_download_base_url" title="skmultilearn.dataset.get_download_base_url"><code class="xref py py-func docutils literal"><span class="pre">get_download_base_url()</span></code></a></dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.get_download_base_url">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">get_download_base_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#get_download_base_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.get_download_base_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns base URL for data sets.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.load_dataset">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">load_dataset</code><span class="sig-paren">(</span><em>set_name</em>, <em>variant</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#load_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a selected variant of the given data set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string</strong> (<em>variant</em>) &#8211; name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>string</strong> &#8211; variant of the data set</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the loaded multilabel data set variant in the scikit-multilearn format, see data_sets</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.load_dataset_dump">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">load_dataset_dump</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#load_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.load_dataset_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a compressed data set dump</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : string</p>
+<blockquote>
+<div><p>Path to dump file, if without .bz2, the .bz2 extension will be appended.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: dictionary {&#8216;X&#8217;: array-like of array-likes, &#8216;y&#8217;: array-like of binary label vectors }</p>
+<blockquote class="last">
+<div><p>The dictionary containing the data frame, with &#8216;X&#8217; key storing the input space array-like of input feature vectors
+and &#8216;y&#8217; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1
+then the input vector has label no. 5)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.load_from_arff">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">load_from_arff</code><span class="sig-paren">(</span><em>filename</em>, <em>labelcount</em>, <em>endian='big'</em>, <em>input_feature_type='float'</em>, <em>encode_nominal=True</em>, <em>load_sparse=False</em>, <em>return_attribute_definitions=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#load_from_arff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.load_from_arff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for loading ARFF files as numpy array</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -282,35 +432,9 @@ should be a numpy type, see <a class="reference external" href="http://docs.scip
 </table>
 </dd></dl>
 
-<dl class="classmethod">
-<dt id="skmultilearn.dataset.Dataset.load_dataset_dump">
-<em class="property">classmethod </em><code class="descname">load_dataset_dump</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.load_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.load_dataset_dump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads a compressed data set dump</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : string</p>
-<blockquote>
-<div><p>Path to dump file, if without .bz2, the .bz2 extension will be appended.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: dictionary {&#8216;X&#8217;: array-like of array-likes, &#8216;y&#8217;: array-like of binary label vectors }</p>
-<blockquote class="last">
-<div><p>The dictionary containing the data frame, with &#8216;X&#8217; key storing the input space array-like of input feature vectors
-and &#8216;y&#8217; storing labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1
-then the input vector has label no. 5)</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="skmultilearn.dataset.Dataset.save_dataset_dump">
-<em class="property">classmethod </em><code class="descname">save_dataset_dump</code><span class="sig-paren">(</span><em>filename</em>, <em>input_space</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.save_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.save_dataset_dump" title="Permalink to this definition">¶</a></dt>
+<dl class="function">
+<dt id="skmultilearn.dataset.save_dataset_dump">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">save_dataset_dump</code><span class="sig-paren">(</span><em>filename</em>, <em>input_space</em>, <em>labels</em>, <em>feature_names</em>, <em>label_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#save_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.save_dataset_dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a compressed data set dump</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -325,9 +449,17 @@ then the input vector has label no. 5)</p>
 <div><p>Input space array-like of input feature vectors</p>
 </div></blockquote>
 <p><strong>labels: array-like of binary label vectors</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>Array-like of labels assigned to each input vector, as a binary indicator vector (i.e. if 5th position has value 1
 then the input vector has label no. 5)</p>
+</div></blockquote>
+<p><strong>feature_names: array-like</strong></p>
+<blockquote>
+<div><p>optional, names of features</p>
+</div></blockquote>
+<p><strong>label_names: array-like</strong></p>
+<blockquote class="last">
+<div><p>optional, names of labels</p>
 </div></blockquote>
 </td>
 </tr>
@@ -335,9 +467,9 @@ then the input vector has label no. 5)</p>
 </table>
 </dd></dl>
 
-<dl class="classmethod">
-<dt id="skmultilearn.dataset.Dataset.save_to_arff">
-<em class="property">classmethod </em><code class="descname">save_to_arff</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>endian='little'</em>, <em>save_sparse=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#Dataset.save_to_arff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.Dataset.save_to_arff" title="Permalink to this definition">¶</a></dt>
+<dl class="function">
+<dt id="skmultilearn.dataset.save_to_arff">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">save_to_arff</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>endian='little'</em>, <em>save_sparse=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#save_to_arff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.save_to_arff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for dumping data to ARFF files</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -367,8 +499,6 @@ or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -447,7 +577,7 @@ or at the end (&#8220;little&#8221; endianness, MULAN format)</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

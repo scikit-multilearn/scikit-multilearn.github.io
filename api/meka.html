@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using the meka wrapper &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>Using the meka wrapper &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="index.html"/>
         <link rel="next" title="Implementing a multi-label classifier" href="base.html"/>
         <link rel="prev" title="Estimating parameters" href="model_estimation.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -161,7 +161,7 @@
 <p><strong>The current version supports meka 1.9.1+</strong></p>
 <p>The currently officially released MEKA version is 1.9.0 from 2015 and has a <a class="reference external" href="https://github.com/Waikato/meka/issues/1">bug</a>
 that prevents the wrapper from working. Please <a class="reference external" href="https://adams.cms.waikato.ac.nz/snapshots/meka/">download a compiled 1.9.1+ snapshot</a>
-instead of using the 1.9.0 version, unzip it to <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;</span></code> and use <code class="docutils literal"><span class="pre">&lt;MEKA_DIR&gt;/lib/</span></code> as the MEKA classpath for the constructor.</p>
+instead of using the 1.9.0 version, unzip it to <code class="docutils literal"><span class="pre">&lt;meka_directory&gt;</span></code> and use <code class="docutils literal"><span class="pre">&lt;meka_directory&gt;/lib/</span></code> as the MEKA classpath for the constructor.</p>
 <p>Note that you will need to have <code class="docutils literal"><span class="pre">liac-arff</span></code> installed if you want to use the MEKA wrapper, you can get them using: <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">liac-arff</span></code>.</p>
 <p>An example path to java might be: <code class="docutils literal"><span class="pre">/usr/bin/java</span></code>, an example classpath to meka can be: <code class="docutils literal"><span class="pre">/opt/meka-1.9.1-SNAPSHOT/lib/</span></code>.
 In Python 2.7 the pip package <code class="docutils literal"><span class="pre">whichcraft</span></code> is used to detect the location of java executables if no path is provided to the constructor.
@@ -284,7 +284,7 @@ You can install it via <code class="docutils literal"><span class="pre">pip</spa
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

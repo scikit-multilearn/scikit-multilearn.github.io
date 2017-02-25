@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.cluster package &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn.cluster package &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/>
         <link rel="next" title="skmultilearn.ensemble package" href="skmultilearn.ensemble.html"/>
         <link rel="prev" title="skmultilearn.base package" href="skmultilearn.base.html"/> 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -114,6 +114,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#module-skmultilearn.cluster.base">skmultilearn.cluster.base module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-skmultilearn.cluster.graphtool">skmultilearn.cluster.graphtool module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-skmultilearn.cluster.igraph">skmultilearn.cluster.igraph module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skmultilearn.cluster.matrix">skmultilearn.cluster.matrix module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="skmultilearn.ensemble.html">skmultilearn.ensemble package</a></li>
@@ -225,7 +226,7 @@
 <dt id="skmultilearn.cluster.LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix">
 <code class="descname">generate_coocurence_adjacency_matrix</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/base.html#LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate adjacency matrix from label matrix</p>
-<p>This function generates a weighted or unweighted cooccurence graph based on input binary label vectors 
+<p>This function generates a weighted or unweighted cooccurence graph based on input binary label vectors
 and sets it to self.coocurence_graph</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -248,7 +249,7 @@ and sets it to self.coocurence_graph</p>
 
 <dl class="class">
 <dt id="skmultilearn.cluster.GraphToolCooccurenceClusterer">
-<em class="property">class </em><code class="descclassname">skmultilearn.cluster.</code><code class="descname">GraphToolCooccurenceClusterer</code><span class="sig-paren">(</span><em>weighted=None</em>, <em>include_self_edges=None</em>, <em>allow_overlap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#GraphToolCooccurenceClusterer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.GraphToolCooccurenceClusterer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.cluster.</code><code class="descname">GraphToolCooccurenceClusterer</code><span class="sig-paren">(</span><em>weighted=None</em>, <em>include_self_edges=None</em>, <em>allow_overlap=None</em>, <em>n_iters=100</em>, <em>n_init_iters=10</em>, <em>use_degree_corr=None</em>, <em>model_selection_criterium='mean_field'</em>, <em>verbose=False</em>, <em>equlibrate_options={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#GraphToolCooccurenceClusterer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.GraphToolCooccurenceClusterer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#skmultilearn.cluster.base.LabelCooccurenceClustererBase" title="skmultilearn.cluster.base.LabelCooccurenceClustererBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.cluster.base.LabelCooccurenceClustererBase</span></code></a></p>
 <p>Clusters the label space using graph tool&#8217;s stochastic block modelling community detection method</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -259,13 +260,13 @@ and sets it to self.coocurence_graph</p>
 <blockquote>
 <div><p>Decide whether to generate a weighted or unweighted graph.</p>
 </div></blockquote>
-<p><strong>allow_overlap: boolean</strong></p>
-<blockquote>
-<div><p>Allow overlapping of clusters or not.</p>
-</div></blockquote>
 <p><strong>include_self_edges</strong> : boolean</p>
 <blockquote>
 <div><p>Decide whether to include self-edge i.e. label 1 - label 1 in co-occurrence graph</p>
+</div></blockquote>
+<p><strong>allow_overlap: boolean</strong></p>
+<blockquote>
+<div><p>Allow overlapping of clusters or not.</p>
 </div></blockquote>
 <p><strong>n_iters</strong> : int</p>
 <blockquote>
@@ -275,21 +276,21 @@ and sets it to self.coocurence_graph</p>
 <blockquote>
 <div><p>Number of iterations to perform</p>
 </div></blockquote>
-<p><strong>collect_community_statistics: bool</strong></p>
+<p><strong>use_degree_corr: None or bool</strong></p>
 <blockquote>
-<div><p>Whether to collect statistics related to detected community</p>
-</div></blockquote>
-<p><strong>use_degree_corr: &#8216;auto&#8217; or bool</strong></p>
-<blockquote>
-<div><p>Whether to use a degree correlated stochastic blockmodel, or not - if auto, it is selected based on selection criterium</p>
+<div><p>Whether to use a degree correlated stochastic blockmodel, or not - if None, it is selected based on selection criterium</p>
 </div></blockquote>
 <p><strong>model_selection_criterium: &#8216;mean_field&#8217; or &#8216;bethe&#8217;</strong></p>
 <blockquote>
 <div><p>Approach to use in case</p>
 </div></blockquote>
 <p><strong>verbose: bool</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>Be verbose about the output</p>
+</div></blockquote>
+<p><strong>equlibrate_options: dict</strong></p>
+<blockquote class="last">
+<div><p>additional options to pass to <a class="reference external" href="https://graph-tool.skewed.de/static/doc/inference.html#graph_tool.inference.mcmc_equilibrate">graphtool&#8217;s mcmc_equilibrate</a></p>
 </div></blockquote>
 </td>
 </tr>
@@ -391,6 +392,49 @@ and sets it to self.coocurence_graph</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="skmultilearn.cluster.MatrixLabelSpaceClusterer">
+<em class="property">class </em><code class="descclassname">skmultilearn.cluster.</code><code class="descname">MatrixLabelSpaceClusterer</code><span class="sig-paren">(</span><em>clusterer=None</em>, <em>pass_input_space=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/matrix.html#MatrixLabelSpaceClusterer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.MatrixLabelSpaceClusterer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#skmultilearn.cluster.base.LabelSpaceClustererBase" title="skmultilearn.cluster.base.LabelSpaceClustererBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.cluster.base.LabelSpaceClustererBase</span></code></a></p>
+<p>Clusters the label space using a matrix-based clusterer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>clusterer</strong> &#8211; a clonable instance of a
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.ClusterMixin.html">scikit-compatible matrix-based</a> clusterer</li>
+<li><strong>bool</strong> (<em>pass_input_space</em>) &#8211; whether to take <code class="docutils literal"><span class="pre">X</span></code> into
+consideration upon clustering, use only if you know that the clusterer
+can handle two parameters for clustering</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="skmultilearn.cluster.MatrixLabelSpaceClusterer.fit_predict">
+<code class="descname">fit_predict</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/matrix.html#MatrixLabelSpaceClusterer.fit_predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.MatrixLabelSpaceClusterer.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster the output space</p>
+<p>Uses the <code class="docutils literal"><span class="pre">fit_predict</span></code> method of provided <code class="docutils literal"><span class="pre">clusterer</span></code>
+to perform label space division.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">partition of labels, each sublist contains
+label indices related to label positions in <code class="docutils literal"><span class="pre">y</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">nd.array of nd.arrays</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">this is just an abstract method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -421,7 +465,7 @@ and sets it to self.coocurence_graph</p>
 <dt id="skmultilearn.cluster.base.LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix">
 <code class="descname">generate_coocurence_adjacency_matrix</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/base.html#LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.base.LabelCooccurenceClustererBase.generate_coocurence_adjacency_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate adjacency matrix from label matrix</p>
-<p>This function generates a weighted or unweighted cooccurence graph based on input binary label vectors 
+<p>This function generates a weighted or unweighted cooccurence graph based on input binary label vectors
 and sets it to self.coocurence_graph</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -470,7 +514,7 @@ and sets it to self.coocurence_graph</p>
 <span id="skmultilearn-cluster-graphtool-module"></span><h2>skmultilearn.cluster.graphtool module<a class="headerlink" href="#module-skmultilearn.cluster.graphtool" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer">
-<em class="property">class </em><code class="descclassname">skmultilearn.cluster.graphtool.</code><code class="descname">GraphToolCooccurenceClusterer</code><span class="sig-paren">(</span><em>weighted=None</em>, <em>include_self_edges=None</em>, <em>allow_overlap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#GraphToolCooccurenceClusterer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.cluster.graphtool.</code><code class="descname">GraphToolCooccurenceClusterer</code><span class="sig-paren">(</span><em>weighted=None</em>, <em>include_self_edges=None</em>, <em>allow_overlap=None</em>, <em>n_iters=100</em>, <em>n_init_iters=10</em>, <em>use_degree_corr=None</em>, <em>model_selection_criterium='mean_field'</em>, <em>verbose=False</em>, <em>equlibrate_options={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#GraphToolCooccurenceClusterer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.graphtool.GraphToolCooccurenceClusterer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#skmultilearn.cluster.base.LabelCooccurenceClustererBase" title="skmultilearn.cluster.base.LabelCooccurenceClustererBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.cluster.base.LabelCooccurenceClustererBase</span></code></a></p>
 <p>Clusters the label space using graph tool&#8217;s stochastic block modelling community detection method</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -481,13 +525,13 @@ and sets it to self.coocurence_graph</p>
 <blockquote>
 <div><p>Decide whether to generate a weighted or unweighted graph.</p>
 </div></blockquote>
-<p><strong>allow_overlap: boolean</strong></p>
-<blockquote>
-<div><p>Allow overlapping of clusters or not.</p>
-</div></blockquote>
 <p><strong>include_self_edges</strong> : boolean</p>
 <blockquote>
 <div><p>Decide whether to include self-edge i.e. label 1 - label 1 in co-occurrence graph</p>
+</div></blockquote>
+<p><strong>allow_overlap: boolean</strong></p>
+<blockquote>
+<div><p>Allow overlapping of clusters or not.</p>
 </div></blockquote>
 <p><strong>n_iters</strong> : int</p>
 <blockquote>
@@ -497,21 +541,21 @@ and sets it to self.coocurence_graph</p>
 <blockquote>
 <div><p>Number of iterations to perform</p>
 </div></blockquote>
-<p><strong>collect_community_statistics: bool</strong></p>
+<p><strong>use_degree_corr: None or bool</strong></p>
 <blockquote>
-<div><p>Whether to collect statistics related to detected community</p>
-</div></blockquote>
-<p><strong>use_degree_corr: &#8216;auto&#8217; or bool</strong></p>
-<blockquote>
-<div><p>Whether to use a degree correlated stochastic blockmodel, or not - if auto, it is selected based on selection criterium</p>
+<div><p>Whether to use a degree correlated stochastic blockmodel, or not - if None, it is selected based on selection criterium</p>
 </div></blockquote>
 <p><strong>model_selection_criterium: &#8216;mean_field&#8217; or &#8216;bethe&#8217;</strong></p>
 <blockquote>
 <div><p>Approach to use in case</p>
 </div></blockquote>
 <p><strong>verbose: bool</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>Be verbose about the output</p>
+</div></blockquote>
+<p><strong>equlibrate_options: dict</strong></p>
+<blockquote class="last">
+<div><p>additional options to pass to <a class="reference external" href="https://graph-tool.skewed.de/static/doc/inference.html#graph_tool.inference.mcmc_equilibrate">graphtool&#8217;s mcmc_equilibrate</a></p>
 </div></blockquote>
 </td>
 </tr>
@@ -617,6 +661,53 @@ and sets it to self.coocurence_graph</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-skmultilearn.cluster.matrix">
+<span id="skmultilearn-cluster-matrix-module"></span><h2>skmultilearn.cluster.matrix module<a class="headerlink" href="#module-skmultilearn.cluster.matrix" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="skmultilearn.cluster.matrix.MatrixLabelSpaceClusterer">
+<em class="property">class </em><code class="descclassname">skmultilearn.cluster.matrix.</code><code class="descname">MatrixLabelSpaceClusterer</code><span class="sig-paren">(</span><em>clusterer=None</em>, <em>pass_input_space=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/matrix.html#MatrixLabelSpaceClusterer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.matrix.MatrixLabelSpaceClusterer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#skmultilearn.cluster.base.LabelSpaceClustererBase" title="skmultilearn.cluster.base.LabelSpaceClustererBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.cluster.base.LabelSpaceClustererBase</span></code></a></p>
+<p>Clusters the label space using a matrix-based clusterer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>clusterer</strong> &#8211; <p>a clonable instance of a
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.ClusterMixin.html">scikit-compatible matrix-based</a> clusterer</p>
+</li>
+<li><strong>bool</strong> (<em>pass_input_space</em>) &#8211; whether to take <code class="docutils literal"><span class="pre">X</span></code> into
+consideration upon clustering, use only if you know that the clusterer
+can handle two parameters for clustering</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="skmultilearn.cluster.matrix.MatrixLabelSpaceClusterer.fit_predict">
+<code class="descname">fit_predict</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/matrix.html#MatrixLabelSpaceClusterer.fit_predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.matrix.MatrixLabelSpaceClusterer.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster the output space</p>
+<p>Uses the <code class="docutils literal"><span class="pre">fit_predict</span></code> method of provided <code class="docutils literal"><span class="pre">clusterer</span></code>
+to perform label space division.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">partition of labels, each sublist contains
+label indices related to label positions in <code class="docutils literal"><span class="pre">y</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">nd.array of nd.arrays</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">this is just an abstract method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -659,7 +750,7 @@ and sets it to self.coocurence_graph</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

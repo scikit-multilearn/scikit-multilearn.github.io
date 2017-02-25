@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.problem_transform.br &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn.problem_transform.br &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../../../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -156,22 +156,23 @@
 
 
 <div class="viewcode-block" id="BinaryRelevance"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.BinaryRelevance">[docs]</a><span class="k">class</span> <span class="nc">BinaryRelevance</span><span class="p">(</span><span class="n">ProblemTransformationBase</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Binary Relevance Multi-Label Classifier.</span>
 
 <span class="sd">    Transforms a multi-label classification problem with L labels</span>
-<span class="sd">    into L single-label separate binary classification problems </span>
-<span class="sd">    using the same base classifier provided in the constructor. The </span>
+<span class="sd">    into L single-label separate binary classification problems</span>
+<span class="sd">    using the same base classifier provided in the constructor. The</span>
 <span class="sd">    prediction output is the union of all per label classifiers.</span>
 
 <span class="sd">    :param classifier: clonable scikit-compatible base classifier</span>
 <span class="sd">    :type classifier: :py:class:`sklearn.base.BaseEstimator` or compatible</span>
 
-<span class="sd">    :param require_dense: whether the base classifier requires dense </span>
+<span class="sd">    :param require_dense: whether the base classifier requires dense</span>
 <span class="sd">        representations for input features and classes/labels matrices in fit/predict.</span>
 <span class="sd">    :type require_dense: [bool, bool]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">BRIEFNAME</span> <span class="o">=</span> <span class="s2">&quot;BR&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_dense</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -181,8 +182,8 @@
         <span class="sd">&quot;&quot;&quot; Partitions the label space into singletons</span>
 
 <span class="sd">            :param X: not used</span>
-<span class="sd">            :param y: binary indicator matrix with label assignments - </span>
-<span class="sd">                only used for learning # of labels  </span>
+<span class="sd">            :param y: binary indicator matrix with label assignments -</span>
+<span class="sd">                only used for learning # of labels</span>
 <span class="sd">            :type y: matrix or sparse matrix</span>
 
 <span class="sd">            Sets self.partition (list of single item lists) and self.model_count (equal to number of labels)</span>
@@ -194,7 +195,7 @@
 <div class="viewcode-block" id="BinaryRelevance.fit"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.BinaryRelevance.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fit classifier with training data</span>
 
-<span class="sd">        Internally this method uses a sparse CSR representation for X </span>
+<span class="sd">        Internally this method uses a sparse CSR representation for X</span>
 <span class="sd">        (:py:class:`scipy.sparse.csr_matrix`) and sparse CSC representation for y</span>
 <span class="sd">        (:py:class:`scipy.sparse.csc_matrix`).</span>
 
@@ -216,7 +217,8 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_count</span><span class="p">):</span>
             <span class="n">classifier</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">)</span>
             <span class="n">y_subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_data_subset</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">partition</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y_subset</span><span class="p">))</span>
+            <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_output_format</span><span class="p">(</span><span class="n">y_subset</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">classifier</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
@@ -224,7 +226,7 @@
 <div class="viewcode-block" id="BinaryRelevance.predict"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.BinaryRelevance.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
 
-<span class="sd">        Internally this method uses a sparse CSR representation for X </span>
+<span class="sd">        Internally this method uses a sparse CSR representation for X</span>
 <span class="sd">        (:py:class:`scipy.sparse.coo_matrix`).</span>
 
 <span class="sd">        :param X: input features</span>
@@ -234,26 +236,26 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_multi_label_from_single_class</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
             <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_count</span><span class="p">)]</span>
 
         <span class="k">return</span> <span class="n">hstack</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span></div>
-    
+
 <div class="viewcode-block" id="BinaryRelevance.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.problem_transform.html#skmultilearn.problem_transform.BinaryRelevance.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
 
-<span class="sd">        Internally this method uses a sparse CSR representation for X </span>
+<span class="sd">        Internally this method uses a sparse CSR representation for X</span>
 <span class="sd">        (:py:class:`scipy.sparse.coo_matrix`).</span>
 
 <span class="sd">        :param X: input features</span>
 <span class="sd">        :type X: dense or sparse matrix (n_samples, n_labels)</span>
 <span class="sd">        :returns: matrix with label assignment probabilities</span>
 <span class="sd">        :rtype: sparse matrix of float (n_samples, n_labels)</span>
-<span class="sd">        </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_multi_label_from_single_class</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">))[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_count</span><span class="p">))]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)))[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_count</span><span class="p">)]</span>
 
         <span class="k">return</span> <span class="n">hstack</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span></div></div>
 </pre></div>
@@ -288,7 +290,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

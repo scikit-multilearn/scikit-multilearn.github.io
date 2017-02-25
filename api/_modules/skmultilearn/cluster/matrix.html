@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.base.mock &mdash; scikit-multilearn 0.0.5 documentation</title>
+  <title>skmultilearn.cluster.matrix &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
       
-    <li>skmultilearn.base.mock</li>
+    <li>skmultilearn.cluster.matrix</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -147,22 +147,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for skmultilearn.base.mock</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">MLClassifierBase</span>
+  <h1>Source code for skmultilearn.cluster.matrix</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">LabelSpaceClustererBase</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="MockClassifier"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.mock.MockClassifier">[docs]</a><span class="k">class</span> <span class="nc">MockClassifier</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A stub classifier&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MatrixLabelSpaceClusterer"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.MatrixLabelSpaceClusterer">[docs]</a><span class="k">class</span> <span class="nc">MatrixLabelSpaceClusterer</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MockClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;Clusters the label space using a matrix-based clusterer</span>
 
-<div class="viewcode-block" id="MockClassifier.fit"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.mock.MockClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+<span class="sd">        :param clusterer: a clonable instance of a</span>
+<span class="sd">            `scikit-compatible matrix-based &lt;http://scikit-learn.org/stable/modules/generated/sklearn.base.ClusterMixin.html&gt;`_ clusterer</span>
 
-<div class="viewcode-block" id="MockClassifier.predict"><a class="viewcode-back" href="../../../api/skmultilearn.base.html#skmultilearn.base.mock.MockClassifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span></div></div>
+<span class="sd">        :param pass_input_space bool: whether to take ``X`` into</span>
+<span class="sd">            consideration upon clustering, use only if you know that the clusterer</span>
+<span class="sd">            can handle two parameters for clustering</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clusterer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pass_input_space</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MatrixLabelSpaceClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span> <span class="o">=</span> <span class="n">clusterer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pass_input_space</span> <span class="o">=</span> <span class="n">pass_input_space</span>
+
+<div class="viewcode-block" id="MatrixLabelSpaceClusterer.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.MatrixLabelSpaceClusterer.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Cluster the output space</span>
+
+<span class="sd">        Uses the ``fit_predict`` method of provided ``clusterer``</span>
+<span class="sd">        to perform label space division.</span>
+
+<span class="sd">        :returns: partition of labels, each sublist contains</span>
+<span class="sd">            label indices related to label positions in ``y``</span>
+
+<span class="sd">        :rtype: nd.array of nd.arrays</span>
+
+<span class="sd">        :returns: this is just an abstract method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pass_input_space</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span></div></div>
 </pre></div>
 
            </div>

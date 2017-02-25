@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.problem_transform package &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn.problem_transform package &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../index.html"/>
         <link rel="up" title="skmultilearn package" href="skmultilearn.html"/>
         <link rel="prev" title="skmultilearn.neurofuzzy package" href="skmultilearn.neurofuzzy.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -188,8 +188,8 @@ that follow the problem transformation approaches to multi-label classification:
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase" title="skmultilearn.base.problem_transformation.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.problem_transformation.ProblemTransformationBase</span></code></a></p>
 <p>Binary Relevance Multi-Label Classifier.</p>
 <p>Transforms a multi-label classification problem with L labels
-into L single-label separate binary classification problems 
-using the same base classifier provided in the constructor. The 
+into L single-label separate binary classification problems
+using the same base classifier provided in the constructor. The
 prediction output is the union of all per label classifiers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -197,7 +197,7 @@ prediction output is the union of all per label classifiers.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>classifier</strong> (<code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code> or compatible) &#8211; clonable scikit-compatible base classifier</li>
-<li><strong>require_dense</strong> (<em></em><em>[</em><em>bool</em><em>, </em><em>bool</em><em>]</em><em></em>) &#8211; whether the base classifier requires dense 
+<li><strong>require_dense</strong> (<em></em><em>[</em><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>]</em><em></em>) &#8211; whether the base classifier requires dense
 representations for input features and classes/labels matrices in fit/predict.</li>
 </ul>
 </td>
@@ -213,7 +213,7 @@ representations for input features and classes/labels matrices in fit/predict.</
 <dt id="skmultilearn.problem_transform.BinaryRelevance.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.BinaryRelevance.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit classifier with training data</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) and sparse CSC representation for y
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csc_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -243,7 +243,7 @@ representations for input features and classes/labels matrices in fit/predict.</
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>X</strong> &#8211; not used</li>
-<li><strong>y</strong> (<em>matrix</em><em> or </em><em>sparse matrix</em>) &#8211; binary indicator matrix with label assignments - 
+<li><strong>y</strong> (<a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix" title="skmultilearn.cluster.matrix"><em>matrix</em></a><em> or </em><em>sparse matrix</em>) &#8211; binary indicator matrix with label assignments -
 only used for learning # of labels</li>
 </ul>
 </td>
@@ -257,7 +257,7 @@ only used for learning # of labels</li>
 <dt id="skmultilearn.problem_transform.BinaryRelevance.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.BinaryRelevance.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.coo_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -277,7 +277,7 @@ only used for learning # of labels</li>
 <dt id="skmultilearn.problem_transform.BinaryRelevance.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.BinaryRelevance.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict probabilities of label assignments for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.coo_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -297,19 +297,19 @@ only used for learning # of labels</li>
 
 <dl class="class">
 <dt id="skmultilearn.problem_transform.ClassifierChain">
-<em class="property">class </em><code class="descclassname">skmultilearn.problem_transform.</code><code class="descname">ClassifierChain</code><span class="sig-paren">(</span><em>classifier=None</em>, <em>require_dense=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.ClassifierChain" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.problem_transform.</code><code class="descname">ClassifierChain</code><span class="sig-paren">(</span><em>classifier=None</em>, <em>require_dense=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.ClassifierChain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase" title="skmultilearn.base.problem_transformation.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.problem_transformation.ProblemTransformationBase</span></code></a></p>
 <p>Classifier Chains Multi-Label Classifier.</p>
 <p>This class provides implementation of Jesse Read&#8217;s problem transformation
 method called Classifier Chains. For L labels it trains L classifiers
-ordered in a chain according to the 
+ordered in a chain according to the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Chain_rule_(probability)">Bayesian chain rule</a>.
-The first classifier is trained just on the input space, and then each next 
+The first classifier is trained just on the input space, and then each next
 classifier is trained on the input space and all previous classifiers in the
 chain.</p>
 <p>The default classifier chains follow the same ordering as provided in the
 training set, i.e. label in column 0, then 1, etc.</p>
-<p>You can find more information about this method in Jesse Read&#8217;s 
+<p>You can find more information about this method in Jesse Read&#8217;s
 <a class="reference external" href="https://users.ics.aalto.fi/jesse/talks/chains-ECML-2009-presentation.pdf">ECML presentation</a>
 or <a class="reference external" href="http://www.cs.waikato.ac.nz/~eibe/pubs/ccformlc.pdf">journal paper</a>.</p>
 <dl class="attribute">
@@ -321,7 +321,7 @@ or <a class="reference external" href="http://www.cs.waikato.ac.nz/~eibe/pubs/cc
 <dt id="skmultilearn.problem_transform.ClassifierChain.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.ClassifierChain.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit classifier with training data</p>
-<p>Internally this method uses a sparse CSC representation 
+<p>Internally this method uses a sparse CSC representation
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csc_matrix</span></code>) of the X &amp; y matrices.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -386,10 +386,10 @@ or <a class="reference external" href="http://www.cs.waikato.ac.nz/~eibe/pubs/cc
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase" title="skmultilearn.base.problem_transformation.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.problem_transformation.ProblemTransformationBase</span></code></a></p>
 <p>Label Powerset Multi-Label Classifier.</p>
 <p>Label Powerset is a problem transformation approach to multi-label
-classification that transforms a multi-label problem to a multi-class 
-problem with 1 multi-class classifier trained on all unique label 
+classification that transforms a multi-label problem to a multi-class
+problem with 1 multi-class classifier trained on all unique label
 combinations found in the training data.</p>
-<p>More information about this method can be found in an introduction 
+<p>More information about this method can be found in an introduction
 to multi-label classification by Tsoumakas et. al.</p>
 <dl class="attribute">
 <dt id="skmultilearn.problem_transform.LabelPowerset.BRIEFNAME">
@@ -399,14 +399,15 @@ to multi-label classification by Tsoumakas et. al.</p>
 <dl class="method">
 <dt id="skmultilearn.problem_transform.LabelPowerset.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.LabelPowerset.clean" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Reset classifier internals before refitting</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="skmultilearn.problem_transform.LabelPowerset.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.LabelPowerset.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit classifier with training data</p>
-<p>Internally this method uses a sparse CSR representation 
-(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) of the X matrix and 
+<p>Internally this method uses a sparse CSR representation
+(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) of the X matrix and
 a sparse LIL representation (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.lil_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -428,13 +429,30 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dl class="method">
 <dt id="skmultilearn.problem_transform.LabelPowerset.inverse_transform">
 <code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.LabelPowerset.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Transforms multi-class assignment to multi-label</p>
+<p>Transforms a mutli-label problem into a single-label multi-class
+problem where each label combination is a separate class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>nd.array</em>) &#8211; of size <code class="docutils literal"><span class="pre">n_samples</span></code> multi-class
+output space as transformed by <a class="reference internal" href="#skmultilearn.problem_transform.LabelPowerset.transform" title="skmultilearn.problem_transform.LabelPowerset.transform"><code class="xref py py-meth docutils literal"><span class="pre">transform()</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">assignments following the label combinations of the
+original multi-label classification problem</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">sparse indicator matrix of shape <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code> of {0,1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="skmultilearn.problem_transform.LabelPowerset.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.LabelPowerset.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -454,7 +472,7 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dt id="skmultilearn.problem_transform.LabelPowerset.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.LabelPowerset.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict probabilities of label assignments for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -473,7 +491,23 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dl class="method">
 <dt id="skmultilearn.problem_transform.LabelPowerset.transform">
 <code class="descname">transform</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.LabelPowerset.transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Transform multi-label output space to multi-class</p>
+<p>Transforms a mutli-label problem into a single-label multi-class
+problem where each label combination is a separate class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix" title="skmultilearn.cluster.matrix"><em>matrix</em></a>) &#8211; output space of shape <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code>
+of {0,1} of a multi-label classification problem</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with multi-class output space problem</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">nd.array of size <code class="docutils literal"><span class="pre">n_samples</span></code> of int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -488,8 +522,8 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase" title="skmultilearn.base.problem_transformation.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.problem_transformation.ProblemTransformationBase</span></code></a></p>
 <p>Binary Relevance Multi-Label Classifier.</p>
 <p>Transforms a multi-label classification problem with L labels
-into L single-label separate binary classification problems 
-using the same base classifier provided in the constructor. The 
+into L single-label separate binary classification problems
+using the same base classifier provided in the constructor. The
 prediction output is the union of all per label classifiers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -497,7 +531,7 @@ prediction output is the union of all per label classifiers.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>classifier</strong> (<code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code> or compatible) &#8211; clonable scikit-compatible base classifier</li>
-<li><strong>require_dense</strong> (<em></em><em>[</em><em>bool</em><em>, </em><em>bool</em><em>]</em><em></em>) &#8211; whether the base classifier requires dense 
+<li><strong>require_dense</strong> (<em></em><em>[</em><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>]</em><em></em>) &#8211; whether the base classifier requires dense
 representations for input features and classes/labels matrices in fit/predict.</li>
 </ul>
 </td>
@@ -513,7 +547,7 @@ representations for input features and classes/labels matrices in fit/predict.</
 <dt id="skmultilearn.problem_transform.br.BinaryRelevance.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.br.BinaryRelevance.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit classifier with training data</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) and sparse CSC representation for y
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csc_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -543,7 +577,7 @@ representations for input features and classes/labels matrices in fit/predict.</
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>X</strong> &#8211; not used</li>
-<li><strong>y</strong> (<em>matrix</em><em> or </em><em>sparse matrix</em>) &#8211; binary indicator matrix with label assignments - 
+<li><strong>y</strong> (<a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix" title="skmultilearn.cluster.matrix"><em>matrix</em></a><em> or </em><em>sparse matrix</em>) &#8211; binary indicator matrix with label assignments -
 only used for learning # of labels</li>
 </ul>
 </td>
@@ -557,7 +591,7 @@ only used for learning # of labels</li>
 <dt id="skmultilearn.problem_transform.br.BinaryRelevance.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.br.BinaryRelevance.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.coo_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -577,7 +611,7 @@ only used for learning # of labels</li>
 <dt id="skmultilearn.problem_transform.br.BinaryRelevance.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/br.html#BinaryRelevance.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.br.BinaryRelevance.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict probabilities of label assignments for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.coo_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -600,19 +634,19 @@ only used for learning # of labels</li>
 <span id="skmultilearn-problem-transform-cc-module"></span><h2>skmultilearn.problem_transform.cc module<a class="headerlink" href="#module-skmultilearn.problem_transform.cc" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="skmultilearn.problem_transform.cc.ClassifierChain">
-<em class="property">class </em><code class="descclassname">skmultilearn.problem_transform.cc.</code><code class="descname">ClassifierChain</code><span class="sig-paren">(</span><em>classifier=None</em>, <em>require_dense=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.cc.ClassifierChain" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.problem_transform.cc.</code><code class="descname">ClassifierChain</code><span class="sig-paren">(</span><em>classifier=None</em>, <em>require_dense=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.cc.ClassifierChain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase" title="skmultilearn.base.problem_transformation.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.problem_transformation.ProblemTransformationBase</span></code></a></p>
 <p>Classifier Chains Multi-Label Classifier.</p>
 <p>This class provides implementation of Jesse Read&#8217;s problem transformation
 method called Classifier Chains. For L labels it trains L classifiers
-ordered in a chain according to the 
+ordered in a chain according to the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Chain_rule_(probability)">Bayesian chain rule</a>.
-The first classifier is trained just on the input space, and then each next 
+The first classifier is trained just on the input space, and then each next
 classifier is trained on the input space and all previous classifiers in the
 chain.</p>
 <p>The default classifier chains follow the same ordering as provided in the
 training set, i.e. label in column 0, then 1, etc.</p>
-<p>You can find more information about this method in Jesse Read&#8217;s 
+<p>You can find more information about this method in Jesse Read&#8217;s
 <a class="reference external" href="https://users.ics.aalto.fi/jesse/talks/chains-ECML-2009-presentation.pdf">ECML presentation</a>
 or <a class="reference external" href="http://www.cs.waikato.ac.nz/~eibe/pubs/ccformlc.pdf">journal paper</a>.</p>
 <dl class="attribute">
@@ -624,7 +658,7 @@ or <a class="reference external" href="http://www.cs.waikato.ac.nz/~eibe/pubs/cc
 <dt id="skmultilearn.problem_transform.cc.ClassifierChain.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/cc.html#ClassifierChain.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.cc.ClassifierChain.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit classifier with training data</p>
-<p>Internally this method uses a sparse CSC representation 
+<p>Internally this method uses a sparse CSC representation
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csc_matrix</span></code>) of the X &amp; y matrices.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -692,10 +726,10 @@ or <a class="reference external" href="http://www.cs.waikato.ac.nz/~eibe/pubs/cc
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.html#skmultilearn.base.problem_transformation.ProblemTransformationBase" title="skmultilearn.base.problem_transformation.ProblemTransformationBase"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.base.problem_transformation.ProblemTransformationBase</span></code></a></p>
 <p>Label Powerset Multi-Label Classifier.</p>
 <p>Label Powerset is a problem transformation approach to multi-label
-classification that transforms a multi-label problem to a multi-class 
-problem with 1 multi-class classifier trained on all unique label 
+classification that transforms a multi-label problem to a multi-class
+problem with 1 multi-class classifier trained on all unique label
 combinations found in the training data.</p>
-<p>More information about this method can be found in an introduction 
+<p>More information about this method can be found in an introduction
 to multi-label classification by Tsoumakas et. al.</p>
 <dl class="attribute">
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.BRIEFNAME">
@@ -705,14 +739,15 @@ to multi-label classification by Tsoumakas et. al.</p>
 <dl class="method">
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.clean" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Reset classifier internals before refitting</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit classifier with training data</p>
-<p>Internally this method uses a sparse CSR representation 
-(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) of the X matrix and 
+<p>Internally this method uses a sparse CSR representation
+(<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>) of the X matrix and
 a sparse LIL representation (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.lil_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -734,13 +769,30 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dl class="method">
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.inverse_transform">
 <code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.inverse_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Transforms multi-class assignment to multi-label</p>
+<p>Transforms a mutli-label problem into a single-label multi-class
+problem where each label combination is a separate class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>nd.array</em>) &#8211; of size <code class="docutils literal"><span class="pre">n_samples</span></code> multi-class
+output space as transformed by <a class="reference internal" href="#skmultilearn.problem_transform.lp.LabelPowerset.transform" title="skmultilearn.problem_transform.lp.LabelPowerset.transform"><code class="xref py py-meth docutils literal"><span class="pre">transform()</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">assignments following the label combinations of the
+original multi-label classification problem</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">sparse indicator matrix of shape <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code> of {0,1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.predict">
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict labels for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -760,7 +812,7 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict probabilities of label assignments for X</p>
-<p>Internally this method uses a sparse CSR representation for X 
+<p>Internally this method uses a sparse CSR representation for X
 (<code class="xref py py-class docutils literal"><span class="pre">scipy.sparse.csr_matrix</span></code>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -779,7 +831,23 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
 <dl class="method">
 <dt id="skmultilearn.problem_transform.lp.LabelPowerset.transform">
 <code class="descname">transform</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/problem_transform/lp.html#LabelPowerset.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.problem_transform.lp.LabelPowerset.transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Transform multi-label output space to multi-class</p>
+<p>Transforms a mutli-label problem into a single-label multi-class
+problem where each label combination is a separate class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<a class="reference internal" href="skmultilearn.cluster.html#module-skmultilearn.cluster.matrix" title="skmultilearn.cluster.matrix"><em>matrix</em></a>) &#8211; output space of shape <code class="docutils literal"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code>
+of {0,1} of a multi-label classification problem</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array with multi-class output space problem</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">nd.array of size <code class="docutils literal"><span class="pre">n_samples</span></code> of int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -824,7 +892,7 @@ a sparse LIL representation (<code class="xref py py-class docutils literal"><sp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

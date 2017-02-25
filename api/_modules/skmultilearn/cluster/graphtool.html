@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>skmultilearn.cluster.graphtool &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>skmultilearn.cluster.graphtool &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="../../../index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -149,13 +149,16 @@
             
   <h1>Source code for skmultilearn.cluster.graphtool</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">LabelCooccurenceClustererBase</span>
+<span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">graph_tool.all</span> <span class="k">as</span> <span class="nn">gt</span>
 
 
 <div class="viewcode-block" id="GraphToolCooccurenceClusterer"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.GraphToolCooccurenceClusterer">[docs]</a><span class="k">class</span> <span class="nc">GraphToolCooccurenceClusterer</span><span class="p">(</span><span class="n">LabelCooccurenceClustererBase</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot; Clusters the label space using graph tool&#39;s stochastic block modelling community detection method</span>
 
 <span class="sd">        Parameters</span>
@@ -164,23 +167,20 @@
 <span class="sd">        weighted: boolean</span>
 <span class="sd">                Decide whether to generate a weighted or unweighted graph.</span>
 
-<span class="sd">        allow_overlap: boolean</span>
-<span class="sd">                Allow overlapping of clusters or not.</span>
-
 <span class="sd">        include_self_edges : boolean</span>
 <span class="sd">            Decide whether to include self-edge i.e. label 1 - label 1 in co-occurrence graph</span>
 
+<span class="sd">        allow_overlap: boolean</span>
+<span class="sd">                Allow overlapping of clusters or not.</span>
+
 <span class="sd">        n_iters : int</span>
-<span class="sd">                Number of iterations to perform in sweeping </span>
+<span class="sd">                Number of iterations to perform in sweeping</span>
 
 <span class="sd">        n_init_iters: int</span>
-<span class="sd">                Number of iterations to perform </span>
+<span class="sd">                Number of iterations to perform</span>
 
-<span class="sd">        collect_community_statistics: bool</span>
-<span class="sd">                Whether to collect statistics related to detected community</span>
-
-<span class="sd">        use_degree_corr: &#39;auto&#39; or bool</span>
-<span class="sd">                Whether to use a degree correlated stochastic blockmodel, or not - if auto, it is selected based on selection criterium</span>
+<span class="sd">        use_degree_corr: None or bool</span>
+<span class="sd">                Whether to use a degree correlated stochastic blockmodel, or not - if None, it is selected based on selection criterium</span>
 
 <span class="sd">        model_selection_criterium: &#39;mean_field&#39; or &#39;bethe&#39;</span>
 <span class="sd">                Approach to use in case</span>
@@ -188,18 +188,31 @@
 <span class="sd">        verbose: bool</span>
 <span class="sd">                Be verbose about the output</span>
 
+<span class="sd">        equlibrate_options: dict</span>
+<span class="sd">                additional options to pass to `graphtool&#39;s mcmc_equilibrate &lt;https://graph-tool.skewed.de/static/doc/inference.html#graph_tool.inference.mcmc_equilibrate&gt;`_</span>
+
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_self_edges</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_overlap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GraphToolCooccurenceClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">weighted</span><span class="o">=</span><span class="n">weighted</span><span class="p">,</span> <span class="n">include_self_edges</span><span class="o">=</span><span class="n">include_self_edges</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">include_self_edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">allow_overlap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">n_iters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">n_init_iters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">use_degree_corr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">model_selection_criterium</span><span class="o">=</span><span class="s1">&#39;mean_field&#39;</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">equlibrate_options</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphToolCooccurenceClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">weighted</span><span class="o">=</span><span class="n">weighted</span><span class="p">,</span> <span class="n">include_self_edges</span><span class="o">=</span><span class="n">include_self_edges</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span> <span class="o">=</span> <span class="n">allow_overlap</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_iters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_init_iters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">use_degree_corr</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_selection_criterium</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">collect_community_statistics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iters</span> <span class="o">=</span> <span class="n">n_iters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_init_iters</span> <span class="o">=</span> <span class="n">n_init_iters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_degree_corr</span> <span class="o">=</span> <span class="n">use_degree_corr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_selection_criterium</span> <span class="o">=</span> <span class="n">model_selection_criterium</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equlibrate_options</span> <span class="o">=</span> <span class="n">equlibrate_options</span>
 
         <span class="k">if</span> <span class="n">allow_overlap</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;allow_overlap needs to be a boolean&quot;</span><span class="p">)</span>
@@ -248,23 +261,49 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        partition: list of lists : list of lists label indexes, each sublist represents labels that are in that community</span>
-<span class="sd">        </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dls_</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vm_</span>  <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">en_</span>  <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">h_</span>   <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vm_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">em_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S_bethe_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S_mf_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L_</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_coocurence_adjacency_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_coocurence_graph</span><span class="p">()</span>
 
-        <span class="n">d</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">minimize_blockmodel_dl</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span><span class="p">)</span> <span class="c1">#, ec=self.weights), broken in graphtool for now</span>
-        <span class="n">A</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get_blocks</span><span class="p">()</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">which_model_to_use</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">B</span><span class="p">)]</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span><span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_degree_corr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">deg_corr</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">predict_communities</span><span class="p">(</span><span class="n">deg_corr</span><span class="p">)</span>
+
+            <span class="n">decision_criterion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">S_mf_</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_selection_criterium</span> <span class="o">==</span> <span class="s1">&#39;bethe&#39;</span><span class="p">:</span>
+                <span class="n">decision_criterion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">S_bethe_</span>
+
+            <span class="n">which_model_to_use</span> <span class="o">=</span> <span class="n">decision_criterion</span><span class="p">[</span>
+                <span class="kc">True</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">decision_criterion</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predict_communities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">use_degree_corr</span><span class="p">)</span>
+            <span class="n">which_model_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_degree_corr</span>
+
+        <span class="n">state_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_</span><span class="p">[</span><span class="n">which_model_to_use</span><span class="p">]</span>
+
+        <span class="n">found_blocks</span> <span class="o">=</span> <span class="n">state_to_use</span><span class="o">.</span><span class="n">get_blocks</span><span class="p">()</span><span class="o">.</span><span class="n">get_array</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">found_blocks</span><span class="p">))}</span>
+
+        <span class="k">for</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">block_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">found_blocks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span><span class="p">[</span><span class="n">block_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_id</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_sets</span><span class="p">)</span>
 
@@ -272,53 +311,50 @@
 
 <div class="viewcode-block" id="GraphToolCooccurenceClusterer.predict_communities"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.html#skmultilearn.cluster.GraphToolCooccurenceClusterer.predict_communities">[docs]</a>    <span class="k">def</span> <span class="nf">predict_communities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deg_corr</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_weighted</span><span class="p">:</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">minimize_blockmodel_dl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span><span class="p">,</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">minimize_blockmodel_dl</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span><span class="p">,</span>
                 <span class="n">deg_corr</span><span class="o">=</span><span class="n">deg_corr</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">ec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">minimize_blockmodel_dl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span><span class="p">,</span> <span class="n">deg_corr</span><span class="o">=</span><span class="n">deg_corr</span><span class="p">)</span>
-            
-        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">())</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">minimize_blockmodel_dl</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_overlap</span><span class="p">,</span> <span class="n">deg_corr</span><span class="o">=</span><span class="n">deg_corr</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collect_community_statistics</span><span class="p">:</span>
-            <span class="n">dls</span> <span class="o">=</span> <span class="p">[]</span>         <span class="c1"># description length history</span>
-            <span class="n">vm</span> <span class="o">=</span> <span class="kc">None</span>        <span class="c1"># vertex marginals</span>
-            <span class="n">em</span> <span class="o">=</span> <span class="kc">None</span>        <span class="c1"># edge marginals</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">())</span>
 
-        <span class="k">def</span> <span class="nf">collect_marginals</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-            <span class="k">global</span> <span class="n">vm</span><span class="p">,</span> <span class="n">em</span><span class="p">,</span> <span class="n">dls</span><span class="p">,</span> <span class="n">h</span>
-            <span class="n">vm</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">collect_vertex_marginals</span><span class="p">(</span><span class="n">vm</span><span class="p">)</span>
-            <span class="n">em</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">collect_edge_marginals</span><span class="p">(</span><span class="n">em</span><span class="p">)</span>
-            <span class="n">dls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">entropy</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dls_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>          <span class="c1"># description length history</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vm_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>        <span class="c1"># vertex marginals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">em_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>        <span class="c1"># edge marginals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">collect_marginals</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">deg_corr</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">vm_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">collect_vertex_marginals</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vm_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">em_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">collect_edge_marginals</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">em_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">dls_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">entropy</span><span class="p">())</span>
             <span class="n">B</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_nonempty_B</span><span class="p">()</span>
-            <span class="n">h</span><span class="p">[</span><span class="n">B</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">h_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">][</span><span class="n">B</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">collect_marginals_for_class</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">collect_marginals</span><span class="p">(</span>
+            <span class="n">s</span><span class="p">,</span> <span class="n">deg_corr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="c1"># Now we collect the marginal distributions for exactly 200,000 sweeps</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collect_community_statistics</span><span class="p">:</span>
-            <span class="n">gt</span><span class="o">.</span><span class="n">mcmc_equilibrate</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">force_niter</span><span class="o">=</span><span class="n">n_iters</span><span class="p">,</span> <span class="n">mcmc_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">niter</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
-                            <span class="n">callback</span><span class="o">=</span><span class="n">collect_marginals</span><span class="p">)</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">dls_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">dls</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vm_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">vm</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">en_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">em</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">h_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">gt</span><span class="o">.</span><span class="n">mcmc_equilibrate</span><span class="p">(</span>
+            <span class="n">state</span><span class="p">,</span> <span class="n">force_niter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iters</span><span class="p">,</span> <span class="n">mcmc_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">niter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_init_iters</span><span class="p">),</span>
+                        <span class="n">callback</span><span class="o">=</span><span class="n">collect_marginals_for_class</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">equlibrate_options</span><span class="p">)</span>
 
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">gt</span><span class="o">.</span><span class="n">mcmc_equilibrate</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">force_niter</span><span class="o">=</span><span class="n">n_iters</span><span class="p">,</span> <span class="n">mcmc_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">niter</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">S_mf</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">mf_entropy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vm_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">])</span>
+        <span class="n">S_bethe</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">bethe_entropy</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coocurence_graph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">em_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dls_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">])</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S_bethe_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">S_bethe</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S_mf_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">S_mf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 
-
-        <span class="n">S_mf</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">mf_entropy</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">vm</span><span class="p">)</span>
-        <span class="n">S_bethe</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">bethe_entropy</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">em</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">L</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dls</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">S_bethe_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">S_bethe</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">S_mf_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">S_mf</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">L_</span><span class="p">[</span><span class="n">deg_corr</span><span class="p">]</span> <span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
-
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model evidence for deg_corr = </span><span class="si">%s</span><span class="s2">:&quot;</span> <span class="o">%</span> <span class="n">deg_corr</span><span class="p">,</span>
-              <span class="n">L</span> <span class="o">+</span> <span class="n">S_mf</span><span class="p">,</span> <span class="s2">&quot;(mean field),&quot;</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="n">S_bethe</span><span class="p">,</span> <span class="s2">&quot;(Bethe)&quot;</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;Model evidence for deg_corr = </span><span class="si">%s</span><span class="s2">:&quot;</span> <span class="o">%</span> <span class="n">deg_corr</span><span class="p">,</span>
+                  <span class="n">L</span> <span class="o">+</span> <span class="n">S_mf</span><span class="p">,</span> <span class="s2">&quot;(mean field),&quot;</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="n">S_bethe</span><span class="p">,</span> <span class="s2">&quot;(Bethe)&quot;</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>
@@ -351,7 +387,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

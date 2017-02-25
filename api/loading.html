@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Loading and generating multi-label datasets &mdash; scikit-multilearn 0.0.4 documentation</title>
+  <title>Loading and generating multi-label datasets &mdash; scikit-multilearn 0.0.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="scikit-multilearn 0.0.4 documentation" href="index.html"/>
+    <link rel="top" title="scikit-multilearn 0.0.5 documentation" href="index.html"/>
         <link rel="next" title="Selecting a multi-label classifier" href="classify.html"/>
         <link rel="prev" title="The data format for multi-label classification" href="datasets.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -177,7 +177,7 @@
 <p>The <code class="docutils literal"><span class="pre">MULAN</span></code> package provides a <a class="reference external" href="http://mulan.sourceforge.net/datasets-mlc.html">repository</a> of multi-label datasets used in a variety of publications. The data sets are provided in the <code class="docutils literal"><span class="pre">ARFF</span></code> format, with labels provided as last elements of the <code class="docutils literal"><span class="pre">ARFF</span></code> data frame (little endian). Scikit-multilearn provides support for loading <code class="docutils literal"><span class="pre">ARFF</span></code> data files.</p>
 <div class="section" id="loading-from-arff">
 <h3>Loading from ARFF<a class="headerlink" href="#loading-from-arff" title="Permalink to this headline">¶</a></h3>
-<p>The class <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-class docutils literal"><span class="pre">skmultilearn.dataset.Dataset</span></code></a> allows loading data from <code class="docutils literal"><span class="pre">WEKA</span></code>, <code class="docutils literal"><span class="pre">MULAN</span></code> or <code class="docutils literal"><span class="pre">MEKA</span></code> provided data sets in <code class="docutils literal"><span class="pre">ARFF</span></code> format. The module depends on <a class="reference external" href="https://pypi.python.org/pypi/liac-arff">liac-arff</a> and is capable of loading sparse and dense represented <code class="docutils literal"><span class="pre">ARFF</span></code> data, the <cite>X</cite>, <cite>y</cite> are returned as sparse matrices. See the <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset.load_arff_to_numpy" title="skmultilearn.dataset.Dataset.load_arff_to_numpy"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset.load_arff_to_numpy()</span></code></a> for more information.</p>
+<p>The class <code class="xref py py-class docutils literal"><span class="pre">skmultilearn.dataset.Dataset</span></code> allows loading data from <code class="docutils literal"><span class="pre">WEKA</span></code>, <code class="docutils literal"><span class="pre">MULAN</span></code> or <code class="docutils literal"><span class="pre">MEKA</span></code> provided data sets in <code class="docutils literal"><span class="pre">ARFF</span></code> format. The module depends on <a class="reference external" href="https://pypi.python.org/pypi/liac-arff">liac-arff</a> and is capable of loading sparse and dense represented <code class="docutils literal"><span class="pre">ARFF</span></code> data, the <cite>X</cite>, <cite>y</cite> are returned as sparse matrices. See the <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset.load_arff_to_numpy()</span></code> for more information.</p>
 <p>Example code for converting <code class="docutils literal"><span class="pre">ARFF</span></code> file to data dumps:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
@@ -215,12 +215,12 @@
     <span class="n">load_sparse</span> <span class="o">=</span> <span class="n">load_sparse</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> provided data sets are produced using <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code></a> class and contain a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing a data set in the format described above. The data sets are <code class="docutils literal"><span class="pre">pickle</span></code> dumps compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
+<p>The <code class="docutils literal"><span class="pre">scikit-multilearn</span></code> provided data sets are produced using <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code> class and contain a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing a data set in the format described above. The data sets are <code class="docutils literal"><span class="pre">pickle</span></code> dumps compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
 </div>
 </div>
 <div class="section" id="scikit-multilearn-data-set-helpers">
 <h2>Scikit-multilearn data set helpers<a class="headerlink" href="#scikit-multilearn-data-set-helpers" title="Permalink to this headline">¶</a></h2>
-<p>For experimental purposes we provide a helper function to quickly load compressed data sources for multi-label classification. The <a class="reference internal" href="api/skmultilearn.html#skmultilearn.dataset.Dataset" title="skmultilearn.dataset.Dataset"><code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code></a> class can load and save <cite>X</cite> and <cite>y</cite> to a compressed file containing a <code class="docutils literal"><span class="pre">pickle</span></code> of a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing the input and output matrices. The data sets are dumped using <code class="docutils literal"><span class="pre">pickle</span></code> module and compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
+<p>For experimental purposes we provide a helper function to quickly load compressed data sources for multi-label classification. The <code class="xref py py-meth docutils literal"><span class="pre">skmultilearn.dataset.Dataset()</span></code> class can load and save <cite>X</cite> and <cite>y</cite> to a compressed file containing a <code class="docutils literal"><span class="pre">pickle</span></code> of a dictionary with two keys: <code class="docutils literal"><span class="pre">X</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, containing the input and output matrices. The data sets are dumped using <code class="docutils literal"><span class="pre">pickle</span></code> module and compressed using the <code class="docutils literal"><span class="pre">bz2</span></code> module. They can be loaded using the <code class="docutils literal"><span class="pre">Dataset</span></code> class.</p>
 <p>Example use case of  saving and loading data sets:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
@@ -245,24 +245,50 @@
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As there is no established stratified folding procedure for multi-label classification and scikit-learn&#8217;s StratifiedFold will fail on multi-label data. We are left to use a traditional k-fold cross-validation approach with <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html">sklearn.model_selection.KFold</a>:</p>
+<p>As there is no established stratified folding procedure for multi-label classification we can use a traditional k-fold cross-validation approach with <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html">sklearn.model_selection.KFold</a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
 
+<span class="c1"># remember to set n_splits and shuffle!</span>
 <span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+
 <span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># assuming classifier object exists</span>
+    <span class="c1"># assuming classifier object exists</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
 
-        <span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
-        <span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
 
-        <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
-        <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
+    <span class="c1"># learn the classifier</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-        <span class="c1"># learn the classifier</span>
-        <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="c1"># predict labels for test data</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is noteworthy that traditional <code class="docutils literal"><span class="pre">k</span></code>-folding may lead to severe problems with label combination representability across folds, thus if your data set exhibits a strong label co-occurrence structure you might want to use a label-combination based <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html">stratified k-fold</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
 
-        <span class="c1"># predict labels for test data</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">lp</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">()</span>
+
+<span class="c1"># remember to set n_splits and shuffle!</span>
+<span class="n">kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">lp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+
+    <span class="c1"># assuming classifier object exists</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">,:]</span>
+
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">,:]</span>
+
+    <span class="c1"># learn the classifier</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="c1"># predict labels for test data</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>In the next section you will learn what classification methods are available in scikit-multilearn.</p>
@@ -309,7 +335,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.4',
+            VERSION:'0.0.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
