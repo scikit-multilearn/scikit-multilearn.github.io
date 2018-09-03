@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.cluster.networkx</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">community</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">networkx.algorithms.community</span> <span class="k">import</span> <span class="n">asyn_lpa_communities</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">LabelGraphClustererBase</span>
+<span class="kn">from</span> <span class="nn">.helpers</span> <span class="k">import</span> <span class="n">_membership_to_list_of_communities</span>
+
+
+<div class="viewcode-block" id="NetworkXLabelGraphClusterer"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer">[docs]</a><span class="k">class</span> <span class="nc">NetworkXLabelGraphClusterer</span><span class="p">(</span><span class="n">LabelGraphClustererBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Cluster label space with NetworkX community detection</span>
+
+<span class="sd">    This clusterer constructs a NetworkX representation of the Label Graph generated by graph builder and detects</span>
+<span class="sd">    communities in it using methods from the NetworkX library. Detected communities are converted to</span>
+<span class="sd">    a label space clustering.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    graph_builder: a GraphBuilderBase inherited transformer</span>
+<span class="sd">        the graph builder to provide the adjacency matrix and weight map for the underlying graph</span>
+<span class="sd">    method: string</span>
+<span class="sd">        the community detection method to use, this clusterer supports the following community detection methods:</span>
+
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | Method name string   |                             Description                                        |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | louvain_             | Detecting communities with largest modularity using incremental greedy search  |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | label_propagation_   | Detecting communities from multiple async label propagation on the graph       |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+
+<span class="sd">        .. _louvain: https://python-louvain.readthedocs.io/en/latest/</span>
+<span class="sd">        .. _label_propagation: https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.label_propagation.asyn_lpa_communities.html</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    graph_ : networkx.Graph</span>
+<span class="sd">        the networkx Graph object containing the graph representation of graph builder&#39;s adjacency matrix and weights</span>
+<span class="sd">    weights_ : { &#39;weight&#39; : list of values in edge order of graph edges }</span>
+<span class="sd">        edge weights stored in a format recognizable by the networkx module</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    If you use this clusterer please cite the igraph paper and the clustering paper:</span>
+
+<span class="sd">    .. code :: latex</span>
+
+<span class="sd">        @unknown{networkx,</span>
+<span class="sd">            author = {Hagberg, Aric and Swart, Pieter and S Chult, Daniel},</span>
+<span class="sd">            year = {2008},</span>
+<span class="sd">            month = {01},</span>
+<span class="sd">            title = {Exploring Network Structure, Dynamics, and Function Using NetworkX},</span>
+<span class="sd">            booktitle = {Proceedings of the 7th Python in Science Conference}</span>
+<span class="sd">        }</span>
+
+<span class="sd">        @article{blondel2008fast,</span>
+<span class="sd">          title={Fast unfolding of communities in large networks},</span>
+<span class="sd">          author={Blondel, Vincent D and Guillaume, Jean-Loup and Lambiotte, Renaud and Lefebvre, Etienne},</span>
+<span class="sd">          journal={Journal of statistical mechanics: theory and experiment},</span>
+<span class="sd">          volume={2008},</span>
+<span class="sd">          number={10},</span>
+<span class="sd">          pages={P10008},</span>
+<span class="sd">          year={2008},</span>
+<span class="sd">          publisher={IOP Publishing}</span>
+<span class="sd">        }</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    An example code for using this clusterer with a classifier looks like this:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from sklearn.ensemble import RandomForestClassifier</span>
+<span class="sd">        from skmultilearn.problem_transform import LabelPowerset</span>
+<span class="sd">        from skmultilearn.cluster import NetworkXLabelGraphClusterer, LabelCooccurrenceGraphBuilder</span>
+<span class="sd">        from skmultilearn.ensemble import LabelSpacePartitioningClassifier</span>
+
+<span class="sd">        # construct base forest classifier</span>
+<span class="sd">        base_classifier = RandomForestClassifier(n_estimators=1000)</span>
+
+<span class="sd">        # construct a graph builder that will include</span>
+<span class="sd">        # label relations weighted by how many times they</span>
+<span class="sd">        # co-occurred in the data, without self-edges</span>
+<span class="sd">        graph_builder = LabelCooccurrenceGraphBuilder(</span>
+<span class="sd">            weighted = True,</span>
+<span class="sd">            include_self_edges = False</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # setup problem transformation approach with sparse matrices for random forest</span>
+<span class="sd">        problem_transform_classifier = LabelPowerset(classifier=base_classifier,</span>
+<span class="sd">            require_dense=[False, False])</span>
+
+<span class="sd">        # setup the clusterer to use, we selected the modularity-based approach</span>
+<span class="sd">        clusterer = NetworkXLabelGraphClusterer(graph_builder=graph_builder, method=&#39;louvain&#39;)</span>
+
+<span class="sd">        # setup the ensemble metaclassifier</span>
+<span class="sd">        classifier = LabelSpacePartitioningClassifier(problem_transform_classifier, clusterer)</span>
+
+<span class="sd">        # train</span>
+<span class="sd">        classifier.fit(X_train, y_train)</span>
+
+<span class="sd">        # predict</span>
+<span class="sd">        predictions = classifier.predict(X_test)</span>
+
+<span class="sd">    For more use cases see `the label relations exploration guide &lt;../labelrelations.ipynb&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_builder</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the clusterer</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph_builder: a GraphBuilderBase inherited transformer</span>
+<span class="sd">                Class used to provide an underlying graph for NetworkX</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NetworkXLabelGraphClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">graph_builder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+<div class="viewcode-block" id="NetworkXLabelGraphClusterer.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs clustering on y and returns list of label lists</span>
+
+<span class="sd">        Builds a label graph using the provided graph builder&#39;s `transform` method</span>
+<span class="sd">        on `y` and then detects communities using the selected `method`.</span>
+
+<span class="sd">        Sets :code:`self.weights_` and :code:`self.graph_`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : None</span>
+<span class="sd">            currently unused, left for scikit compatibility</span>
+<span class="sd">        y : scipy.sparse</span>
+<span class="sd">            label space of shape :code:`(n_samples, n_labels)`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        arrray of arrays of label indexes (numpy.ndarray)</span>
+<span class="sd">            label space division, each sublist represents labels that are in that community</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">edge_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span><span class="o">.</span><span class="n">is_weighted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weights_</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">edge_map</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weights_</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">edge_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="n">w</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;louvain&#39;</span><span class="p">:</span>
+            <span class="n">partition_dict</span> <span class="o">=</span> <span class="n">community</span><span class="o">.</span><span class="n">best_partition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="p">)</span>
+            <span class="n">memberships</span> <span class="o">=</span> <span class="p">[</span><span class="n">partition_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="n">_membership_to_list_of_communities</span><span class="p">(</span>
+                    <span class="n">memberships</span><span class="p">,</span>
+                    <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">memberships</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">asyn_lpa_communities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">)])</span></div></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

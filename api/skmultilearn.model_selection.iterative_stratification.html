@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../userguide.html">User Guide</a></li>
+        <li><a href="skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">skmultilearn.model_selection.iterative_stratification module</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="module-skmultilearn.model_selection.iterative_stratification">
+<span id="skmultilearn-model-selection-iterative-stratification-module"></span><h1>skmultilearn.model_selection.iterative_stratification module<a class="headerlink" href="#module-skmultilearn.model_selection.iterative_stratification" title="Permalink to this headline">¶</a></h1>
+<p>Iterative stratification for multi-label data</p>
+<p>The classifier follows methods outlined in Sechidis11 and Szymanski17 papers related to stratyfing
+multi-label data.</p>
+<p>In general what we expect from a given stratification output is that a strata, or a fold, is close to a given, demanded size,
+usually equal to 1/k in k-fold approach, or a x% train to test set division in 2-fold splits.</p>
+<p>The idea behind this stratification method is to assign label combinations to folds based on how much a given combination is desired
+by a given fold, as more and more assignments are made, some folds are filled and positive evidence is directed into other folds,
+in the end negative evidence is distributed based on a folds desirability of size.</p>
+<p>You can also watch a <a class="reference external" href="http://videolectures.net/ecmlpkdd2011_tsoumakas_stratification/?q=stratification%20multi%20label">video presentation</a> by G. Tsoumakas which explains the algorithm. In 2017 Szymanski &amp; Kajdanowicz extended the algorithm
+to handle high-order relationships in the data set, if order = 1, the algorithm falls back to the original Sechidis11 setting.</p>
+<p>If order is larger than 1 this class constructs a list of label combinations with replacement, i.e. allowing combinations of lower
+order to be take into account. For example for combinations of order 2, the stratifier will consider both
+label pairs (1, 2) and single labels denoted as (1,1) in the algorithm. In higher order cases the
+when two combinations of different size have similar desirablity: the larger, i.e. more specific combination
+is taken into consideration first, thus if a label pair (1,2) and label 1 represented as (1,1) are of similar
+desirability, evidence for (1,2) will be assigned to folds first.</p>
+<p>You can use this class exactly the same way you would use a normal scikit KFold class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.model_selection</span> <span class="kn">import</span> <span class="n">IterativeStratification</span>
+
+<span class="n">k_fold</span> <span class="o">=</span> <span class="n">IterativeStratification</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">k_fold</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">test</span><span class="p">])</span>
+    <span class="c1"># do something with the result, comparing it to y[test]</span>
+</pre></div>
+</div>
+<p>Most of the methods of this class are private, you will not need them unless you are extending the method.</p>
+<p>If you use this method to stratify data please cite both:
+Sechidis, K., Tsoumakas, G., &amp; Vlahavas, I. (2011). On the stratification of multi-label data. Machine Learning and Knowledge Discovery in Databases, 145-158.
+<a class="reference external" href="http://lpis.csd.auth.gr/publications/sechidis-ecmlpkdd-2011.pdf">http://lpis.csd.auth.gr/publications/sechidis-ecmlpkdd-2011.pdf</a></p>
+<p>Piotr Szymański, Tomasz Kajdanowicz ; Proceedings of the First International Workshop on Learning with Imbalanced Domains: Theory and Applications, PMLR 74:22-35, 2017.
+<a class="reference external" href="http://proceedings.mlr.press/v74/szyma%C5%84ski17a.html">http://proceedings.mlr.press/v74/szyma%C5%84ski17a.html</a></p>
+<p>Bibtex:</p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">sechidis2011stratification</span><span class="p">,</span>
+  <span class="na">title</span><span class="p">=</span><span class="s">{On the stratification of multi-label data}</span><span class="p">,</span>
+  <span class="na">author</span><span class="p">=</span><span class="s">{Sechidis, Konstantinos and Tsoumakas, Grigorios and Vlahavas, Ioannis}</span><span class="p">,</span>
+  <span class="na">journal</span><span class="p">=</span><span class="s">{Machine Learning and Knowledge Discovery in Databases}</span><span class="p">,</span>
+  <span class="na">pages</span><span class="p">=</span><span class="s">{145--158}</span><span class="p">,</span>
+  <span class="na">year</span><span class="p">=</span><span class="s">{2011}</span><span class="p">,</span>
+  <span class="na">publisher</span><span class="p">=</span><span class="s">{Springer}</span>
+<span class="p">}</span>
+
+<span class="nc">@InProceedings</span><span class="p">{</span><span class="nl">pmlr-v74-szymański17a</span><span class="p">,</span>
+  <span class="na">title</span> <span class="p">=</span>    <span class="s">{A Network Perspective on Stratification of Multi-Label Data}</span><span class="p">,</span>
+  <span class="na">author</span> <span class="p">=</span>   <span class="s">{Piotr Szymański and Tomasz Kajdanowicz}</span><span class="p">,</span>
+  <span class="na">booktitle</span> <span class="p">=</span>    <span class="s">{Proceedings of the First International Workshop on Learning with Imbalanced Domains: Theory and Applications}</span><span class="p">,</span>
+  <span class="na">pages</span> <span class="p">=</span>    <span class="s">{22--35}</span><span class="p">,</span>
+  <span class="na">year</span> <span class="p">=</span>     <span class="s">{2017}</span><span class="p">,</span>
+  <span class="na">editor</span> <span class="p">=</span>   <span class="s">{Luís Torgo and Bartosz Krawczyk and Paula Branco and Nuno Moniz}</span><span class="p">,</span>
+  <span class="na">volume</span> <span class="p">=</span>   <span class="s">{74}</span><span class="p">,</span>
+  <span class="na">series</span> <span class="p">=</span>   <span class="s">{Proceedings of Machine Learning Research}</span><span class="p">,</span>
+  <span class="na">address</span> <span class="p">=</span>      <span class="s">{ECML-PKDD, Skopje, Macedonia}</span><span class="p">,</span>
+  <span class="na">publisher</span> <span class="p">=</span>    <span class="s">{PMLR}</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification">
+<em class="property">class </em><code class="descclassname">skmultilearn.model_selection.iterative_stratification.</code><code class="descname">IterativeStratification</code><span class="sig-paren">(</span><em>n_splits=3</em>, <em>order=1</em>, <em>sample_distribution_per_fold=None</em>, <em>random_state=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/iterative_stratification.html#IterativeStratification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.model_selection._split._BaseKFold</span></code></p>
+<p>Iteratively stratify a multi-label data set into folds</p>
+<p>Construct an interative stratifier that splits the data set into folds trying to maintain balanced representation
+with respect to order-th label combinations.</p>
+<dl class="attribute">
+<dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.n_splits">
+<code class="descname">n_splits</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.n_splits" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>number of splits, int</em> – the number of folds to stratify into</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.order">
+<code class="descname">order</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.order" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int, &gt;= 1</em> – the order of label relationship to take into account when balancing sample distribution across labels</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.sample_distribution_per_fold">
+<code class="descname">sample_distribution_per_fold</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.sample_distribution_per_fold" title="Permalink to this definition">¶</a></dt>
+<dd><p>None or List[float], <code class="code docutils literal notranslate"><span class="pre">(n_splits)</span></code> – desired percentage of samples in each of the folds, if None and equal distribution of samples per fold
+is assumed i.e. 1/n_splits for each fold. The value is held in <code class="code docutils literal notranslate"><span class="pre">self.percentage_per_fold</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.random_state">
+<code class="descname">random_state</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.random_state" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – the random state seed (optional)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.iterative_stratification.iterative_train_test_split">
+<code class="descclassname">skmultilearn.model_selection.iterative_stratification.</code><code class="descname">iterative_train_test_split</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>test_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/iterative_stratification.html#iterative_train_test_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.iterative_train_test_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iteratively stratified train/test split</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a><em>, </em><em>[</em><em>0</em><em>,</em><em>1</em><em>]</em>) – the proportion of the dataset to include in the test split, the rest will be put in the train set</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">stratified division into train/test split</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">X_train, y_train, X_test, y_test</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="../_sources/api/skmultilearn.model_selection.iterative_stratification.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

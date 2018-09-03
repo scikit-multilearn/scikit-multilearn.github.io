@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.adapt.mlknn</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="k">import</span> <span class="n">MLClassifierBase</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">get_matrix_in_format</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sparse</span>
+
+
+<div class="viewcode-block" id="MLkNN"><a class="viewcode-back" href="../../../api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN">[docs]</a><span class="k">class</span> <span class="nc">MLkNN</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;kNN classification method adapted for multi-label classification</span>
+
+<span class="sd">    MLkNN builds uses k-NearestNeighbors find nearest examples to a test class and uses Bayesian inference</span>
+<span class="sd">    to select assigned labels.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k : int</span>
+<span class="sd">        number of neighbours of each input instance to take into account</span>
+<span class="sd">    s: float (default is 1.0)</span>
+<span class="sd">        the smoothing parameter</span>
+<span class="sd">    ignore_first_neighbours : int (default is 0)</span>
+<span class="sd">            ability to ignore first N neighbours, useful for comparing</span>
+<span class="sd">            with other classification software.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    knn_ : an instance of sklearn.NearestNeighbors</span>
+<span class="sd">        the nearest neighbors single-label classifier used underneath</span>
+
+
+
+<span class="sd">    .. note:: If you don&#39;t know what :code:`ignore_first_neighbours`</span>
+<span class="sd">              does, the default is safe. Please see this `issue`_.</span>
+
+
+<span class="sd">    .. _issue: https://github.com/scikit-multilearn/scikit-multilearn/issues/22</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    If you use this classifier please cite the original paper introducing the method:</span>
+
+<span class="sd">    .. code :: bibtex</span>
+
+<span class="sd">        @article{zhang2007ml,</span>
+<span class="sd">          title={ML-KNN: A lazy learning approach to multi-label learning},</span>
+<span class="sd">          author={Zhang, Min-Ling and Zhou, Zhi-Hua},</span>
+<span class="sd">          journal={Pattern recognition},</span>
+<span class="sd">          volume={40},</span>
+<span class="sd">          number={7},</span>
+<span class="sd">          pages={2038--2048},</span>
+<span class="sd">          year={2007},</span>
+<span class="sd">          publisher={Elsevier}</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Here&#39;s a very simple example of using MLkNN with a fixed number of neighbors:</span>
+
+<span class="sd">    .. code :: python</span>
+
+<span class="sd">        from skmultilearn.adapt import MLkNN</span>
+
+<span class="sd">        classifier = MLkNN(k=3)</span>
+
+<span class="sd">        # train</span>
+<span class="sd">        classifier.fit(X_train, y_train)</span>
+
+<span class="sd">        # predict</span>
+<span class="sd">        predictions = classifier.predict(X_test)</span>
+
+
+<span class="sd">    You can also use :class:`~sklearn.model_selection.GridSearchCV` to find an optimal set of parameters:</span>
+
+<span class="sd">    .. code :: python</span>
+
+<span class="sd">        from skmultilearn.adapt import MLkNN</span>
+<span class="sd">        from sklearn.model_selection import GridSearchCV</span>
+
+<span class="sd">        parameters = {&#39;k&#39;: range(1,3), &#39;s&#39;: [0.5, 0.7, 1.0]}</span>
+<span class="sd">        score = &#39;f1-macro</span>
+
+<span class="sd">        clf = GridSearchCV(MLkNN(), parameters, scoring=score)</span>
+<span class="sd">        clf.fit(X, y)</span>
+
+<span class="sd">        print clf.best_params_, clf.best_score_</span>
+
+<span class="sd">        # output</span>
+<span class="sd">        ({&#39;k&#39;: 1, &#39;s&#39;: 0.5}, 0.78988303374297597)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ignore_first_neighbours</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the classifier</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        k : int</span>
+<span class="sd">            number of neighbours of each input instance to take into account</span>
+<span class="sd">        s: float (default is 1.0)</span>
+<span class="sd">            the smoothing parameter</span>
+<span class="sd">        ignore_first_neighbours : int (default is 0)</span>
+<span class="sd">                ability to ignore first N neighbours, useful for comparing</span>
+<span class="sd">                with other classification software.</span>
+
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        knn_ : an instance of sklearn.NearestNeighbors</span>
+<span class="sd">            the nearest neighbors single-label classifier used underneath</span>
+
+<span class="sd">        .. note:: If you don&#39;t know what :code:`ignore_first_neighbours`</span>
+<span class="sd">                  does, the default is safe. Please see this `issue`_.</span>
+
+<span class="sd">        .. _issue: https://github.com/scikit-multilearn/scikit-multilearn/issues/22</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MLkNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>  <span class="c1"># Number of neighbours</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">s</span>  <span class="c1"># Smooth parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span> <span class="o">=</span> <span class="n">ignore_first_neighbours</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore_first_neighbours&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_compute_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to compute for the prior probabilities</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y : numpy.ndarray or scipy.sparse</span>
+<span class="sd">            the training labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            the prior probability given true</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            the prior probability given false</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prior_prob_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_instances</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">prior_prob_false</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">prior_prob_true</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">prior_prob_true</span><span class="p">,</span> <span class="n">prior_prob_false</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_compute_cond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to compute for the posterior probabilities</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.ndarray or scipy.sparse</span>
+<span class="sd">            input features, can be a dense or sparse matrix of size</span>
+<span class="sd">            :code:`(n_samples, n_features)`</span>
+<span class="sd">        y : numpy.ndaarray or scipy.sparse {0,1}</span>
+<span class="sd">            binary indicator matrix with label assignments.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            the posterior probability given true</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            the posterior probability given false</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i8&#39;</span><span class="p">)</span>
+        <span class="n">cn</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i8&#39;</span><span class="p">)</span>
+
+        <span class="n">label_info</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;dok&#39;</span><span class="p">)</span>
+
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span><span class="p">:]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_instances</span><span class="p">):</span>
+            <span class="n">deltas</span> <span class="o">=</span> <span class="n">label_info</span><span class="p">[</span><span class="n">neighbors</span><span class="p">[</span><span class="n">instance</span><span class="p">],</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">label_info</span><span class="p">[</span><span class="n">instance</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">c</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cn</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">c_sum</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cn_sum</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">cond_prob_true</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="n">cond_prob_false</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">cond_prob_true</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_sum</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+                <span class="n">cond_prob_false</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">+</span> <span class="n">cn</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">cn_sum</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">cond_prob_true</span><span class="p">,</span> <span class="n">cond_prob_false</span>
+
+<div class="viewcode-block" id="MLkNN.fit"><a class="viewcode-back" href="../../../api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit classifier with training data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.ndarray or scipy.sparse</span>
+<span class="sd">            input features, can be a dense or sparse matrix of size</span>
+<span class="sd">            :code:`(n_samples, n_features)`</span>
+<span class="sd">        y : numpy.ndaarray or scipy.sparse {0,1}</span>
+<span class="sd">            binary indicator matrix with label assignments.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">            fitted instance of self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;lil&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_instances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Computing the prior probabilities</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prior_prob_true</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prior_prob_false</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_prior</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span><span class="p">)</span>
+        <span class="c1"># Computing the posterior probabilities</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cond_prob_true</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond_prob_false</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cond</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="MLkNN.predict"><a class="viewcode-back" href="../../../api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.ndarray or scipy.sparse.csc_matrix</span>
+<span class="sd">            input features of shape :code:`(n_samples, n_features)`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        scipy.sparse matrix of int</span>
+<span class="sd">            binary indicator matrix with label assignments with shape</span>
+<span class="sd">            :code:`(n_samples, n_labels)`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i8&#39;</span><span class="p">)</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span><span class="p">:]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">deltas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span><span class="p">[</span><span class="n">neighbors</span><span class="p">[</span><span class="n">instance</span><span class="p">],]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">):</span>
+                <span class="n">p_true</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prior_prob_true</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond_prob_true</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">]]</span>
+                <span class="n">p_false</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prior_prob_false</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond_prob_false</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">]]</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">instance</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p_true</span> <span class="o">&gt;=</span> <span class="n">p_false</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="MLkNN.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.ndarray or scipy.sparse.csc_matrix</span>
+<span class="sd">            input features of shape :code:`(n_samples, n_features)`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        scipy.sparse matrix of int</span>
+<span class="sd">            binary indicator matrix with label assignment probabilities</span>
+<span class="sd">            with shape :code:`(n_samples, n_labels)`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span><span class="p">:]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_first_neighbours</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">deltas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cache</span><span class="p">[</span><span class="n">neighbors</span><span class="p">[</span><span class="n">instance</span><span class="p">],]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_labels</span><span class="p">):</span>
+                <span class="n">p_true</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prior_prob_true</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond_prob_true</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">]]</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">instance</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_true</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

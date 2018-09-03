@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer documentation" href="developer.html" />
+    <link rel="prev" title="The scikit-multilearn Team" href="authors.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">scikit-multilearn benchmark</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="scikit-multilearn-benchmark">
+<h1>scikit-multilearn benchmark<a class="headerlink" href="#scikit-multilearn-benchmark" title="Permalink to this headline">¶</a></h1>
+<p>Scikit-multilearn is faster than MEKA, MULAN on 12 well-cited benchmark multi-label classification datasets in two comparison scenarios:</p>
+<ul class="simple">
+<li>Binary Relevance: one single-class classifier trained per label</li>
+<li>Label Powerset: one multi-class classifier trained per data set, each class corresponds to a unique label combination.</li>
+</ul>
+<p>We use these methods to illustrate two aspects of the classification performance of the libraries:</p>
+<ul class="simple">
+<li>the cost of using many classifiers with splitting operations performed on the label space matrix</li>
+<li>the cost of using a single classifier which requires to access all label combinations to perform the transformation.</li>
+</ul>
+<p>Both classification schemes scikit-multilearn always use less or, in a few edge cases the same amount of, memory than MEKA or MULAN due to its sparse matrix support.</p>
+<p>In most cases scikit-multilearn also operates faster than MEKA or MULAN, apart from the edge case of Binary Relevance classification of the mediamill data set.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="_images/comparison.png"><img alt="_images/comparison.png" src="_images/comparison.png" style="width: 80%;" /></a>
+<p class="caption"><span class="caption-text">Normalized (100% - worst median) user running time (s) and memory usage of scikit-multilearn, Meka and Mulan implementations for Binary Relevance and Label Powerset multi-label classifiers based on Random Forest.  The closer the library is to point 0, the better it performed, thus the smaller area inside the library curve, the better.</span></p>
+</div>
+<p>The Figure presents the time and memory required to perform classification, including loading the ARFF data set and measuring errors, i.e. a complete classification use case scenario.</p>
+<p>As different data sets require different amount of time and memory we decided to normalize the charts. The results on the chart are normalized for each data set separately.</p>
+<p>Normalizion is calculated as follows: out of the median of every library’s time or memory perfomance the highest of the medians in the data is used as normalization point, i.e. 100% is the worst median performance.</p>
+<p>We present the best, median, and worst performance of each library per data set, normalized performance with the worst median performance on that data set.</p>
+<p>All the libraries were forced to use a single core using the <code class="docutils literal notranslate"><span class="pre">taskset</span></code> command to minimize parallelization effects on the comparison. Time and memory results were obtained using the <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">-v</span></code> command and represent User time, and Maximum resident set size respectively. All results taken into consideration reported that 100% of their CPU core had been assigned to the process which performed the classification scenario.</p>
+<p>We did not test algorithm adaptation methods as there are no algorithm adaptation methods present in all three libraries.</p>
+<p>To minimize the impact of base classifiers, we have decided to use a fast Random Forest base classifier with 10 trees.</p>
+<p>We have checked the classification quality and did not find significant differences between Hamming Loss, Jaccard and Accuracy scores between the outputs.</p>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="developer.html" title="Developer documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="authors.html" title="The scikit-multilearn Team"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/benchmark.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

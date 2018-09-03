@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.cluster.igraph</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;IGraph based Label Space Clustering&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">igraph</span> <span class="k">import</span> <span class="n">Graph</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">LabelGraphClustererBase</span>
+
+
+<div class="viewcode-block" id="IGraphLabelGraphClusterer"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer">[docs]</a><span class="k">class</span> <span class="nc">IGraphLabelGraphClusterer</span><span class="p">(</span><span class="n">LabelGraphClustererBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Clusters the label space using igraph community detection methods</span>
+
+<span class="sd">    This clusterer constructs an igraph representation of the Label Graph generated by graph builder and detects</span>
+<span class="sd">    communities in it using community detection methods from the igraph library. Detected communities are converted to</span>
+<span class="sd">    a label space clustering. The approach has been described in `this paper concerning data-driven label space division</span>
+<span class="sd">    &lt;http://www.mdpi.com/1099-4300/18/8/282/htm&gt;`_.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    graph_builder: a GraphBuilderBase inherited transformer</span>
+<span class="sd">        the graph builder to provide the adjacency matrix and weight map for the underlying graph</span>
+<span class="sd">    method: string</span>
+<span class="sd">        the community detection method to use, this clusterer supports the following community detection methods:</span>
+
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+<span class="sd">        | Method name string   |                             Description                                               |</span>
+<span class="sd">        +======================+=======================================================================================+</span>
+<span class="sd">        | fastgreedy_          | Detecting communities with largest modularity using incremental greedy search         |</span>
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+<span class="sd">        | infomap_             | Detecting communities through information flow compressing simulated via random walks |</span>
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+<span class="sd">        | label_propagation_   | Detecting communities from colorings via multiple label propagation on the graph      |</span>
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+<span class="sd">        | leading_eigenvector_ | Detecting communities with largest modularity through adjacency matrix eigenvectors   |</span>
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+<span class="sd">        | multilevel_          | Recursive communitiy detection with largest modularity step by step maximization      |</span>
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+<span class="sd">        | walktrap_            |  Finding communities by trapping many random walks                                    |</span>
+<span class="sd">        +----------------------+---------------------------------------------------------------------------------------+</span>
+
+<span class="sd">        .. _fastgreedy: http://igraph.org/python/doc/igraph.Graph-class.html#community_fastgreedy</span>
+<span class="sd">        .. _infomap: http://igraph.org/python/doc/igraph.Graph-class.html#community_infomap</span>
+<span class="sd">        .. _label_propagation: http://igraph.org/python/doc/igraph.Graph-class.html#community_label_propagation</span>
+<span class="sd">        .. _leading_eigenvector: http://igraph.org/python/doc/igraph.Graph-class.html#community_leading_eigenvector</span>
+<span class="sd">        .. _multilevel: http://igraph.org/python/doc/igraph.Graph-class.html#community_multilevel</span>
+<span class="sd">        .. _walktrap: http://igraph.org/python/doc/igraph.Graph-class.html#community_walktrap</span>
+
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    graph_ : igraph.Graph</span>
+<span class="sd">        the igraph Graph object containing the graph representation of graph builder&#39;s adjacency matrix and weights</span>
+<span class="sd">    weights_ : { &#39;weight&#39; : list of values in edge order of graph edges }</span>
+<span class="sd">        edge weights stored in a format recognizable by the igraph module</span>
+
+
+<span class="sd">    .. note ::</span>
+
+<span class="sd">        This clusterer is GPL-licenced and will taint your code with GPL restrictions.</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    If you use this clusterer please cite the igraph paper and the clustering paper:</span>
+
+<span class="sd">    .. code:: latex</span>
+
+<span class="sd">        @Article{igraph,</span>
+<span class="sd">            title = {The igraph software package for complex network research},</span>
+<span class="sd">            author = {Gabor Csardi and Tamas Nepusz},</span>
+<span class="sd">            journal = {InterJournal},</span>
+<span class="sd">            volume = {Complex Systems},</span>
+<span class="sd">            pages = {1695},</span>
+<span class="sd">            year = {2006},</span>
+<span class="sd">            url = {http://igraph.org},</span>
+<span class="sd">        }</span>
+
+<span class="sd">        @Article{datadriven,</span>
+<span class="sd">            author = {Szymański, Piotr and Kajdanowicz, Tomasz and Kersting, Kristian},</span>
+<span class="sd">            title = {How Is a Data-Driven Approach Better than Random Choice in</span>
+<span class="sd">            Label Space Division for Multi-Label Classification?},</span>
+<span class="sd">            journal = {Entropy},</span>
+<span class="sd">            volume = {18},</span>
+<span class="sd">            year = {2016},</span>
+<span class="sd">            number = {8},</span>
+<span class="sd">            article_number = {282},</span>
+<span class="sd">            url = {http://www.mdpi.com/1099-4300/18/8/282},</span>
+<span class="sd">            issn = {1099-4300},</span>
+<span class="sd">            doi = {10.3390/e18080282}</span>
+<span class="sd">        }</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    An example code for using this clusterer with a classifier looks like this:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from sklearn.ensemble import RandomForestClassifier</span>
+<span class="sd">        from skmultilearn.problem_transform import LabelPowerset</span>
+<span class="sd">        from skmultilearn.cluster import IGraphLabelGraphClusterer, LabelCooccurrenceGraphBuilder</span>
+<span class="sd">        from skmultilearn.ensemble import LabelSpacePartitioningClassifier</span>
+
+<span class="sd">        # construct base forest classifier</span>
+<span class="sd">        base_classifier = RandomForestClassifier(n_estimators=1000)</span>
+
+<span class="sd">        # construct a graph builder that will include</span>
+<span class="sd">        # label relations weighted by how many times they</span>
+<span class="sd">        # co-occurred in the data, without self-edges</span>
+<span class="sd">        graph_builder = LabelCooccurrenceGraphBuilder(</span>
+<span class="sd">            weighted = True,</span>
+<span class="sd">            include_self_edges = False</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # setup problem transformation approach with sparse matrices for random forest</span>
+<span class="sd">        problem_transform_classifier = LabelPowerset(classifier=base_classifier,</span>
+<span class="sd">            require_dense=[False, False])</span>
+
+<span class="sd">        # setup the clusterer to use, we selected the fast greedy modularity-maximization approach</span>
+<span class="sd">        clusterer = IGraphLabelGraphClusterer(graph_builder=graph_builder, method=&#39;fastgreedy&#39;)</span>
+
+<span class="sd">        # setup the ensemble metaclassifier</span>
+<span class="sd">        classifier = LabelSpacePartitioningClassifier(problem_transform_classifier, clusterer)</span>
+
+<span class="sd">        # train</span>
+<span class="sd">        classifier.fit(X_train, y_train)</span>
+
+<span class="sd">        # predict</span>
+<span class="sd">        predictions = classifier.predict(X_test)</span>
+
+<span class="sd">    For more use cases see `the label relations exploration guide &lt;../labelrelations.ipynb&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_METHODS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fastgreedy&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">graph</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">graph</span><span class="o">.</span><span class="n">community_fastgreedy</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">as_clustering</span><span class="p">(),</span>
+        <span class="s1">&#39;infomap&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">graph</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">graph</span><span class="o">.</span><span class="n">community_infomap</span><span class="p">(</span><span class="n">edge_weights</span><span class="o">=</span><span class="n">w</span><span class="p">),</span>
+        <span class="s1">&#39;label_propagation&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">graph</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">graph</span><span class="o">.</span><span class="n">community_label_propagation</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">),</span>
+        <span class="s1">&#39;leading_eigenvector&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">graph</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">graph</span><span class="o">.</span><span class="n">community_leading_eigenvector</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">),</span>
+        <span class="s1">&#39;multilevel&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">graph</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">graph</span><span class="o">.</span><span class="n">community_multilevel</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">),</span>
+        <span class="s1">&#39;walktrap&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">graph</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">graph</span><span class="o">.</span><span class="n">community_walktrap</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">as_clustering</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_builder</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IGraphLabelGraphClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">graph_builder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IGraphLabelGraphClusterer</span><span class="o">.</span><span class="n">_METHODS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> not a supported igraph community detection method&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+
+<div class="viewcode-block" id="IGraphLabelGraphClusterer.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs clustering on y and returns list of label lists</span>
+
+<span class="sd">        Builds a label graph using the provided graph builder&#39;s `transform` method</span>
+<span class="sd">        on `y` and then detects communities using the selected `method`.</span>
+
+<span class="sd">        Sets :code:`self.weights_` and :code:`self.graph_`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : None</span>
+<span class="sd">            currently unused, left for scikit compatibility</span>
+<span class="sd">        y : scipy.sparse</span>
+<span class="sd">            label space of shape :code:`(n_samples, n_labels)`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        arrray of arrays of label indexes (numpy.ndarray)</span>
+<span class="sd">            label space division, each sublist represents labels that are in that community</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">edge_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span><span class="o">.</span><span class="n">is_weighted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weights_</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">edge_map</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weights_</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span>
+            <span class="n">edges</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">edge_map</span><span class="p">],</span>
+            <span class="n">vertex_attrs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))),</span>
+            <span class="n">edge_attrs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="n">IGraphLabelGraphClusterer</span><span class="o">.</span><span class="n">_METHODS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights_</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../userguide.html">User Guide</a></li>
+        <li><a href="skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">RAkELd: random label space partitioning with Label Powerset</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="rakeld-random-label-space-partitioning-with-label-powerset">
+<h1>RAkELd: random label space partitioning with Label Powerset<a class="headerlink" href="#rakeld-random-label-space-partitioning-with-label-powerset" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="skmultilearn.ensemble.RakelD">
+<em class="property">class </em><code class="descclassname">skmultilearn.ensemble.</code><code class="descname">RakelD</code><span class="sig-paren">(</span><em>base_classifier=None</em>, <em>labelset_size=None</em>, <em>base_classifier_require_dense=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ensemble/rakeld.html#RakelD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ensemble.RakelD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase" title="skmultilearn.base.base.MLClassifierBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">skmultilearn.base.base.MLClassifierBase</span></code></a></p>
+<p>Distinct RAndom k-labELsets multi-label classifier.</p>
+<p>Divides the label space in to equal partitions of size k, trains a Label Powerset
+classifier per partition and predicts by summing the result of all trained classifiers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>base_classifier</strong> (<em>sklearn.base</em>) – the base classifier that will be used in a class, will be
+automatically put under <code class="code docutils literal notranslate"><span class="pre">self.classifier</span></code> for future
+access.</li>
+<li><strong>base_classifier_require_dense</strong> (<em>[</em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>]</em>) – whether the base classifier requires [input, output] matrices
+in dense representation, will be automatically
+put under <code class="code docutils literal notranslate"><span class="pre">self.require_dense</span></code></li>
+<li><strong>labelset_size</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – the desired size of each of the partitions, parameter k according to paper</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="skmultilearn.ensemble.RakelD._label_count">
+<code class="descname">_label_count</code><a class="headerlink" href="#skmultilearn.ensemble.RakelD._label_count" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – the number of labels the classifier is fit to, set by <a class="reference internal" href="#skmultilearn.ensemble.RakelD.fit" title="skmultilearn.ensemble.RakelD.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skmultilearn.ensemble.RakelD.model_count_">
+<code class="descname">model_count_</code><a class="headerlink" href="#skmultilearn.ensemble.RakelD.model_count_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – the number of sub classifiers trained, set by <a class="reference internal" href="#skmultilearn.ensemble.RakelD.fit" title="skmultilearn.ensemble.RakelD.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skmultilearn.ensemble.RakelD.classifier_">
+<code class="descname">classifier_</code><a class="headerlink" href="#skmultilearn.ensemble.RakelD.classifier_" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier" title="skmultilearn.ensemble.LabelSpacePartitioningClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">skmultilearn.ensemble.LabelSpacePartitioningClassifier</span></code></a> – the underneath classifier that perform the label space partitioning using a
+random clusterer <code class="xref py py-class docutils literal notranslate"><span class="pre">skmultilearn.ensemble.RandomLabelSpaceClusterer</span></code></p>
+</dd></dl>
+
+<p class="rubric">References</p>
+<p>If you use this class please cite the paper introducing the method:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span>@ARTICLE<span class="nb">{</span>5567103,
+    author=<span class="nb">{</span>G. Tsoumakas and I. Katakis and I. Vlahavas<span class="nb">}</span>,
+    journal=<span class="nb">{</span>IEEE Transactions on Knowledge and Data Engineering<span class="nb">}</span>,
+    title=<span class="nb">{</span>Random k-Labelsets for Multilabel Classification<span class="nb">}</span>,
+    year=<span class="nb">{</span>2011<span class="nb">}</span>,
+    volume=<span class="nb">{</span>23<span class="nb">}</span>,
+    number=<span class="nb">{</span>7<span class="nb">}</span>,
+    pages=<span class="nb">{</span>1079-1089<span class="nb">}</span>,
+    doi=<span class="nb">{</span>10.1109/TKDE.2010.164<span class="nb">}</span>,
+    ISSN=<span class="nb">{</span>1041-4347<span class="nb">}</span>,
+    month=<span class="nb">{</span>July<span class="nb">}</span>,
+<span class="nb">}</span>
+</pre></div>
+</div>
+<p class="rubric">Examples</p>
+<p>Here’s a simple example of how to use this class with a base classifier from scikit-learn to teach
+non-overlapping classifiers each trained on at most four labels:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">RakelD</span>
+
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">RakelD</span><span class="p">(</span>
+    <span class="n">base_classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">(),</span>
+    <span class="n">base_classifier_require_dense</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">],</span>
+    <span class="n">labelset_size</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="skmultilearn.ensemble.RakelD.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ensemble/rakeld.html#RakelD.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ensemble.RakelD.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit classifier to multi-label data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><em>numpy.ndarray</em></a><em> or </em><em>scipy.sparse</em>) – input features, can be a dense or sparse matrix of size
+<code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code></li>
+<li><strong>y</strong> (<em>numpy.ndaarray</em><em> or </em><em>scipy.sparse {0</em><em>,</em><em>1}</em>) – binary indicator matrix with label assignments, shape
+<code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">fitted instance of self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.ensemble.RakelD.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ensemble/rakeld.html#RakelD.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ensemble.RakelD.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict label assignments</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><em>numpy.ndarray</em></a><em> or </em><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csc_matrix.html#scipy.sparse.csc_matrix" title="(in SciPy v1.1.0)"><em>scipy.sparse.csc_matrix</em></a>) – input features of shape <code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">binary indicator matrix with label assignments with shape
+<code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">scipy.sparse of int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.ensemble.RakelD.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ensemble/rakeld.html#RakelD.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ensemble.RakelD.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict label probabilities</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><em>numpy.ndarray</em></a><em> or </em><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csc_matrix.html#scipy.sparse.csc_matrix" title="(in SciPy v1.1.0)"><em>scipy.sparse.csc_matrix</em></a>) – input features of shape <code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">binary indicator matrix with probability of label assignment with shape
+<code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">scipy.sparse of float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="../_sources/api/skmultilearn.ensemble.rakeld.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

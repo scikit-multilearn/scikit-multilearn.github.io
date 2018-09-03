@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../userguide.html">User Guide</a></li>
+        <li><a href="skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">skmultilearn.dataset module</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="module-skmultilearn.dataset">
+<span id="skmultilearn-dataset-module"></span><h1>skmultilearn.dataset module<a class="headerlink" href="#module-skmultilearn.dataset" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="skmultilearn.dataset.available_data_sets">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">available_data_sets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#available_data_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.available_data_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists available data sets and their variants</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">available datasets and their variants with the key pertaining
+to the <code class="code docutils literal notranslate"><span class="pre">(set_name,</span> <span class="pre">variant_name)</span></code> and values include md5 and file name on server</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a>[(set_name, variant_name)] -&gt; [md5, file_name]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.clear_data_home">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">clear_data_home</code><span class="sig-paren">(</span><em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#clear_data_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.clear_data_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all the content of the data home cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_home</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> (</em><em>default is None</em><em>)</em>) – the path to the directory in which scikit-multilearn data sets
+should be stored.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.download_dataset">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">download_dataset</code><span class="sig-paren">(</span><em>set_name</em>, <em>variant</em>, <em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#download_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.download_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads a data set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>set_name</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – variant of the data set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>data_home</strong> (<em>default None</em><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – custom base folder for data, if None, default is used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">path to the downloaded data set file on disk</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.get_data_home">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">get_data_home</code><span class="sig-paren">(</span><em>data_home=None</em>, <em>subdirectory=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#get_data_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.get_data_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the path of the scikit-multilearn data dir.</p>
+<p>This folder is used by some large dataset loaders to avoid
+downloading the data several times.</p>
+<p>By default the <code class="code docutils literal notranslate"><span class="pre">data_home</span></code> is set to a folder named
+<code class="code docutils literal notranslate"><span class="pre">'scikit_ml_learn_data'</span></code> in the user home folder.</p>
+<p>Alternatively, it can be set by the <code class="code docutils literal notranslate"><span class="pre">'SCIKIT_ML_LEARN_DATA'</span></code>
+environment variable or programmatically by giving an explicit
+folder path. The <code class="code docutils literal notranslate"><span class="pre">'~'</span></code> symbol is expanded to the user home
+folder.</p>
+<p>If the folder does not already exist, it is automatically created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data_home</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> (</em><em>default is None</em><em>)</em>) – the path to the directory in which scikit-multilearn data sets
+should be stored, if None the path is generated as stated above</li>
+<li><strong>subdirectory</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>default ''</em>) – return path subdirectory under data_home if data_home passed or under default if not passed</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the path to the data home</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.load_dataset">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">load_dataset</code><span class="sig-paren">(</span><em>set_name</em>, <em>variant</em>, <em>data_home=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#load_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a selected variant of the given data set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>set_name</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – variant of the data set</li>
+<li><strong>data_home</strong> (<em>default None</em><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – custom base folder for data, if None, default is used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the loaded multilabel data set variant in the scikit-multilearn
+format, see data_sets</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.load_dataset_dump">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">load_dataset_dump</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#load_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.load_dataset_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a compressed data set dump</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – path to dump file, if without .bz2 ending, the .bz2 extension will be appended.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>X</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix, shape=(n_samples, n_features)) – input feature matrix</li>
+<li><strong>y</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix of <cite>{0, 1}</cite>, shape=(n_samples, n_labels)) – binary indicator matrix with label assignments</li>
+<li><strong>names of attributes</strong> (<em>List[str]</em>) – list of attribute names for <cite>X</cite> columns</li>
+<li><strong>names of labels</strong> (<em>List[str]</em>) – list of label names for <cite>y</cite> columns</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.load_from_arff">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">load_from_arff</code><span class="sig-paren">(</span><em>filename</em>, <em>label_count</em>, <em>label_location='end'</em>, <em>input_feature_type='float'</em>, <em>encode_nominal=True</em>, <em>load_sparse=False</em>, <em>return_attribute_definitions=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#load_from_arff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.load_from_arff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for loading ARFF files as numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – path to ARFF file</li>
+<li><strong>labelcount</strong> (<em>integer</em>) – number of labels in the ARFF file</li>
+<li><strong>endian</strong> (<em>str {&quot;big&quot;</em><em>, </em><em>&quot;little&quot;}</em><em> (</em><em>default is &quot;big&quot;</em><em>)</em>) – whether the ARFF file contains labels at the beginning of the
+attributes list (“start”, MEKA format)
+or at the end (“end”, MULAN format)</li>
+<li><strong>input_feature_type</strong> (<em>numpy.type as string</em><em> (</em><em>default is &quot;float&quot;</em><em>)</em>) – the desire type of the contents of the return ‘X’ array-likes,
+default ‘i8’, should be a numpy type,
+see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">http://docs.scipy.org/doc/numpy/user/basics.types.html</a></li>
+<li><strong>encode_nominal</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – whether convert categorical data into numeric factors - required
+for some scikit classifiers that can’t handle non-numeric
+input features.</li>
+<li><strong>load_sparse</strong> (<em>boolean</em><em> (</em><em>default is False</em><em>)</em>) – whether to read arff file as a sparse file format, liac-arff
+breaks if sparse reading is enabled for non-sparse ARFFs.</li>
+<li><strong>return_attribute_definitions</strong> (<em>boolean</em><em> (</em><em>default is False</em><em>)</em>) – whether to return the definitions for each attribute in the
+dataset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>X</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse.lil_matrix</span></code> of <cite>input_feature_type</cite>, shape=(n_samples, n_features)) – input feature matrix</li>
+<li><strong>y</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse.lil_matrix</span></code> of <cite>{0, 1}</cite>, shape=(n_samples, n_labels)) – binary indicator matrix with label assignments</li>
+<li><strong>names of attributes</strong> (<em>List[str]</em>) – list of attribute names from ARFF file</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.save_dataset_dump">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">save_dataset_dump</code><span class="sig-paren">(</span><em>input_space</em>, <em>labels</em>, <em>feature_names</em>, <em>label_names</em>, <em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#save_dataset_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.save_dataset_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a compressed data set dump</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_space</strong> (<em>array-like of array-likes</em>) – Input space array-like of input feature vectors</li>
+<li><strong>labels</strong> (<em>array-like of binary label vectors</em>) – Array-like of labels assigned to each input vector, as a binary
+indicator vector (i.e. if 5th position has value 1
+then the input vector has label no. 5)</li>
+<li><strong>feature_names</strong> (<em>array-like</em><em>,</em><em>optional</em>) – names of features</li>
+<li><strong>label_names</strong> (<em>array-like</em><em>, </em><em>optional</em>) – names of labels</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>optional</em>) – Path to dump file, if without .bz2, the .bz2 extension will be
+appended.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.dataset.save_to_arff">
+<code class="descclassname">skmultilearn.dataset.</code><code class="descname">save_to_arff</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>label_location='end'</em>, <em>save_sparse=True</em>, <em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/dataset.html#save_to_arff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.dataset.save_to_arff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for dumping data to ARFF files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix, shape=(n_samples, n_features)) – input feature matrix</li>
+<li><strong>y</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix of <cite>{0, 1}</cite>, shape=(n_samples, n_labels)) – binary indicator matrix with label assignments</li>
+<li><strong>label_location</strong> (<em>string {&quot;start&quot;</em><em>, </em><em>&quot;end&quot;}</em><em> (</em><em>default is &quot;end&quot;</em><em>)</em>) – whether the ARFF file will contain labels at the beginning of the
+attributes list (“start”, MEKA format)
+or at the end (“end”, MULAN format)</li>
+<li><strong>save_sparse</strong> (<em>boolean</em>) – Whether to save in ARFF’s sparse dictionary-like format instead of listing all
+zeroes within file, very useful in multi-label classification.</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> or </em><em>None</em>) – Path to ARFF file, if None, the ARFF representation is returned as string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the ARFF dump string, if filename is None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)">str</a> or None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="../_sources/api/skmultilearn.dataset.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

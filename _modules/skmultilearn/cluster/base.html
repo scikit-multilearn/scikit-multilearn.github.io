@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.cluster.base</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">get_matrix_in_format</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span>
+
+<div class="viewcode-block" id="GraphBuilderBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.GraphBuilderBase">[docs]</a><span class="k">class</span> <span class="nc">GraphBuilderBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract base class for a graph building class used in Label Space clustering.</span>
+
+<span class="sd">    Inherit it in your classifier according to`developer guide &lt;../developer.ipynb&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphBuilderBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="GraphBuilderBase.transform"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.GraphBuilderBase.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Abstract method for graph edge map builder for a label space clusterer</span>
+
+<span class="sd">        Implement it in your classifier according to`developer guide &lt;../developer.ipynb&gt;`_.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            this is an abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;GraphBuilderBase::transform()&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LabelSpaceClustererBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelSpaceClustererBase">[docs]</a><span class="k">class</span> <span class="nc">LabelSpaceClustererBase</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract base class for Label Space clustering</span>
+
+<span class="sd">    Inherit it in your classifier according to`developer guide &lt;../developer.ipynb&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="LabelSpaceClustererBase.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelSpaceClustererBase.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Abstract method for clustering label space</span>
+
+<span class="sd">        Implement it in your classifier according to`developer guide &lt;../developer.ipynb&gt;`_.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            this is an abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;LabelSpaceClustererBase::fit_predict()&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LabelGraphClustererBase"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelGraphClustererBase">[docs]</a><span class="k">class</span> <span class="nc">LabelGraphClustererBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract base class for Label Graph clustering</span>
+
+<span class="sd">    Inherit it in your classifier according to`developer guide &lt;../developer.ipynb&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_builder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph_builder : a  GraphBuilderBase derivative class</span>
+<span class="sd">            a graph building class for the clusterer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LabelGraphClustererBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span> <span class="o">=</span> <span class="n">graph_builder</span>
+
+<div class="viewcode-block" id="LabelGraphClustererBase.fit_predict"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelGraphClustererBase.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Abstract method for clustering label space</span>
+
+<span class="sd">        Implement it in your classifier according to`developer guide &lt;../developer.ipynb&gt;`_.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            this is an abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;LabelGraphClustererBase::fit_predict()&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LabelCooccurrenceGraphBuilder"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelCooccurrenceGraphBuilder">[docs]</a><span class="k">class</span> <span class="nc">LabelCooccurrenceGraphBuilder</span><span class="p">(</span><span class="n">GraphBuilderBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class providing API and common functions for all label</span>
+<span class="sd">    co-occurence based multi-label classifiers.</span>
+
+<span class="sd">    This graph builder constructs a Label Graph based on the output matrix where two label nodes are connected</span>
+<span class="sd">    when at least one sample is labeled with both of them. If the graph is weighted, the weight of an edge between two</span>
+<span class="sd">    label nodes is the number of samples labeled with these two labels. Self-edge weights contain the number of samples</span>
+<span class="sd">    with a given label.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    weighted: bool</span>
+<span class="sd">        decide whether to generate a weighted or unweighted graph.</span>
+<span class="sd">    include_self_edges : bool</span>
+<span class="sd">        decide whether to include self-edge i.e. label 1 - label 1 in</span>
+<span class="sd">        co-occurrence graph</span>
+<span class="sd">    normalize_self_edges: bool</span>
+<span class="sd">        if including self edges, divide the (i, i) edge by 2.0, requires include_self_edges=True</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    If you use this graph builder please cite the clustering paper:</span>
+
+<span class="sd">    .. code:: latex</span>
+
+<span class="sd">        @Article{datadriven,</span>
+<span class="sd">            author = {Szymański, Piotr and Kajdanowicz, Tomasz and Kersting, Kristian},</span>
+<span class="sd">            title = {How Is a Data-Driven Approach Better than Random Choice in</span>
+<span class="sd">            Label Space Division for Multi-Label Classification?},</span>
+<span class="sd">            journal = {Entropy},</span>
+<span class="sd">            volume = {18},</span>
+<span class="sd">            year = {2016},</span>
+<span class="sd">            number = {8},</span>
+<span class="sd">            article_number = {282},</span>
+<span class="sd">            url = {http://www.mdpi.com/1099-4300/18/8/282},</span>
+<span class="sd">            issn = {1099-4300},</span>
+<span class="sd">            doi = {10.3390/e18080282}</span>
+<span class="sd">        }</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    A full example of building a modularity-based label space division based on the Label Co-occurrence Graph and</span>
+<span class="sd">    classifying with a separate classifier chain per subspace.</span>
+
+<span class="sd">    .. code :: python</span>
+
+<span class="sd">        from skmultilearn.cluster import LabelCooccurrenceGraphBuilder, NetworkXLabelGraphClusterer</span>
+<span class="sd">        from skmultilearn.ensemble import LabelSpacePartitioningClassifier</span>
+<span class="sd">        from skmultilearn.problem_transform import ClassifierChain</span>
+<span class="sd">        from sklearn.naive_bayes import GaussianNB</span>
+
+<span class="sd">        graph_builder = LabelCooccurrenceGraphBuilder(weighted=True, include_self_edges=False, normalize_self_edges=False)</span>
+<span class="sd">        clusterer = NetworkXLabelGraphClusterer(graph_builder, method=&#39;louvain&#39;)</span>
+<span class="sd">        classifier = LabelSpacePartitioningClassifier(</span>
+<span class="sd">            classifier = ClassifierChain(classifier=GaussianNB()),</span>
+<span class="sd">            clusterer = clusterer</span>
+<span class="sd">        )</span>
+<span class="sd">        classifier.fit(X_train, y_train)</span>
+<span class="sd">        prediction = classifier.predict(X_test)</span>
+
+
+<span class="sd">    For more use cases see `the label relations exploration guide &lt;../labelrelations.ipynb&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_self_edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize_self_edges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LabelCooccurrenceGraphBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">weighted</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weighted needs to be a boolean&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">include_self_edges</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Decision whether to include self edges needs to be a boolean&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">include_self_edges</span> <span class="ow">and</span> <span class="p">(</span><span class="n">normalize_self_edges</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Decision whether to normalize self edges needs to be a boolean&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">normalize_self_edges</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">include_self_edges</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Include self edges must be set to true if normalization is true&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">normalize_self_edges</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">weighted</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Normalizing self-edge weights_ does not make sense in an unweighted graph&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_weighted</span> <span class="o">=</span> <span class="n">weighted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_self_edges</span> <span class="o">=</span> <span class="n">include_self_edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_self_edges</span> <span class="o">=</span> <span class="n">normalize_self_edges</span>
+
+<div class="viewcode-block" id="LabelCooccurrenceGraphBuilder.transform"><a class="viewcode-back" href="../../../api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelCooccurrenceGraphBuilder.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate adjacency matrix from label matrix</span>
+
+<span class="sd">        This function generates a weighted or unweighted co-occurence Label Graph adjacency matrix in dictionary of keys</span>
+<span class="sd">        format based on input binary label vectors</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y : numpy.ndarray or scipy.sparse</span>
+<span class="sd">            dense or sparse binary matrix with shape</span>
+<span class="sd">            :code:`(n_samples, n_labels)`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict[(int, int), float]</span>
+<span class="sd">            weight map with a tuple of label indexes as keys and a the number of samples in which the two co-occurred</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">label_data</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;lil&#39;</span><span class="p">)</span>
+        <span class="n">label_count</span> <span class="o">=</span> <span class="n">label_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">edge_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">label_data</span><span class="o">.</span><span class="n">rows</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_self_edges</span><span class="p">:</span>
+                <span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">edge_map</span><span class="p">:</span>
+                    <span class="n">edge_map</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_weighted</span><span class="p">:</span>
+                        <span class="n">edge_map</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_self_edges</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">label_count</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edge_map</span><span class="p">:</span>
+                    <span class="n">edge_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">edge_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+        <span class="k">return</span> <span class="n">edge_map</span></div></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

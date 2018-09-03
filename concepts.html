@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Dataset handling" href="datasets.html" />
+    <link rel="prev" title="1. Getting started with scikit-multilearn" href="tutorial.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">2. Relevant Concepts in Multi-Label Classification</a><ul>
+<li><a class="reference internal" href="#Aim">2.1. Aim</a></li>
+<li><a class="reference internal" href="#Single-label-vs-multi-label-classification">2.2. Single-label vs multi-label classification</a></li>
+<li><a class="reference internal" href="#Multi-label-classification-data">2.3. Multi-label classification data</a><ul>
+<li><a class="reference internal" href="#The-multi-label-data-representation">2.3.1. The multi-label data representation</a></li>
+<li><a class="reference internal" href="#Single-label-representations-in-problem-transformation">2.3.2. Single-label representations in problem transformation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Relevant-Concepts-in-Multi-Label-Classification">
+<h1>2. Relevant Concepts in Multi-Label Classification<a class="headerlink" href="#Relevant-Concepts-in-Multi-Label-Classification" title="Permalink to this headline">¶</a></h1>
+<p>In this section you will learn the basic concepts behind multi-label
+classification.</p>
+<div class="section" id="Aim">
+<h2>2.1. Aim<a class="headerlink" href="#Aim" title="Permalink to this headline">¶</a></h2>
+<p>Classification aims to assign classes/labels to objects. Objects usually
+represent things we come across in daily life: photos, audio recordings,
+text documents, videos, but can also include complicated biological
+systems.</p>
+<p>Objects are usually represented by their selected features (its count
+denoted as <code class="docutils literal notranslate"><span class="pre">n_features</span></code> in the documentation). Features are the
+characteristics of objects that distinguish them from others. For
+example text documents can be represented by words that are present in
+them.</p>
+<p>The output of classification for a given object is either a class or a
+set of classes. Traditional classification, usually due to computational
+limits, aimed at solving only single-label scenarios in which at most
+one class had been assigned to an object.</p>
+</div>
+<div class="section" id="Single-label-vs-multi-label-classification">
+<h2>2.2. Single-label vs multi-label classification<a class="headerlink" href="#Single-label-vs-multi-label-classification" title="Permalink to this headline">¶</a></h2>
+<p>One can identify two types of single-label classification problems:</p>
+<ul class="simple">
+<li>a single-class one, where the decision is whether to assign the class
+or not, for ex. having a photo sample from someones pancreas,
+deciding if it is a photo of cancer sample or not. This is also
+sometimes called binary classification, as the output values of the
+predictions are always <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></li>
+<li>a multi-class problem where the class, if assigned, is selected from
+a number of available classes: for example, assigning a brand to a
+photo of a car</li>
+</ul>
+<p>In multi-label classification one can assign more than one label/class
+out of the available <code class="docutils literal notranslate"><span class="pre">n_labels</span></code> to a given object.</p>
+<p><a class="reference external" href="http://kt.ijs.si/DragiKocev/wikipage/lib/exe/fetch.php?media=2012pr_ml_comparison.pdf">Madjarov et
+al.</a>
+divide approaches to multi-label classification into three categories,
+you should select a scikit-multilearn base class according to the
+philosophy behind your classifier:</p>
+<ul class="simple">
+<li>algorithm adaptation, currently none in <code class="docutils literal notranslate"><span class="pre">scikit-multilearn</span></code> in the
+future they will be placed in <code class="docutils literal notranslate"><span class="pre">skmultilearn.adapt</span></code></li>
+<li>problem transformation, such as Binary Relevance, Label Powerset &amp;
+more, are now available from <code class="docutils literal notranslate"><span class="pre">skmultilearn.problem_transformation</span></code></li>
+<li>ensemble classification, such as <code class="docutils literal notranslate"><span class="pre">RAkEL</span></code> or label space
+partitioning classifiers, are now available from
+<code class="docutils literal notranslate"><span class="pre">skmultilearn.ensemble</span></code></li>
+</ul>
+<p>A single-label classifier is a function that given an object represented
+as a feature vector of length <code class="docutils literal notranslate"><span class="pre">n_features</span></code> assigns a class (a number,
+or None). A multi-label classifier outputs a set of assigned labels,
+either in a form of a list of assigned labels or as a binary vector in
+which a <code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">0</span></code> on <code class="docutils literal notranslate"><span class="pre">i</span></code>-th position indicates if an <code class="docutils literal notranslate"><span class="pre">i</span></code>-th
+label is assigned or not.</p>
+<p>To learn a classifier we use a training set that provides <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>
+of sampled objects represented by <code class="docutils literal notranslate"><span class="pre">n_features</span></code> with evidence
+concerning which labels out of <code class="docutils literal notranslate"><span class="pre">n_labels</span></code> are assigned to each of the
+object. The quality of the classifier is tested on a test set that
+follows the same format.</p>
+</div>
+<div class="section" id="Multi-label-classification-data">
+<h2>2.3. Multi-label classification data<a class="headerlink" href="#Multi-label-classification-data" title="Permalink to this headline">¶</a></h2>
+<p>To train a classification model we need data about a phenomenon that the
+classifier is supposed to generalise. Such data usually comes in two
+parts:</p>
+<ul class="simple">
+<li>the objects to classify - the input space - which we will denote as
+<code class="docutils literal notranslate"><span class="pre">X</span></code> and which consists of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> that are represented using
+<code class="docutils literal notranslate"><span class="pre">n_features</span></code></li>
+<li>the labels assigned to <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> objects - an output space -
+which we will denote as <code class="docutils literal notranslate"><span class="pre">y</span></code>. <code class="docutils literal notranslate"><span class="pre">y</span></code> provides information about
+which, out of <code class="docutils literal notranslate"><span class="pre">n_labels</span></code> that are available, are actually assigned
+to each of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> objects</li>
+</ul>
+<div class="section" id="The-multi-label-data-representation">
+<h3>2.3.1. The multi-label data representation<a class="headerlink" href="#The-multi-label-data-representation" title="Permalink to this headline">¶</a></h3>
+<p>scikit-multilearn expects on input:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code> to be a matrix of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">y</span></code> to be a matrix of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></li>
+</ul>
+<p>Let’s load up a data set to see this in practice:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emotions:train - exists, not redownloading
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(&lt;391x72 sparse matrix of type &#39;&lt;type &#39;numpy.float64&#39;&gt;&#39;
+    with 28059 stored elements in LInked List format&gt;,
+ &lt;391x6 sparse matrix of type &#39;&lt;type &#39;numpy.int64&#39;&gt;&#39;
+    with 709 stored elements in LInked List format&gt;)
+</pre></div>
+</div>
+</div>
+<p>We can see that in the case of emotions data the values are: -
+n_samples: 391 - n_features: 72 - n_labels: 6</p>
+<p>By matrix scikit-multilearn understands following the <code class="docutils literal notranslate"><span class="pre">A[i,j]</span></code> element
+accessing scheme. Sparse matrices should be used instead of dense ones,
+especially for the output space. Scikit-multilearn will internally
+convert dense representations to sparse representations that are most
+suitable to a given classification procedure. Scikit-multilearn will
+output</p>
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code> can store any type of data a given classification method can
+handle is allowed, but nominal encoding is always helpful. Nominal
+encoding is enabled by default when loading data with
+:meth:<code class="docutils literal notranslate"><span class="pre">skmultilearn.dataset.Dataset.load_arff_to_numpy</span></code> helper, which
+also returns sparse representations of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> loaded from ARFF
+data file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">y</span></code> is expected to be a binary <code class="docutils literal notranslate"><span class="pre">integer</span></code> indicator matrix of shape.
+In the binary indicator matrix each matrix element <code class="docutils literal notranslate"><span class="pre">A[i,j]</span></code> should be
+either <code class="docutils literal notranslate"><span class="pre">1</span></code> if label <code class="docutils literal notranslate"><span class="pre">j</span></code> is assigned to an object no <code class="docutils literal notranslate"><span class="pre">i</span></code>, and <code class="docutils literal notranslate"><span class="pre">0</span></code>
+if not.</p>
+<p>We highly recommend for every multi-label output space to be stored in
+sparse matrices and expect scikit-multilearn classifiers to operate only
+on sparse binary label indicator matrices internally. This is also the
+format of predicted label assignments. Sparse representation is employed
+as default because it is very rare for a real-world output space <code class="docutils literal notranslate"><span class="pre">y</span></code>
+to be dense. Usually, the number of labels assigned per instance is just
+a small portion of all labels. The average percentage of labels assigned
+per object is called <code class="docutils literal notranslate"><span class="pre">label</span> <span class="pre">density</span></code> and in established data sets it
+<code class="docutils literal notranslate"><span class="pre">tends</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">small</span> <span class="pre">&lt;http://mulan.sourceforge.net/datasets-mlc.html&gt;</span></code>_.</p>
+</div>
+<div class="section" id="Single-label-representations-in-problem-transformation">
+<h3>2.3.2. Single-label representations in problem transformation<a class="headerlink" href="#Single-label-representations-in-problem-transformation" title="Permalink to this headline">¶</a></h3>
+<p>The problem transformation approach to multi-label classification
+converts multi-label problems to single-label problems: single-class or
+multi-class. Then those problems are solved using base classifiers.
+Scikit-multilearn maintains compatibility with <a class="reference external" href="http://scikit-learn.org/stable/modules/multiclass.html">scikit-learn data format
+for single-label
+classifiers</a>
+,which expect:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code> to have an <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code> shape and be one of the
+following:<ul>
+<li>an <code class="docutils literal notranslate"><span class="pre">array-like</span></code> of <code class="docutils literal notranslate"><span class="pre">array-likes</span></code>, which usually means a nested
+array, where <code class="docutils literal notranslate"><span class="pre">i</span></code>-th row and <code class="docutils literal notranslate"><span class="pre">j</span></code>-th column are adressed as
+<code class="docutils literal notranslate"><span class="pre">X[i][j]</span></code>, in many cases the classifiers expect <code class="docutils literal notranslate"><span class="pre">array-like</span></code>
+to be an <code class="docutils literal notranslate"><span class="pre">np.array</span></code></li>
+<li>a dense matrix of the type <code class="docutils literal notranslate"><span class="pre">np.matrix</span></code></li>
+<li>a scipy sparse matrix</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">y</span></code> to be a one-dimensional <code class="docutils literal notranslate"><span class="pre">array-like</span></code> of shape
+<code class="docutils literal notranslate"><span class="pre">(n_samples,)</span></code> with one class value per sample, which is a natural
+representation of a single-label problem</li>
+</ul>
+<p>The data set is stored in sparse matrices for efficiency. However not
+all scikit-learn classifiers support matrix input and sparse
+representations. For this reason, every scikit-multilearn classifier
+that follows a problem transformation approach admits a
+<code class="docutils literal notranslate"><span class="pre">require_dense</span></code> parameter in the constructor. As these
+scikit-multilearn classifiers transform the multi-label problem to a set
+of single-label problems and solve them using scikit-learn base
+classifiers - the <code class="docutils literal notranslate"><span class="pre">require_dense</span></code> parameter allows control over which
+format of the transformed input and output space passed to the base
+classifier.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">require_dense</span></code> expects a two-element list:
+<code class="docutils literal notranslate"><span class="pre">[bool</span> <span class="pre">or</span> <span class="pre">None,</span> <span class="pre">bool</span> <span class="pre">or</span> <span class="pre">None]</span></code> which control the input and output
+space formats respectively. If None - the base classifier will receive a
+dense representation if it does not inherit
+:class:<code class="docutils literal notranslate"><span class="pre">skmultilearn.base.MLClassifierBase</span></code>, otherwise the
+representation forwarded will be sparse. The dense representation for
+<code class="docutils literal notranslate"><span class="pre">X</span></code> is a <code class="docutils literal notranslate"><span class="pre">numpy.matrix</span></code>, while for <code class="docutils literal notranslate"><span class="pre">y</span></code> it is a
+<code class="docutils literal notranslate"><span class="pre">numpy.array</span> <span class="pre">of</span> <span class="pre">int</span></code> (scikit-learn’s required format of the output
+space).</p>
+<p>Scikit-learn’s expected format is described <a class="reference external" href="http://scikit-learn.org/stable/modules/multiclass.html#multilabel-classification-format">in the scikit-learn
+docs</a>
+and assumes that:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code> is provided either as a <code class="docutils literal notranslate"><span class="pre">numpy.matrix</span></code>, a <code class="docutils literal notranslate"><span class="pre">sparse.matrix</span></code>
+or as <code class="docutils literal notranslate"><span class="pre">array</span> <span class="pre">likes</span> <span class="pre">of</span> <span class="pre">arrays</span> <span class="pre">likes</span></code> (vectors) of features, i.e. the
+array of row vectors that consist of input features (same length,
+i.e. feature/attribute count), ex. a two-object set with each row
+being a small 1px x 1px image with RGB channels (three <code class="docutils literal notranslate"><span class="pre">int8</span></code>
+values describing red, blue, green colors per pixel):
+<code class="docutils literal notranslate"><span class="pre">[[128,10,10,20,30,128],</span> <span class="pre">[10,155,30,10,155,10]]</span></code> -
+scikit-multilearn will expect a matrix representation and will
+forward a matrix representation to the base classifier</li>
+<li><code class="docutils literal notranslate"><span class="pre">y</span></code> is expected to be provided as an array of array likes</li>
+</ul>
+<p>Some scikit-learn classifiers support the sparse representation of <code class="docutils literal notranslate"><span class="pre">X</span></code>
+especially for textual data, to have it forwarded as such to the
+scikit-learn classifier one needs to pass
+<code class="docutils literal notranslate"><span class="pre">require_dense</span> <span class="pre">=</span> <span class="pre">[False,</span> <span class="pre">None]</span></code> to the scikit-multilearn classifier’s
+constructor. If you are sure that the base classifier you use will be
+able to handle a sparse matrix representation of <code class="docutils literal notranslate"><span class="pre">y</span></code> - pass
+<code class="docutils literal notranslate"><span class="pre">require_dense</span> <span class="pre">=</span> <span class="pre">[None,</span> <span class="pre">False]</span></code>. Pass
+<code class="docutils literal notranslate"><span class="pre">require_dense</span> <span class="pre">=</span> <span class="pre">[False,</span> <span class="pre">False]</span></code> if both <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are supported
+in sparse representation.</p>
+</div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datasets.html" title="3. Dataset handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="1. Getting started with scikit-multilearn"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="userguide.html" accesskey="U">User Guide</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/concepts.ipynb.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

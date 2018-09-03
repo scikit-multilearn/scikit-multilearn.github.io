@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD._label_count">_label_count (skmultilearn.ensemble.RakelD attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.available_data_sets">available_data_sets() (in module skmultilearn.dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance">BinaryRelevance (class in skmultilearn.problem_transform)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier">BRkNNaClassifier (class in skmultilearn.adapt)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier">BRkNNbClassifier (class in skmultilearn.adapt)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ensemble.rakelo.html#skmultilearn.ensemble.RakelO.classifier">classifier (skmultilearn.ensemble.RakelO attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD.classifier_">classifier_ (skmultilearn.ensemble.RakelD attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.problem_transform.cc.html#skmultilearn.problem_transform.ClassifierChain">ClassifierChain (class in skmultilearn.problem_transform)</a>
+</li>
+      <li><a href="api/skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier.classifiers">classifiers (skmultilearn.ensemble.LabelSpacePartitioningClassifier attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier.classifiers">(skmultilearn.ensemble.MajorityVotingClassifier attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance.classifiers_">classifiers_ (skmultilearn.problem_transform.BinaryRelevance attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.problem_transform.cc.html#skmultilearn.problem_transform.ClassifierChain.classifiers_">(skmultilearn.problem_transform.ClassifierChain attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.clear_data_home">clear_data_home() (in module skmultilearn.dataset)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.confidences_">confidences_ (skmultilearn.adapt.BRkNNaClassifier attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.confidences_">(skmultilearn.adapt.BRkNNbClassifier attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase.copyable_attrs">copyable_attrs (skmultilearn.base.base.MLClassifierBase attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.download_dataset">download_dataset() (in module skmultilearn.dataset)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ext.meka.html#skmultilearn.ext.download_meka">download_meka() (in module skmultilearn.ext)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.example_distribution">example_distribution() (in module skmultilearn.model_selection.measures)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.fit">fit() (skmultilearn.adapt.BRkNNaClassifier method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.fit">(skmultilearn.adapt.BRkNNbClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.fit">(skmultilearn.adapt.MLARAM method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.fit">(skmultilearn.adapt.MLkNN method)</a>
+</li>
+        <li><a href="api/skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase.fit">(skmultilearn.base.base.MLClassifierBase method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD.fit">(skmultilearn.ensemble.RakelD method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakelo.html#skmultilearn.ensemble.RakelO.fit">(skmultilearn.ensemble.RakelO method)</a>
+</li>
+        <li><a href="api/skmultilearn.ext.meka.html#skmultilearn.ext.Meka.fit">(skmultilearn.ext.Meka method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance.fit">(skmultilearn.problem_transform.BinaryRelevance method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.cc.html#skmultilearn.problem_transform.ClassifierChain.fit">(skmultilearn.problem_transform.ClassifierChain method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.fit">(skmultilearn.problem_transform.LabelPowerset method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelGraphClustererBase.fit_predict">fit_predict() (skmultilearn.cluster.base.LabelGraphClustererBase method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.cluster.fixed.html#skmultilearn.cluster.FixedLabelSpaceClusterer.fit_predict">(skmultilearn.cluster.FixedLabelSpaceClusterer method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.GraphToolLabelGraphClusterer.fit_predict">(skmultilearn.cluster.GraphToolLabelGraphClusterer method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer.fit_predict">(skmultilearn.cluster.IGraphLabelGraphClusterer method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.matrix.html#skmultilearn.cluster.MatrixLabelSpaceClusterer.fit_predict">(skmultilearn.cluster.MatrixLabelSpaceClusterer method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer.fit_predict">(skmultilearn.cluster.NetworkXLabelGraphClusterer method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.random.html#skmultilearn.cluster.RandomLabelSpaceClusterer.fit_predict">(skmultilearn.cluster.RandomLabelSpaceClusterer method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.StochasticBlockModel.fit_predict">(skmultilearn.cluster.StochasticBlockModel method)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelSpaceClustererBase.fit_predict">(skmultilearn.cluster.base.LabelSpaceClustererBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.cluster.fixed.html#skmultilearn.cluster.FixedLabelSpaceClusterer">FixedLabelSpaceClusterer (class in skmultilearn.cluster)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.folds_label_combination_pairs_without_evidence">folds_label_combination_pairs_without_evidence() (in module skmultilearn.model_selection.measures)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.folds_without_evidence_for_at_least_one_label_combination">folds_without_evidence_for_at_least_one_label_combination() (in module skmultilearn.model_selection.measures)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.get_combination_wise_output_matrix">get_combination_wise_output_matrix() (in module skmultilearn.model_selection.measures)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.get_data_home">get_data_home() (in module skmultilearn.dataset)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.get_indicator_representation">get_indicator_representation() (in module skmultilearn.model_selection.measures)</a>
+</li>
+      <li><a href="api/skmultilearn.utils.html#skmultilearn.utils.get_matrix_in_format">get_matrix_in_format() (in module skmultilearn.utils)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.get_params">get_params() (skmultilearn.adapt.BRkNNaClassifier method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.get_params">(skmultilearn.adapt.BRkNNbClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.get_params">(skmultilearn.adapt.MLARAM method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.get_params">(skmultilearn.adapt.MLkNN method)</a>
+</li>
+        <li><a href="api/skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase.get_params">(skmultilearn.base.base.MLClassifierBase method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.get_unique_combinations">get_unique_combinations() (in module skmultilearn.model_selection.measures)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.StochasticBlockModel.graph">graph (skmultilearn.cluster.StochasticBlockModel attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.GraphToolLabelGraphClusterer.graph_">graph_ (skmultilearn.cluster.GraphToolLabelGraphClusterer attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer.graph_">(skmultilearn.cluster.IGraphLabelGraphClusterer attribute)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer.graph_">(skmultilearn.cluster.NetworkXLabelGraphClusterer attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.GraphBuilderBase">GraphBuilderBase (class in skmultilearn.cluster.base)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.GraphToolLabelGraphClusterer">GraphToolLabelGraphClusterer (class in skmultilearn.cluster)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer">IGraphLabelGraphClusterer (class in skmultilearn.cluster)</a>
+</li>
+      <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.inverse_transform">inverse_transform() (skmultilearn.problem_transform.LabelPowerset method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#skmultilearn.model_selection.iterative_stratification.iterative_train_test_split">iterative_train_test_split() (in module skmultilearn.model_selection.iterative_stratification)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#skmultilearn.model_selection.iterative_stratification.IterativeStratification">IterativeStratification (class in skmultilearn.model_selection.iterative_stratification)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.knn_">knn_ (skmultilearn.adapt.BRkNNaClassifier attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.knn_">(skmultilearn.adapt.BRkNNbClassifier attribute)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.knn_">(skmultilearn.adapt.MLkNN attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.label_combination_distribution">label_combination_distribution() (in module skmultilearn.model_selection.measures)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelCooccurrenceGraphBuilder">LabelCooccurrenceGraphBuilder (class in skmultilearn.cluster.base)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelGraphClustererBase">LabelGraphClustererBase (class in skmultilearn.cluster.base)</a>
+</li>
+      <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset">LabelPowerset (class in skmultilearn.problem_transform)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelSpaceClustererBase">LabelSpaceClustererBase (class in skmultilearn.cluster.base)</a>
+</li>
+      <li><a href="api/skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier">LabelSpacePartitioningClassifier (class in skmultilearn.ensemble)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.load_dataset">load_dataset() (in module skmultilearn.dataset)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.load_dataset_dump">load_dataset_dump() (in module skmultilearn.dataset)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.load_from_arff">load_from_arff() (in module skmultilearn.dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier">MajorityVotingClassifier (class in skmultilearn.ensemble)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.matrix.html#skmultilearn.cluster.MatrixLabelSpaceClusterer">MatrixLabelSpaceClusterer (class in skmultilearn.cluster)</a>
+</li>
+      <li><a href="api/skmultilearn.utils.html#skmultilearn.utils.measure_per_label">measure_per_label() (in module skmultilearn.utils)</a>
+</li>
+      <li><a href="api/skmultilearn.ext.meka.html#skmultilearn.ext.Meka">Meka (class in skmultilearn.ext)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM">MLARAM (class in skmultilearn.adapt)</a>
+</li>
+      <li><a href="api/skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase">MLClassifierBase (class in skmultilearn.base.base)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN">MLkNN (class in skmultilearn.adapt)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.StochasticBlockModel.model_">model_ (skmultilearn.cluster.StochasticBlockModel attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier.model_count_">model_count_ (skmultilearn.ensemble.LabelSpacePartitioningClassifier attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier.model_count_">(skmultilearn.ensemble.MajorityVotingClassifier attribute)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD.model_count_">(skmultilearn.ensemble.RakelD attribute)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance.model_count_">(skmultilearn.problem_transform.BinaryRelevance attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#skmultilearn.model_selection.iterative_stratification.IterativeStratification.n_splits">n_splits (skmultilearn.model_selection.iterative_stratification.IterativeStratification attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.neighbors_">neighbors_ (skmultilearn.adapt.BRkNNaClassifier attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.neighbors_">(skmultilearn.adapt.BRkNNbClassifier attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer">NetworkXLabelGraphClusterer (class in skmultilearn.cluster)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#skmultilearn.model_selection.iterative_stratification.IterativeStratification.order">order (skmultilearn.model_selection.iterative_stratification.IterativeStratification attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ext.meka.html#skmultilearn.ext.Meka.output_">output_ (skmultilearn.ext.Meka attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier.partition_">partition_ (skmultilearn.ensemble.LabelSpacePartitioningClassifier attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier.partition_">(skmultilearn.ensemble.MajorityVotingClassifier attribute)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance.partition_">(skmultilearn.problem_transform.BinaryRelevance attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.model_selection.measures.html#skmultilearn.model_selection.measures.percentage_of_label_combinations_without_evidence_per_fold">percentage_of_label_combinations_without_evidence_per_fold() (in module skmultilearn.model_selection.measures)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.predict">predict() (skmultilearn.adapt.BRkNNaClassifier method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.predict">(skmultilearn.adapt.BRkNNbClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.predict">(skmultilearn.adapt.MLARAM method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.predict">(skmultilearn.adapt.MLkNN method)</a>
+</li>
+        <li><a href="api/skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase.predict">(skmultilearn.base.base.MLClassifierBase method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier.predict">(skmultilearn.ensemble.LabelSpacePartitioningClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier.predict">(skmultilearn.ensemble.MajorityVotingClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD.predict">(skmultilearn.ensemble.RakelD method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakelo.html#skmultilearn.ensemble.RakelO.predict">(skmultilearn.ensemble.RakelO method)</a>
+</li>
+        <li><a href="api/skmultilearn.ext.meka.html#skmultilearn.ext.Meka.predict">(skmultilearn.ext.Meka method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance.predict">(skmultilearn.problem_transform.BinaryRelevance method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.cc.html#skmultilearn.problem_transform.ClassifierChain.predict">(skmultilearn.problem_transform.ClassifierChain method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.predict">(skmultilearn.problem_transform.LabelPowerset method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.predict_proba">predict_proba() (skmultilearn.adapt.MLARAM method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.predict_proba">(skmultilearn.adapt.MLkNN method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD.predict_proba">(skmultilearn.ensemble.RakelD method)</a>
+</li>
+        <li><a href="api/skmultilearn.ensemble.rakelo.html#skmultilearn.ensemble.RakelO.predict_proba">(skmultilearn.ensemble.RakelO method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance.predict_proba">(skmultilearn.problem_transform.BinaryRelevance method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.cc.html#skmultilearn.problem_transform.ClassifierChain.predict_proba">(skmultilearn.problem_transform.ClassifierChain method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.predict_proba">(skmultilearn.problem_transform.LabelPowerset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.base.problem_transformation.html#skmultilearn.base.problem_transformation.ProblemTransformationBase">ProblemTransformationBase (class in skmultilearn.base.problem_transformation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD">RakelD (class in skmultilearn.ensemble)</a>
+</li>
+      <li><a href="api/skmultilearn.ensemble.rakelo.html#skmultilearn.ensemble.RakelO">RakelO (class in skmultilearn.ensemble)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#skmultilearn.model_selection.iterative_stratification.IterativeStratification.random_state">random_state (skmultilearn.model_selection.iterative_stratification.IterativeStratification attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.random.html#skmultilearn.cluster.RandomLabelSpaceClusterer">RandomLabelSpaceClusterer (class in skmultilearn.cluster)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.reset">reset() (skmultilearn.adapt.MLARAM method)</a>
+</li>
+      <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.reverse_combinations_">reverse_combinations_ (skmultilearn.problem_transform.LabelPowerset attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#skmultilearn.model_selection.iterative_stratification.IterativeStratification.sample_distribution_per_fold">sample_distribution_per_fold (skmultilearn.model_selection.iterative_stratification.IterativeStratification attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.save_dataset_dump">save_dataset_dump() (in module skmultilearn.dataset)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#skmultilearn.dataset.save_to_arff">save_to_arff() (in module skmultilearn.dataset)</a>
+</li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.score">score() (skmultilearn.adapt.BRkNNaClassifier method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.score">(skmultilearn.adapt.BRkNNbClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.score">(skmultilearn.adapt.MLARAM method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.score">(skmultilearn.adapt.MLkNN method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier.set_params">set_params() (skmultilearn.adapt.BRkNNaClassifier method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier.set_params">(skmultilearn.adapt.BRkNNbClassifier method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM.set_params">(skmultilearn.adapt.MLARAM method)</a>
+</li>
+        <li><a href="api/skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN.set_params">(skmultilearn.adapt.MLkNN method)</a>
+</li>
+        <li><a href="api/skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase.set_params">(skmultilearn.base.base.MLClassifierBase method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/skmultilearn.html#module-skmultilearn.adapt">skmultilearn.adapt (module)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.base.base.html#module-skmultilearn.base.base">skmultilearn.base.base (module)</a>
+</li>
+      <li><a href="api/skmultilearn.base.problem_transformation.html#module-skmultilearn.base.problem_transformation">skmultilearn.base.problem_transformation (module)</a>
+</li>
+      <li><a href="api/skmultilearn.html#module-skmultilearn.cluster">skmultilearn.cluster (module)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.base.html#module-skmultilearn.cluster.base">skmultilearn.cluster.base (module)</a>
+</li>
+      <li><a href="api/skmultilearn.dataset.html#module-skmultilearn.dataset">skmultilearn.dataset (module)</a>, <a href="api/skmultilearn.html#module-skmultilearn.dataset">[1]</a>
+</li>
+      <li><a href="api/skmultilearn.html#module-skmultilearn.ensemble">skmultilearn.ensemble (module)</a>
+</li>
+      <li><a href="api/skmultilearn.html#module-skmultilearn.ext">skmultilearn.ext (module)</a>
+</li>
+      <li><a href="api/skmultilearn.html#module-skmultilearn.model_selection">skmultilearn.model_selection (module)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.iterative_stratification.html#module-skmultilearn.model_selection.iterative_stratification">skmultilearn.model_selection.iterative_stratification (module)</a>
+</li>
+      <li><a href="api/skmultilearn.model_selection.measures.html#module-skmultilearn.model_selection.measures">skmultilearn.model_selection.measures (module)</a>
+</li>
+      <li><a href="api/skmultilearn.html#module-skmultilearn.problem_transform">skmultilearn.problem_transform (module)</a>
+</li>
+      <li><a href="api/skmultilearn.utils.html#module-skmultilearn.utils">skmultilearn.utils (module)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.StochasticBlockModel">StochasticBlockModel (class in skmultilearn.cluster)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.GraphBuilderBase.transform">transform() (skmultilearn.cluster.base.GraphBuilderBase method)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.cluster.base.html#skmultilearn.cluster.base.LabelCooccurrenceGraphBuilder.transform">(skmultilearn.cluster.base.LabelCooccurrenceGraphBuilder method)</a>
+</li>
+        <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.transform">(skmultilearn.problem_transform.LabelPowerset method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset.unique_combinations_">unique_combinations_ (skmultilearn.problem_transform.LabelPowerset attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.StochasticBlockModel.weights">weights (skmultilearn.cluster.StochasticBlockModel attribute)</a>
+</li>
+      <li><a href="api/skmultilearn.cluster.graphtool.html#skmultilearn.cluster.GraphToolLabelGraphClusterer.weights_">weights_ (skmultilearn.cluster.GraphToolLabelGraphClusterer attribute)</a>
+
+      <ul>
+        <li><a href="api/skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer.weights_">(skmultilearn.cluster.IGraphLabelGraphClusterer attribute)</a>
+</li>
+        <li><a href="api/skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer.weights_">(skmultilearn.cluster.NetworkXLabelGraphClusterer attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="#" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

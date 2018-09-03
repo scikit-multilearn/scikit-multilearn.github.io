@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../userguide.html">User Guide</a></li>
+        <li><a href="skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">skmultilearn.model_selection.measures module</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="module-skmultilearn.model_selection.measures">
+<span id="skmultilearn-model-selection-measures-module"></span><h1>skmultilearn.model_selection.measures module<a class="headerlink" href="#module-skmultilearn.model_selection.measures" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.example_distribution">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">example_distribution</code><span class="sig-paren">(</span><em>folds</em>, <em>desired_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#example_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.example_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Examples Distribution (ED) measure</p>
+<blockquote>
+<div>Examples Distribution is a measure of how much a given fold’s size deviates from the desired number
+of samples in each of the folds.</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.folds_label_combination_pairs_without_evidence">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">folds_label_combination_pairs_without_evidence</code><span class="sig-paren">(</span><em>y</em>, <em>folds</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#folds_label_combination_pairs_without_evidence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.folds_label_combination_pairs_without_evidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fold - Label / Label Pair / Label Combination (FLZ, FLPZ, FLCZ)  pair count measure</p>
+<p>A general implementation of FLZ - the number of pairs of fold and label combination of a given order for which
+there is no positive evidence in that fold for that combination. With <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 1, it becomes the FLZ
+measure from Katakis et.al’s original paper, with <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 2, it becomes the FLPZ measure from
+Szymański et. al.’s paper.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.folds_without_evidence_for_at_least_one_label_combination">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">folds_without_evidence_for_at_least_one_label_combination</code><span class="sig-paren">(</span><em>y</em>, <em>folds</em>, <em>order=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#folds_without_evidence_for_at_least_one_label_combination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.folds_without_evidence_for_at_least_one_label_combination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts the number of folds without evidence for a given Label, Label Pair or Label Combination (FZ, FZLP, FZLC) measure</p>
+<p>A general implementation of FZ - the number of folds that contain at least one label combination of order
+<code class="code docutils literal notranslate"><span class="pre">order</span></code> with no positive examples. With <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 1, it becomes the FZ measure from Katakis et.al’s
+original paper.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.get_combination_wise_output_matrix">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">get_combination_wise_output_matrix</code><span class="sig-paren">(</span><em>y</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#get_combination_wise_output_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.get_combination_wise_output_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns label combinations of a given order that are assigned to each row</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.get_indicator_representation">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">get_indicator_representation</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#get_indicator_representation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.get_indicator_representation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert binary indicator to list of assigned labels</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.get_unique_combinations">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">get_unique_combinations</code><span class="sig-paren">(</span><em>combinations_per_row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#get_unique_combinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.get_unique_combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs set.union on a list of sets</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>combinations_per_row</strong> (<em>List</em><em>[</em><em>Set</em><em>[</em><em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>]</em><em>]</em><em>]</em>) – list of combination assignments per row</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">all unique label combinations</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Set[Tuple[<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)">int</a>]]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.label_combination_distribution">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">label_combination_distribution</code><span class="sig-paren">(</span><em>y</em>, <em>folds</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#label_combination_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.label_combination_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Label / Label Pair / Label Combination Distribution (LD, LPD, LCZD) measure</p>
+<p>A general implementation of Label / Label Pair / Label Combination Distribution - a measure that evaluates
+how the proportion of positive evidence for a label / label pair / label combination to the negative evidence
+for a label (pair/combination) deviates from the same proportion in the entire data set, averaged over all folds and labels.</p>
+<p>With <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 1, it becomes the LD measure from Katakis et.al’s original paper, with <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 2, it
+becomes the LPD measure from Szymański et. al.’s paper.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.model_selection.measures.percentage_of_label_combinations_without_evidence_per_fold">
+<code class="descclassname">skmultilearn.model_selection.measures.</code><code class="descname">percentage_of_label_combinations_without_evidence_per_fold</code><span class="sig-paren">(</span><em>y</em>, <em>folds</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/model_selection/measures.html#percentage_of_label_combinations_without_evidence_per_fold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.model_selection.measures.percentage_of_label_combinations_without_evidence_per_fold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fold - Label / Label Pair / Label Combination (FLZ, FLPZ, FLCZ)  pair count measure</p>
+<p>A general implementation of FLZ - the number of pairs of fold and label combination of a given order for which
+there is no positive evidence in that fold for that combination. With <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 1, it becomes the FLZ
+measure from Katakis et.al’s original paper, with <code class="code docutils literal notranslate"><span class="pre">order</span></code> = 2, it becomes the FLPZ measure from
+Szymański et. al.’s paper.</p>
+</dd></dl>
+
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="../_sources/api/skmultilearn.model_selection.measures.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

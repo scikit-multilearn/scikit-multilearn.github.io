@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../userguide.html">User Guide</a></li>
+        <li><a href="../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.dataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">arff</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+
+<div class="viewcode-block" id="get_data_home"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.get_data_home">[docs]</a><span class="k">def</span> <span class="nf">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subdirectory</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the path of the scikit-multilearn data dir.</span>
+
+<span class="sd">    This folder is used by some large dataset loaders to avoid</span>
+<span class="sd">    downloading the data several times.</span>
+
+<span class="sd">    By default the :code:`data_home` is set to a folder named</span>
+<span class="sd">    :code:`&#39;scikit_ml_learn_data&#39;` in the user home folder.</span>
+
+<span class="sd">    Alternatively, it can be set by the :code:`&#39;SCIKIT_ML_LEARN_DATA&#39;`</span>
+<span class="sd">    environment variable or programmatically by giving an explicit</span>
+<span class="sd">    folder path. The :code:`&#39;~&#39;` symbol is expanded to the user home</span>
+<span class="sd">    folder.</span>
+
+<span class="sd">    If the folder does not already exist, it is automatically created.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_home : str (default is None)</span>
+<span class="sd">        the path to the directory in which scikit-multilearn data sets</span>
+<span class="sd">        should be stored, if None the path is generated as stated above</span>
+
+<span class="sd">    subdirectory : str, default &#39;&#39;</span>
+<span class="sd">        return path subdirectory under data_home if data_home passed or under default if not passed</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    str</span>
+<span class="sd">        the path to the data home</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data_home</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subdirectory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SCIKIT_ML_LEARN_DATA&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;scikit_ml_learn_data&#39;</span><span class="p">,</span> <span class="n">subdirectory</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SCIKIT_ML_LEARN_DATA&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;scikit_ml_learn_data&#39;</span><span class="p">))</span>
+    <span class="n">data_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_home</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_home</span></div>
+
+
+<div class="viewcode-block" id="clear_data_home"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.clear_data_home">[docs]</a><span class="k">def</span> <span class="nf">clear_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Delete all the content of the data home cache.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_home : str (default is None)</span>
+<span class="sd">        the path to the directory in which scikit-multilearn data sets</span>
+<span class="sd">        should be stored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_home</span> <span class="o">=</span> <span class="n">get_data_home</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">data_home</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_download_base_url</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns base URL for data sets.&quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="s1">&#39;http://scikit.ml/datasets/&#39;</span>
+
+
+<div class="viewcode-block" id="available_data_sets"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.available_data_sets">[docs]</a><span class="k">def</span> <span class="nf">available_data_sets</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Lists available data sets and their variants</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict[(set_name, variant_name)] -&gt; [md5, file_name]</span>
+<span class="sd">        available datasets and their variants with the key pertaining</span>
+<span class="sd">        to the :code:`(set_name, variant_name)` and values include md5 and file name on server</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">_get_download_base_url</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;data.list&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">raw_data_list</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
+
+        <span class="n">variant_information</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">raw_data_list</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="n">md5</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+            <span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span> <span class="o">=</span> <span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span> <span class="ow">in</span> <span class="n">variant_information</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Data file broken, files doubled, please file bug report.&#39;</span><span class="p">)</span>
+            <span class="n">variant_information</span><span class="p">[(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">md5</span><span class="p">,</span> <span class="n">file_name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">variant_information</span></div>
+
+
+<div class="viewcode-block" id="download_dataset"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.download_dataset">[docs]</a><span class="k">def</span> <span class="nf">download_dataset</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">,</span> <span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Downloads a data set</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    set_name : str</span>
+<span class="sd">        name of set from :func:`available_data_sets`</span>
+<span class="sd">    variant : str</span>
+<span class="sd">        variant of the data set from :func:`available_data_sets`</span>
+<span class="sd">    data_home : default None, str</span>
+<span class="sd">        custom base folder for data, if None, default is used</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        path to the downloaded data set file on disk</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">data_sets</span> <span class="o">=</span> <span class="n">available_data_sets</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_sets</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The set </span><span class="si">{}</span><span class="s1"> in variant </span><span class="si">{}</span><span class="s1"> does not exist on server.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">))</span>
+
+    <span class="n">md5</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">data_sets</span><span class="p">[</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">data_home</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">target_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_data_home</span><span class="p">(),</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">target_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_home</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">md5</span> <span class="o">==</span> <span class="n">_get_md5</span><span class="p">(</span><span class="n">target_name</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2"> - exists, not redownloading&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">target_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2"> - exists, but MD5 sum mismatch - redownloading&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2"> - does not exists downloading&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">))</span>
+
+    <span class="c1"># not found or broken md5</span>
+    <span class="n">_download_single_file</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">target_name</span><span class="p">)</span>
+    <span class="n">found_md5</span> <span class="o">=</span> <span class="n">_get_md5</span><span class="p">(</span><span class="n">target_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">md5</span> <span class="o">!=</span> <span class="n">found_md5</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: MD5 mismatch </span><span class="si">{}</span><span class="s2"> vs </span><span class="si">{}</span><span class="s2"> - possible download error&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">md5</span><span class="p">,</span> <span class="n">found_md5</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloaded </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">target_name</span></div>
+
+
+<div class="viewcode-block" id="load_dataset"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.load_dataset">[docs]</a><span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">,</span> <span class="n">data_home</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a selected variant of the given data set</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    set_name : str</span>
+<span class="sd">        name of set from :func:`available_data_sets`</span>
+<span class="sd">    variant : str</span>
+<span class="sd">        variant of the data set</span>
+<span class="sd">    data_home : default None, str</span>
+<span class="sd">        custom base folder for data, if None, default is used</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    dict</span>
+<span class="sd">        the loaded multilabel data set variant in the scikit-multilearn</span>
+<span class="sd">        format, see data_sets</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">download_dataset</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">variant</span><span class="p">,</span> <span class="n">data_home</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_dataset_dump</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="load_from_arff"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.load_from_arff">[docs]</a><span class="k">def</span> <span class="nf">load_from_arff</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">label_count</span><span class="p">,</span> <span class="n">label_location</span><span class="o">=</span><span class="s2">&quot;end&quot;</span><span class="p">,</span>
+                   <span class="n">input_feature_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">encode_nominal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">load_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">return_attribute_definitions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Method for loading ARFF files as numpy array</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        path to ARFF file</span>
+<span class="sd">    labelcount: integer</span>
+<span class="sd">        number of labels in the ARFF file</span>
+<span class="sd">    endian: str {&quot;big&quot;, &quot;little&quot;} (default is &quot;big&quot;)</span>
+<span class="sd">        whether the ARFF file contains labels at the beginning of the</span>
+<span class="sd">        attributes list (&quot;start&quot;, MEKA format)</span>
+<span class="sd">        or at the end (&quot;end&quot;, MULAN format)</span>
+<span class="sd">    input_feature_type: numpy.type as string (default is &quot;float&quot;)</span>
+<span class="sd">        the desire type of the contents of the return &#39;X&#39; array-likes,</span>
+<span class="sd">        default &#39;i8&#39;, should be a numpy type,</span>
+<span class="sd">        see http://docs.scipy.org/doc/numpy/user/basics.types.html</span>
+<span class="sd">    encode_nominal: bool (default is True)</span>
+<span class="sd">        whether convert categorical data into numeric factors - required</span>
+<span class="sd">        for some scikit classifiers that can&#39;t handle non-numeric</span>
+<span class="sd">        input features.</span>
+<span class="sd">    load_sparse: boolean (default is False)</span>
+<span class="sd">        whether to read arff file as a sparse file format, liac-arff</span>
+<span class="sd">        breaks if sparse reading is enabled for non-sparse ARFFs.</span>
+<span class="sd">    return_attribute_definitions: boolean (default is False)</span>
+<span class="sd">        whether to return the definitions for each attribute in the</span>
+<span class="sd">        dataset</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    X : :mod:`scipy.sparse.lil_matrix` of `input_feature_type`, shape=(n_samples, n_features)</span>
+<span class="sd">        input feature matrix</span>
+<span class="sd">    y : :mod:`scipy.sparse.lil_matrix` of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">        binary indicator matrix with label assignments</span>
+<span class="sd">    names of attributes : List[str]</span>
+<span class="sd">        list of attribute names from ARFF file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">load_sparse</span><span class="p">:</span>
+        <span class="n">arff_frame</span> <span class="o">=</span> <span class="n">arff</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">),</span> <span class="n">encode_nominal</span><span class="o">=</span><span class="n">encode_nominal</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="n">arff</span><span class="o">.</span><span class="n">DENSE</span>
+        <span class="p">)</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
+            <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">input_feature_type</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">arff_frame</span> <span class="o">=</span> <span class="n">arff</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">),</span> <span class="n">encode_nominal</span><span class="o">=</span><span class="n">encode_nominal</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="n">arff</span><span class="o">.</span><span class="n">COO</span>
+        <span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">label_location</span> <span class="o">==</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()[:,</span> <span class="n">label_count</span><span class="p">:]</span><span class="o">.</span><span class="n">tolil</span><span class="p">(),</span> <span class="n">matrix</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()[:,</span> <span class="p">:</span><span class="n">label_count</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolil</span><span class="p">()</span>
+        <span class="n">feature_names</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">][</span><span class="n">label_count</span><span class="p">:]</span>
+        <span class="n">label_names</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">][:</span><span class="n">label_count</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">label_location</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()[:,</span> <span class="p">:</span><span class="o">-</span><span class="n">label_count</span><span class="p">]</span><span class="o">.</span><span class="n">tolil</span><span class="p">(),</span> <span class="n">matrix</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()[:,</span> <span class="o">-</span><span class="n">label_count</span><span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolil</span><span class="p">()</span>
+        <span class="n">feature_names</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">][:</span><span class="o">-</span><span class="n">label_count</span><span class="p">]</span>
+        <span class="n">label_names</span> <span class="o">=</span> <span class="n">arff_frame</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">][</span><span class="o">-</span><span class="n">label_count</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># unknown endian</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">return_attribute_definitions</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">label_names</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="save_to_arff"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.save_to_arff">[docs]</a><span class="k">def</span> <span class="nf">save_to_arff</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label_location</span><span class="o">=</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">save_sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Method for dumping data to ARFF files</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">        input feature matrix</span>
+<span class="sd">    y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">        binary indicator matrix with label assignments</span>
+<span class="sd">    label_location: string {&quot;start&quot;, &quot;end&quot;} (default is &quot;end&quot;)</span>
+<span class="sd">        whether the ARFF file will contain labels at the beginning of the</span>
+<span class="sd">        attributes list (&quot;start&quot;, MEKA format)</span>
+<span class="sd">        or at the end (&quot;end&quot;, MULAN format)</span>
+<span class="sd">    save_sparse: boolean</span>
+<span class="sd">        Whether to save in ARFF&#39;s sparse dictionary-like format instead of listing all</span>
+<span class="sd">        zeroes within file, very useful in multi-label classification.</span>
+<span class="sd">    filename : str or None</span>
+<span class="sd">        Path to ARFF file, if None, the ARFF representation is returned as string</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str or None</span>
+<span class="sd">        the ARFF dump string, if filename is None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">todok</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">todok</span><span class="p">()</span>
+
+    <span class="n">x_prefix</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y_prefix</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">x_attributes</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;X</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="sa">u</span><span class="s1">&#39;NUMERIC&#39;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="n">y_attributes</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;y</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)])</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+    <span class="k">if</span> <span class="n">label_location</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
+        <span class="n">y_prefix</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">relation_sign</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="n">x_attributes</span> <span class="o">+</span> <span class="n">y_attributes</span>
+
+    <span class="k">elif</span> <span class="n">label_location</span> <span class="o">==</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span>
+        <span class="n">x_prefix</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">relation_sign</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="n">y_attributes</span> <span class="o">+</span> <span class="n">x_attributes</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Label location not in {start, end}&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save_sparse</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[{}</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+    <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">x_prefix</span> <span class="o">+</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">y_prefix</span> <span class="o">+</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="sa">u</span><span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;traindata&#39;</span><span class="p">,</span>
+        <span class="sa">u</span><span class="s1">&#39;relation&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;traindata: -C </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">relation_sign</span><span class="p">),</span>
+        <span class="sa">u</span><span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="n">attributes</span><span class="p">,</span>
+        <span class="sa">u</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">data</span>
+    <span class="p">}</span>
+
+    <span class="n">arff_data</span> <span class="o">=</span> <span class="n">arff</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">arff_data</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">arff_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="save_dataset_dump"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.save_dataset_dump">[docs]</a><span class="k">def</span> <span class="nf">save_dataset_dump</span><span class="p">(</span><span class="n">input_space</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">label_names</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Saves a compressed data set dump</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_space: array-like of array-likes</span>
+<span class="sd">        Input space array-like of input feature vectors</span>
+<span class="sd">    labels: array-like of binary label vectors</span>
+<span class="sd">        Array-like of labels assigned to each input vector, as a binary</span>
+<span class="sd">        indicator vector (i.e. if 5th position has value 1</span>
+<span class="sd">        then the input vector has label no. 5)</span>
+<span class="sd">    feature_names: array-like,optional</span>
+<span class="sd">        names of features</span>
+<span class="sd">    label_names: array-like, optional</span>
+<span class="sd">        names of labels</span>
+<span class="sd">    filename : str, optional</span>
+<span class="sd">        Path to dump file, if without .bz2, the .bz2 extension will be</span>
+<span class="sd">        appended.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">input_space</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span> <span class="s1">&#39;features&#39;</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span> <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="n">label_names</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s1">&#39;.bz2&#39;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">+=</span> <span class="s2">&quot;.bz2&quot;</span>
+
+        <span class="k">with</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file_handle</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="load_dataset_dump"><a class="viewcode-back" href="../../api/skmultilearn.dataset.html#skmultilearn.dataset.load_dataset_dump">[docs]</a><span class="k">def</span> <span class="nf">load_dataset_dump</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a compressed data set dump</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        path to dump file, if without .bz2 ending, the .bz2 extension will be appended.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">        input feature matrix</span>
+<span class="sd">    y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">        binary indicator matrix with label assignments</span>
+<span class="sd">    names of attributes: List[str]</span>
+<span class="sd">        list of attribute names for `X` columns</span>
+<span class="sd">    names of labels: List[str]</span>
+<span class="sd">        list of label names for `y` columns</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> does not exist, use load_dataset to download file&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">filename</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s1">&#39;.bz2&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">+=</span> <span class="s2">&quot;.bz2&quot;</span>
+
+    <span class="k">with</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">_download_single_file</span><span class="p">(</span><span class="n">data_file_name</span><span class="p">,</span> <span class="n">target_file_name</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span> <span class="ow">or</span> <span class="n">_get_download_base_url</span><span class="p">()</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">data_file_name</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_file_name</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">decode_content</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_get_md5</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+    <span class="n">hash_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">hash_md5</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hash_md5</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>
