@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.embedding.openne</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">openne.gf</span> <span class="k">import</span> <span class="n">GraphFactorization</span>
+<span class="kn">from</span> <span class="nn">openne.graph</span> <span class="k">import</span> <span class="n">Graph</span>
+<span class="kn">from</span> <span class="nn">openne.grarep</span> <span class="k">import</span> <span class="n">GraRep</span>
+<span class="kn">from</span> <span class="nn">openne.hope</span> <span class="k">import</span> <span class="n">HOPE</span>
+<span class="kn">from</span> <span class="nn">openne.lap</span> <span class="k">import</span> <span class="n">LaplacianEigenmaps</span>
+<span class="kn">from</span> <span class="nn">openne.line</span> <span class="k">import</span> <span class="n">LINE</span>
+<span class="kn">from</span> <span class="nn">openne.lle</span> <span class="k">import</span> <span class="n">LLE</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<div class="viewcode-block" id="OpenNetworkEmbedder"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.openne.html#skmultilearn.embedding.OpenNetworkEmbedder">[docs]</a><span class="k">class</span> <span class="nc">OpenNetworkEmbedder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Embed the label space using a label network embedder from OpenNE</span>
+
+<span class="sd">    Implements an OpenNE based LNEMLC: label network embeddings for multi-label classification.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    graph_builder: a GraphBuilderBase inherited transformer</span>
+<span class="sd">        the graph builder to provide the adjacency matrix and weight map for the underlying graph</span>
+<span class="sd">    embedding : string, one of {&#39;GraphFactorization&#39;, &#39;GraRep&#39;, &#39;HOPE&#39;, &#39;LaplacianEigenmaps&#39;, &#39;LINE&#39;, &#39;LLE&#39;}</span>
+<span class="sd">        the selected OpenNE_ embedding</span>
+
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | Method name string   |                             Description                                        |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | GraphFactorization_  | Graph factorization embeddings                                                 |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | GraRep_              | Graph representations with global structural information                       |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | HOPE_                | High-order Proximity Preserved Embedding                                       |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | LaplacianEigenmaps_  | Detecting communities from multiple async label propagation on the graph       |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | LINE_                | Large-scale information network embedding                                      |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+<span class="sd">        | LLE_                 | Locally Linear Embedding                                                       |</span>
+<span class="sd">        +----------------------+--------------------------------------------------------------------------------+</span>
+
+<span class="sd">        .. _OpenNE: https://github.com/thunlp/OpenNE/</span>
+<span class="sd">        .. _GraphFactorization: https://github.com/thunlp/OpenNE/blob/master/src/openne/gf.py</span>
+<span class="sd">        .. _GraRep: https://github.com/thunlp/OpenNE/blob/master/src/openne/grarep.py</span>
+<span class="sd">        .. _HOPE: https://github.com/thunlp/OpenNE/blob/master/src/openne/hope.py</span>
+<span class="sd">        .. _LaplacianEigenmaps: https://github.com/thunlp/OpenNE/blob/master/src/openne/lap.py</span>
+<span class="sd">        .. _LINE: https://github.com/thunlp/OpenNE/blob/master/src/openne/line.py</span>
+<span class="sd">        .. _LLE: https://github.com/thunlp/OpenNE/blob/master/src/openne/lle.py</span>
+
+
+<span class="sd">    dimension: int</span>
+<span class="sd">        the dimension of the label embedding vectors</span>
+<span class="sd">    aggregation_function: &#39;add&#39;, &#39;multiply&#39;, &#39;average&#39; or Callable</span>
+<span class="sd">        the function used to aggregate label vectors for all labels assigned to each of the samples</span>
+<span class="sd">    normalize_weights: boolean</span>
+<span class="sd">        whether to normalize weights in the label graph by the number of samples or not</span>
+<span class="sd">    param_dict</span>
+<span class="sd">        parameters passed to the embedder, don&#39;t use the dimension and graph parameters, this class will set them at fit</span>
+
+<span class="sd">    If you use this classifier please cite the relevant embedding method paper</span>
+<span class="sd">    and the label network embedding for multi-label classification paper:</span>
+
+<span class="sd">    .. code :: bibtex</span>
+
+<span class="sd">        @article{zhang2007ml,</span>
+<span class="sd">          title={ML-KNN: A lazy learning approach to multi-label learning},</span>
+<span class="sd">          author={Zhang, Min-Ling and Zhou, Zhi-Hua},</span>
+<span class="sd">          journal={Pattern recognition},</span>
+<span class="sd">          volume={40},</span>
+<span class="sd">          number={7},</span>
+<span class="sd">          pages={2038--2048},</span>
+<span class="sd">          year={2007},</span>
+<span class="sd">          publisher={Elsevier}</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Example code for using this embedder looks like this:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from skmultilearn.embedding import OpenNetworkEmbedder, EmbeddingClassifier</span>
+<span class="sd">        from sklearn.ensemble import RandomForestRegressor</span>
+<span class="sd">        from skmultilearn.adapt import MLkNN</span>
+<span class="sd">        from skmultilearn.cluster import LabelCooccurrenceGraphBuilder</span>
+
+<span class="sd">        graph_builder = LabelCooccurrenceGraphBuilder(weighted=True, include_self_edges=False)</span>
+<span class="sd">        openne_line_params = dict(batch_size=1000, negative_ratio=5)</span>
+
+<span class="sd">        clf = EmbeddingClassifier(</span>
+<span class="sd">            OpenNetworkEmbedder(graph_builder, &#39;LINE&#39;, 4, &#39;add&#39;, True, openne_line_params),</span>
+<span class="sd">            RandomForestRegressor(n_estimators=10),</span>
+<span class="sd">            MLkNN(k=5)</span>
+<span class="sd">        )</span>
+
+<span class="sd">        clf.fit(X_train, y_train)</span>
+
+<span class="sd">        predictions = clf.predict(X_test)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_EMBEDDINGS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;GraphFactorization&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">GraphFactorization</span><span class="p">,</span> <span class="s1">&#39;rep_size&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;GraRep&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">GraRep</span><span class="p">,</span> <span class="s1">&#39;dim&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;HOPE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">HOPE</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;LaplacianEigenmaps&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">LaplacianEigenmaps</span><span class="p">,</span> <span class="s1">&#39;rep_size&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;LINE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">LINE</span><span class="p">,</span> <span class="s1">&#39;rep_size&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;LLE&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">LLE</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">_AGGREGATION_FUNCTIONS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;add&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">reduce</span><span class="p">,</span>
+        <span class="s1">&#39;multiply&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">reduce</span><span class="p">,</span>
+        <span class="s1">&#39;average&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_builder</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">aggregation_function</span><span class="p">,</span> <span class="n">normalize_weights</span><span class="p">,</span> <span class="n">param_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">embedding</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EMBEDDINGS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Embedding must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EMBEDDINGS</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+
+        <span class="k">if</span> <span class="n">aggregation_function</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AGGREGATION_FUNCTIONS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aggregation_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AGGREGATION_FUNCTIONS</span><span class="p">[</span><span class="n">aggregation_function</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">aggregation_function</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aggregation_function</span> <span class="o">=</span> <span class="n">aggregation_function</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Aggregation function must be callable or one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_AGGREGATION_FUNCTIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param_dict</span> <span class="o">=</span> <span class="n">param_dict</span> <span class="k">if</span> <span class="n">param_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">dimension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span> <span class="o">=</span> <span class="n">graph_builder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_weights</span> <span class="o">=</span> <span class="n">normalize_weights</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">reset_default_graph</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_openne_graph</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">embedding_class</span><span class="p">,</span> <span class="n">dimension_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EMBEDDINGS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">]</span>
+        <span class="n">param_dict</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_dict</span><span class="p">)</span>
+        <span class="n">param_dict</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span>
+        <span class="n">param_dict</span><span class="p">[</span><span class="n">dimension_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_</span> <span class="o">=</span> <span class="n">embedding_class</span><span class="p">(</span><span class="o">**</span><span class="n">param_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embedd_y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_openne_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">),</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_builder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_weights</span><span class="p">:</span>
+                <span class="n">w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">G</span><span class="p">[</span><span class="n">src</span><span class="p">][</span><span class="n">dst</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">G</span><span class="p">[</span><span class="n">dst</span><span class="p">][</span><span class="n">src</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">encode_node</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_embedd_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">empty_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">aggregation_function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_</span><span class="o">.</span><span class="n">vectors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">empty_vector</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">_iterate_over_sparse_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aggregation_function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_</span><span class="o">.</span><span class="n">vectors</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">empty_vector</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">A</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span> <span class="k">else</span> <span class="n">y</span><span class="p">)</span>
+        <span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_iterate_over_sparse_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">yield</span> <span class="n">y</span><span class="p">[</span><span class="n">r</span><span class="p">,:]</span><span class="o">.</span><span class="n">indices</span>
+
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

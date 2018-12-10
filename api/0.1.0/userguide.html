@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Getting started with scikit-multilearn" href="tutorial.html" />
+    <link rel="prev" title="Estimating parameters" href="introduction.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">User Guide</a><ul>
+<li><a class="reference internal" href="#introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#advanced-usage">2. Advanced usage</a></li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">1. Getting started with scikit-multilearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">2. Relevant Concepts in Multi-Label Classification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#Aim">2.1. Aim</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#Single-label-vs-multi-label-classification">2.2. Single-label vs multi-label classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#Multi-label-classification-data">2.3. Multi-label classification data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.html#The-multi-label-data-representation">2.3.1. The multi-label data representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concepts.html#Single-label-representations-in-problem-transformation">2.3.2. Single-label representations in problem transformation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">3. Dataset handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#scikit-multilearn-format">3.1. scikit-multilearn format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html#scikit-multilearn-repository">4. scikit-multilearn repository</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets.html#ARFF-files">4.1. ARFF files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modelselection.html">5. How to select a classifier</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modelselection.html#Intutions">5.1. Intutions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modelselection.html#Generalization-quality-measures">5.1.1. Generalization quality measures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modelselection.html#Performance">5.1.2. Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modelselection.html#Data-driven-model-selection">5.2. Data-driven model selection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modelselection.html#Estimating-hyper-parameter-k-for-MLkNN">5.2.1. Estimating hyper-parameter k for MLkNN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modelselection.html#Estimating-hyper-parameter-k-for-embedded-classifiers">5.2.2. Estimating hyper-parameter k for embedded classifiers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="advanced-usage">
+<h2>2. Advanced usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="labelrelations.html">1. Exploring Label Relations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelrelations.html#Detecting-communities-in-Label-Relations-Graph">1.1. Detecting communities in Label Relations Graph</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelrelations.html#Building-a-Label-Graph">1.1.1. Building a Label Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelrelations.html#NetworkX">1.1.2. NetworkX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="labelrelations.html#Using-iGraph">2. Using iGraph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelrelations.html#Stochastic-Blockmodel-from-graph-tool">3. Stochastic Blockmodel from graph-tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelrelations.html#Using-scikit-learn-clusterers">3.1. Using scikit-learn clusterers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelrelations.html#Fixed-partition-based-on-expert-knowledge">3.2. Fixed partition based on expert knowledge</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meka.html">4. Using the MEKA wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#Setting-up-MEKA">4.1. Setting up MEKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#Using-MEKA-via-scikit-multilearn">4.2. Using MEKA via scikit-multilearn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meka.html#Citing-meka">4.3. Citing meka</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stratification.html">5. Multi-label data stratification</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="1. Getting started with scikit-multilearn"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Estimating parameters"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="/index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/userguide.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

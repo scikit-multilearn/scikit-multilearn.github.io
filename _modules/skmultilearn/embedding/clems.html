@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.embedding.clems</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">._mdsw</span> <span class="k">import</span> <span class="n">_MDSW</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+
+
+<span class="c1"># inspired by implementation by Kuan-Hao Huang</span>
+<span class="c1"># https://github.com/ej0cl6/csmlc</span>
+
+<div class="viewcode-block" id="CLEMS"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.clems.html#skmultilearn.embedding.CLEMS">[docs]</a><span class="k">class</span> <span class="nc">CLEMS</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Embed the label space using a label network embedder from OpenNE</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    measure: Callable</span>
+<span class="sd">        a cost function executed on two label vectors</span>
+<span class="sd">    dimension: int</span>
+<span class="sd">        the dimension of the label embedding vectors</span>
+<span class="sd">    is_score: boolean</span>
+<span class="sd">        set to True if measures is a score function (higher value is better), False if loss function (lower is better)</span>
+<span class="sd">    param_dict: dict or None</span>
+<span class="sd">        parameters passed to the embedder, don&#39;t use the dimension and graph parameters, this class will set them at fit</span>
+
+
+<span class="sd">    Example code for using this embedder looks like this:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from skmultilearn.embedding import CLEMS, EmbeddingClassifier</span>
+<span class="sd">        from sklearn.ensemble import RandomForestRegressor</span>
+<span class="sd">        from skmultilearn.adapt import MLkNN</span>
+<span class="sd">        from sklearn.metrics import accuracy_score</span>
+
+
+<span class="sd">        clf = EmbeddingClassifier(</span>
+<span class="sd">            CLEMS(accuracy_score, True),</span>
+<span class="sd">            RandomForestRegressor(n_estimators=10),</span>
+<span class="sd">            MLkNN(k=5)</span>
+<span class="sd">        )</span>
+
+<span class="sd">        clf.fit(X_train, y_train)</span>
+
+<span class="sd">        predictions = clf.predict(X_test)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measure</span><span class="p">,</span> <span class="n">is_score</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measure</span> <span class="o">=</span> <span class="n">measure</span>
+        <span class="k">if</span> <span class="n">is_score</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">measure</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">measure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+
+<div class="viewcode-block" id="CLEMS.fit"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.clems.html#skmultilearn.embedding.CLEMS.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fits the embedder to data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+<span class="sd">        y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">            binary indicator matrix with label assignments</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">            fitted instance of self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get unique label combinations</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CLEMS.fit_transform"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.clems.html#skmultilearn.embedding.CLEMS.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the embedder and transform the output space</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+<span class="sd">        y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">            binary indicator matrix with label assignments</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X, y_embedded</span>
+<span class="sd">            results of the embedding, input and output space</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">tolil</span><span class="p">()</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">y_unique</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">n_unique</span> <span class="o">=</span> <span class="n">y_unique</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y_unique</span><span class="p">)</span>
+
+        <span class="n">nearest_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">knn_</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">nearest_points_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">nearest_points</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># calculate delta matrix</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_unique</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_unique</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_unique</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_unique</span><span class="p">):</span>
+                <span class="n">delta</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">n_unique</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">y_unique</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">y_unique</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="p">]))</span>
+                <span class="n">delta</span><span class="p">[</span><span class="n">n_unique</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">n_unique</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+
+        <span class="c1"># calculate MDS embedding</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;n_components&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;n_uq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_unique</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nearest_points_counts</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;dissimilarity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;precomputed&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedder_</span> <span class="o">=</span> <span class="n">_MDSW</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">y_unique_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">embedding_</span>
+        <span class="n">y_unique_limited_to_before_trick</span> <span class="o">=</span> <span class="n">y_unique_embedded</span><span class="p">[</span><span class="n">n_unique</span><span class="p">:]</span>
+
+        <span class="n">knn_to_extend_embeddings_to_other_combinations</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">knn_to_extend_embeddings_to_other_combinations</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y_unique_limited_to_before_trick</span><span class="p">)</span>
+        <span class="n">neighboring_embeddings_indices</span> <span class="o">=</span> <span class="n">knn_to_extend_embeddings_to_other_combinations</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_unique_embedded</span><span class="p">[</span><span class="n">neighboring_embeddings_indices</span><span class="p">]</span></div></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

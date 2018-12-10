@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Relevant Concepts in Multi-Label Classification" href="concepts.html" />
+    <link rel="prev" title="User Guide" href="userguide.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">1. Getting started with scikit-multilearn</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Getting-started-with-scikit-multilearn">
+<h1>1. Getting started with scikit-multilearn<a class="headerlink" href="#Getting-started-with-scikit-multilearn" title="Permalink to this headline">¶</a></h1>
+<p>Scikit-multilearn is a BSD-licensed library for multi-label
+classification that is built on top of the well-known scikit-learn
+ecosystem.</p>
+<p>To install it just run the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install scikit-multilearn
+</pre></div>
+</div>
+<p>Scikit-multilearn works with Python 2 and 3 on Windows, Linux and OSX.
+The module name is <code class="docutils literal notranslate"><span class="pre">skmultilearn</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s load up some data. In this tutorial we will be working with the
+<code class="docutils literal notranslate"><span class="pre">emotions</span></code> data set introduced in <a class="reference external" href="http://cos">emotions</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">label_names</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emotions:train - exists, not redownloading
+emotions:test - exists, not redownloading
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">feature_names</span></code> variable contains list of pairs (feature name,
+type) that were provided in the original data set. In the case of
+<code class="docutils literal notranslate"><span class="pre">emotions</span></code> data the authors write:</p>
+<blockquote>
+<div>The extracted features fall into two categories: rhythmic and
+timbre.</div></blockquote>
+<p>Let’s take a look at the first few features:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">feature_names</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[(u&#39;Mean_Acc1298_Mean_Mem40_Centroid&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_Rolloff&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_Flux&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_0&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_1&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_2&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_3&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_4&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_5&#39;, u&#39;NUMERIC&#39;),
+ (u&#39;Mean_Acc1298_Mean_Mem40_MFCC_6&#39;, u&#39;NUMERIC&#39;)]
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">label_names</span></code> variable contains list of pairs (label name, type)
+of labels that were used to annotate the music. The paper states that:</p>
+<blockquote>
+<div>The Tellegen-Watson-Clark model was employed for labeling the data
+with emotions. The sound clips were annotated by three male experts
+of age 20, 25 and 30 from the School of Music Studies</div></blockquote>
+<p>The labels counts in the training data are as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="47%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Label</th>
+<th class="head">Description</th>
+<th class="head"># Examples</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>L1</td>
+<td>amazed-surprised</td>
+<td>173</td>
+</tr>
+<tr class="row-odd"><td>L2</td>
+<td>happy-pleased</td>
+<td>166</td>
+</tr>
+<tr class="row-even"><td>L3</td>
+<td>relaxing-calm</td>
+<td>264</td>
+</tr>
+<tr class="row-odd"><td>L4</td>
+<td>quiet-still</td>
+<td>148</td>
+</tr>
+<tr class="row-even"><td>L5</td>
+<td>sad-lonely</td>
+<td>168</td>
+</tr>
+<tr class="row-odd"><td>L6</td>
+<td>angry-fearful</td>
+<td>189</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s see the contents of <code class="docutils literal notranslate"><span class="pre">label_names</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">label_names</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[(u&#39;amazed-suprised&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;happy-pleased&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;relaxing-calm&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;quiet-still&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;sad-lonely&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;angry-aggresive&#39;, [u&#39;0&#39;, u&#39;1&#39;])]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">BinaryRelevance</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="o">=</span><span class="n">SVC</span><span class="p">(),</span>
+    <span class="n">require_dense</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>On a side note, Binary Relevance trains a classifier per each of the
+labels, we can see that the classifier hasn’t been trained yet:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span><span class="o">.</span><span class="n">classifiers</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-7-5aa82f5c3cc2&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>clf<span class="ansi-blue-fg">.</span>classifiers
+
+<span class="ansi-red-fg">AttributeError</span>: &#39;BinaryRelevance&#39; object has no attribute &#39;classifiers&#39;
+</pre></div></div>
+</div>
+<p>Scikit-learn introduces a convention of how classifiers are organized.
+The typical usage of classifier is:</p>
+<ul class="simple">
+<li>fit it to the data (trains the classifier and returns self)</li>
+<li>predict results on new data (returns predicted results)</li>
+</ul>
+<p>Scikit-multilearn follows these conventions, let’s train a multi-label
+classifier:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>BinaryRelevance(classifier=SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False),
+        require_dense=[False, True])
+</pre></div>
+</div>
+</div>
+<p>The base classifiers have been trained now:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span><span class="o">.</span><span class="n">classifiers</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+   decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+   max_iter=-1, probability=False, random_state=None, shrinking=True,
+   tol=0.001, verbose=False),
+ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+   decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+   max_iter=-1, probability=False, random_state=None, shrinking=True,
+   tol=0.001, verbose=False),
+ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+   decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+   max_iter=-1, probability=False, random_state=None, shrinking=True,
+   tol=0.001, verbose=False),
+ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+   decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+   max_iter=-1, probability=False, random_state=None, shrinking=True,
+   tol=0.001, verbose=False),
+ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+   decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+   max_iter=-1, probability=False, random_state=None, shrinking=True,
+   tol=0.001, verbose=False),
+ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+   decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+   max_iter=-1, probability=False, random_state=None, shrinking=True,
+   tol=0.001, verbose=False)]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">prediction</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;202x6 sparse matrix of type &#39;&lt;type &#39;numpy.int64&#39;&gt;&#39;
+    with 246 stored elements in Compressed Sparse Column format&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">## Measure the quality</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sklearn.metrics</span> <span class="kn">as</span> <span class="nn">metrics</span>
+</pre></div>
+</div>
+</div>
+<p>Scikit-learn provides a <a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#classification-metrics">set of
+metrics</a>
+useful for evaluating the quality of the model. They are most often used
+by providing the true assignment matrix/array as the first argument, and
+the prediction matrix/array as the second argument.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">metrics</span><span class="o">.</span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.26485148514851486
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.14356435643564355
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="concepts.html" title="2. Relevant Concepts in Multi-Label Classification"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="userguide.html" title="User Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="/index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="userguide.html" accesskey="U">User Guide</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/tutorial.ipynb.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

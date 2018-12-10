@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="7. Multi-label data stratification" href="stratification.html" />
+    <link rel="prev" title="5. Multi-label deep learning with scikit-multilearn" href="multilabeldnn.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">6. Multi-label embedding-based classification</a><ul>
+<li><a class="reference internal" href="#Label-Network-Embeddings">6.1. Label Network Embeddings</a></li>
+<li><a class="reference internal" href="#Cost-Sensitive-Label-Embedding-with-Multidimensional-Scaling">6.2. Cost-Sensitive Label Embedding with Multidimensional Scaling</a></li>
+<li><a class="reference internal" href="#Scikit-learn-based-embedders">6.3. Scikit-learn based embedders</a></li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Multi-label-embedding-based-classification">
+<h1>6. Multi-label embedding-based classification<a class="headerlink" href="#Multi-label-embedding-based-classification" title="Permalink to this headline">¶</a></h1>
+<p>Multi-label embedding techniques emerged as a response the need to cope
+with a large label space, but with the rise of computing power they
+became a method of improving classification quality. Typically the
+embedding-based multi-label classification starts with embedding the
+label matrix of the training set in some way, training a regressor for
+unseen samples to predict their embeddings, and a classifier (sometimes
+very simple ones) to correct the regression error. Scikit-multilearn
+provides several multi-label embedders alongisde a general
+regressor-classifier classification class.</p>
+<p>Currently available embedding strategies include:</p>
+<ul class="simple">
+<li>Label Network Embeddings via OpenNE network embedding library, as in
+the <a class="reference external" href="https://arxiv.org/abs/1812.02956">LNEMLC paper</a></li>
+<li>Cost-Sensitive Label Embedding with Multidimensional Scaling, as in
+the <a class="reference external" href="https://github.com/ej0cl6/csmlc">CLEMS paper</a></li>
+<li>scikit-learn based embeddings such as PCA or <a class="reference external" href="https://scikit-learn.org/stable/modules/manifold.html">manifold learning
+approaches</a></li>
+</ul>
+<p>Let’s start with loading some data:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="k">import</span> <span class="n">load_dataset</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">label_names</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emotions:train - exists, not redownloading
+emotions:test - exists, not redownloading
+</pre></div></div>
+</div>
+<div class="section" id="Label-Network-Embeddings">
+<h2>6.1. Label Network Embeddings<a class="headerlink" href="#Label-Network-Embeddings" title="Permalink to this headline">¶</a></h2>
+<p>The label network embeddings approaches require a working tensorflow
+installation and the OpenNE library. To install them, run the following
+code:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install networkx tensorflow
+git clone https://github.com/thunlp/OpenNE/
+pip install -e OpenNE/src
+</pre></div>
+</div>
+<div class="figure">
+<img alt="" src="_images/lnemlc.png" />
+</div>
+<p>For an example we will use the LINE embedding method, one of the most
+efficient and well-performing state of the art approaches, for the
+meaning of parameters consult the <a href="#id1"><span class="problematic" id="id2">`OpenNE documentation &lt;&gt;`__</span></a>. We select
+<code class="docutils literal notranslate"><span class="pre">order</span> <span class="pre">=</span> <span class="pre">3</span></code> which means that the method will take both first and
+second order proximities between labels for embedding. We select a
+dimension of 5 times the number of labels, as the linear embeddings tend
+to need more dimensions for best performance, normalize the label
+weights to maintain normalized distances in the network and agregate
+label embedings per sample by summation which is a classical approach.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.embedding</span> <span class="k">import</span> <span class="n">OpenNetworkEmbedder</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="k">import</span> <span class="n">LabelCooccurrenceGraphBuilder</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">graph_builder</span> <span class="o">=</span> <span class="n">LabelCooccurrenceGraphBuilder</span><span class="p">(</span><span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_self_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">openne_line_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">OpenNetworkEmbedder</span><span class="p">(</span>
+    <span class="n">graph_builder</span><span class="p">,</span>
+    <span class="s1">&#39;LINE&#39;</span><span class="p">,</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">aggregation_function</span> <span class="o">=</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span>
+    <span class="n">normalize_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">param_dict</span> <span class="o">=</span> <span class="n">openne_line_params</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We now need to select a regressor and a classifier, we use random forest
+regressors with MLkNN which is a well working combination often used for
+multi-label embedding:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.embedding</span> <span class="k">import</span> <span class="n">EmbeddingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.adapt</span> <span class="k">import</span> <span class="n">MLkNN</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">EmbeddingClassifier</span><span class="p">(</span>
+    <span class="n">embedder</span><span class="p">,</span>
+    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">MLkNN</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pre-procesing for non-uniform negative sampling!
+Pre-procesing for non-uniform negative sampling!
+epoch:0 sum of loss:4.97153359652
+epoch:0 sum of loss:5.11869335175
+epoch:1 sum of loss:4.98133981228
+epoch:1 sum of loss:4.97720247507
+epoch:2 sum of loss:4.81723511219
+epoch:2 sum of loss:5.05428689718
+epoch:3 sum of loss:5.09079384804
+epoch:3 sum of loss:4.72988516092
+epoch:4 sum of loss:5.0347994566
+epoch:4 sum of loss:4.95063251257
+epoch:5 sum of loss:4.68008613586
+epoch:5 sum of loss:4.9329983592
+epoch:6 sum of loss:4.74205821753
+epoch:6 sum of loss:4.68989795446
+epoch:7 sum of loss:4.62912601233
+epoch:7 sum of loss:4.81548637152
+epoch:8 sum of loss:4.40033769608
+epoch:8 sum of loss:4.73801320791
+epoch:9 sum of loss:4.61178982258
+epoch:9 sum of loss:4.91443294287
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Cost-Sensitive-Label-Embedding-with-Multidimensional-Scaling">
+<h2>6.2. Cost-Sensitive Label Embedding with Multidimensional Scaling<a class="headerlink" href="#Cost-Sensitive-Label-Embedding-with-Multidimensional-Scaling" title="Permalink to this headline">¶</a></h2>
+<p>CLEMS is another well-perfoming method in multi-label embeddings. It
+uses weighted multi-dimensional scaling to embedd a cost-matrix of
+unique label combinations. The cost-matrix contains the cost of
+mistaking a given label combination for another, thus real-valued
+functions are better ideas than discrete ones. Also, the <code class="docutils literal notranslate"><span class="pre">is_score</span></code>
+parameter is used to tell the embedder if the cost function is a score
+(the higher the better) or a loss (the lower the better). Additional
+params can be also assigned to the weighted scaler. The most efficient
+parameter for the number of dimensions is equal to number of labels, and
+is thus enforced here.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.embedding</span> <span class="k">import</span> <span class="n">CLEMS</span><span class="p">,</span> <span class="n">EmbeddingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.adapt</span> <span class="k">import</span> <span class="n">MLkNN</span>
+
+<span class="n">dimensional_scaler_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">EmbeddingClassifier</span><span class="p">(</span>
+    <span class="n">CLEMS</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">jaccard_similarity_score</span><span class="p">,</span> <span class="n">is_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">dimensional_scaler_params</span><span class="p">),</span>
+    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">MLkNN</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">regressor_per_dimension</span><span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Scikit-learn-based-embedders">
+<h2>6.3. Scikit-learn based embedders<a class="headerlink" href="#Scikit-learn-based-embedders" title="Permalink to this headline">¶</a></h2>
+<p>Any scikit-learn embedder can be used for multi-label classification
+embeddings with scikit-multilearn, just select one and try, here’s a
+spectral embedding approach with 10 dimensions of the embedding space:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.embedding</span> <span class="k">import</span> <span class="n">SKLearnEmbedder</span><span class="p">,</span> <span class="n">EmbeddingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="k">import</span> <span class="n">SpectralEmbedding</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.adapt</span> <span class="k">import</span> <span class="n">MLkNN</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">EmbeddingClassifier</span><span class="p">(</span>
+    <span class="n">SKLearnEmbedder</span><span class="p">(</span><span class="n">SpectralEmbedding</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)),</span>
+    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">MLkNN</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stratification.html" title="7. Multi-label data stratification"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="multilabeldnn.html" title="5. Multi-label deep learning with scikit-multilearn"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="userguide.html" accesskey="U">User Guide</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/multilabelembeddings.ipynb.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

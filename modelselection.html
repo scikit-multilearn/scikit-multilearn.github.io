@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="_static/" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="1. Exploring Label Relations" href="labelrelations.html" />
@@ -472,6 +471,16 @@ estimating single-label classifers - works when distance between samples
 is a good predictor for label assignment. Often used in biosciences.</p>
 <p><strong>Weak sides</strong>: - trains a classifier per label - less suitable for
 large label space - requires parameter estimation.</p>
+</dd><dt><p><a class="reference external" href="api/skmultilearn.adapt.mltsvn.html">MLTSVN</a></p>
+</dt><dd><p><strong>Parameter estimation needed</strong>: Yes, 2 parameters</p>
+<p><strong>Complexity</strong>: <code class="docutils literal notranslate"><span class="pre">O((n_{samples}</span> <span class="pre">*</span> <span class="pre">n_{features}</span> <span class="pre">+</span> <span class="pre">n_{labels})</span> <span class="pre">*</span> <span class="pre">k)</span></code></p>
+<p>MLkNN builds uses k-NearestNeighbors find nearest examples to a test
+class and uses Bayesian inference to select assigned labels.</p>
+<p><strong>Strong sides</strong>: - estimates one multi-label SVM subclassifier without
+any one-vs-all or one-vs-rest comparisons, O(1) classifiers instead of
+O(l^2). - works when distance between samples is a good predictor for
+label assignment</p>
+<p><strong>Weak sides</strong>: - requires parameter estimation</p>
 </dd><dt><p><a class="reference external" href="api/skmultilearn.adapt.mlknn.html#multilabel-k-nearest-neighbours">MLkNN</a></p>
 </dt><dd><p><strong>Parameter estimation needed</strong>: Yes, 2 parameters</p>
 <p><strong>Complexity</strong>: <code class="docutils literal notranslate"><span class="pre">O((n_{samples}</span> <span class="pre">*</span> <span class="pre">n_{features}</span> <span class="pre">+</span> <span class="pre">n_{labels})</span> <span class="pre">*</span> <span class="pre">k)</span></code></p>
@@ -558,8 +567,9 @@ scalable</li>
 </dd><dt><p><a class="reference external" href="api/skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier">LabelSpacePartitioningClassifier</a></p>
 </dt><dd><p><strong>Parameter estimation needed</strong>: Only base classifier <strong>Complexity</strong>:
 <code class="docutils literal notranslate"><span class="pre">O(n_{partitions}</span> <span class="pre">*</span> <span class="pre">base_classifier_complexity(n_classes</span> <span class="pre">=</span> <span class="pre">n_label_combinations_per_partition))</span></code></p>
-<p>Randomly partitions the label space and trains a base classifier per
-partition with a base multi-class classifier.</p>
+<p>Uses clustering methods to divide the label space into subspaces and
+trains a base classifier per partition with a base multi-class
+classifier.</p>
 <p><strong>Strong sides</strong>:</p>
 <ul class="simple">
 <li>accomodates to different types of problems</li>
@@ -597,6 +607,21 @@ LabelPowerset</li>
 <ul class="simple">
 <li>requires label relationships present in training data to be
 representable of the problem</li>
+</ul>
+</dd><dt><p><a class="reference external" href="api/skmultilearn.embedding.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier">EmbeddingClassifier</a></p>
+</dt><dd><p><strong>Parameter estimation needed</strong>: Only for embedder <strong>Complexity</strong>:
+depends on the selection of embedder, regressor and classifier</p>
+<p>Embedds the label space, trains a regressor (or many) for unseen samples
+to predict their embeddings, and a classifier to correct the regression
+error</p>
+<p><strong>Strong sides</strong>:</p>
+<ul class="simple">
+<li>improves discriminability and joint label probability distributions</li>
+<li>good results with low-complexity linear embeddings and weak
+regressors/classifiers</li>
+<li><strong>Weak sides</strong>:</li>
+<li>requires some parameter estimation while rule-of-thumb ideas exist in
+papers</li>
 </ul>
 </dd></dl></div>
 </div>
@@ -724,6 +749,16 @@ between two approaches provided by the NetworkX library.</li>
        require_dense=[True, True]), &#39;clusterer&#39;: &lt;skmultilearn.cluster.networkx.NetworkXLabelGraphClusterer object at 0x7fc42ec75e50&gt;}, 0.59569187181557981)
 </pre></div></div>
 </div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -780,7 +815,7 @@ between two approaches provided by the NetworkX library.</li>
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="_sources/modelselection.ipynb.txt"
          rel="nofollow">Show this page source</a>

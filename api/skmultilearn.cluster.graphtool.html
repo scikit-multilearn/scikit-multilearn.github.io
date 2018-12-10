@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -89,7 +88,8 @@
 <dl class="class">
 <dt id="skmultilearn.cluster.StochasticBlockModel">
 <em class="property">class </em><code class="descclassname">skmultilearn.cluster.</code><code class="descname">StochasticBlockModel</code><span class="sig-paren">(</span><em>nested</em>, <em>use_degree_correlation</em>, <em>allow_overlap</em>, <em>weight_model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/cluster/graphtool.html#StochasticBlockModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.cluster.StochasticBlockModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Stochastic Blockmodel fit to Label Graph</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.6/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A Stochastic Blockmodel fit to Label Graph</p>
 <p>This contains a stochastic block model instance constructed for a block model variant specified in parameters.
 It can be fit to an instance of a graph and set of weights. More information on how to select parameters can be
 found in <a class="reference external" href="https://graph-tool.skewed.de/static/doc/demos/inference/inference.html">the extensive introduction into Stochastic Block Models</a> in graphtool documentation.</p>
@@ -104,7 +104,7 @@ will be automatically put under <code class="code docutils literal notranslate">
 put under <code class="code docutils literal notranslate"><span class="pre">self.use_degree_correlation</span></code>.</li>
 <li><strong>allow_overlap</strong> (<em>boolean</em>) – whether to allow overlapping clusters or not, will be automatically
 put under <code class="code docutils literal notranslate"><span class="pre">self.allow_overlap</span></code>.</li>
-<li><strong>weight_model</strong> (<em>string</em><em> or </em><em>None</em>) – decide whether to generate a weighted or unweighted graph,
+<li><strong>weight_model</strong> (<em>string</em><em> or </em><a class="reference external" href="https://docs.python.org/3.6/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a>) – decide whether to generate a weighted or unweighted graph,
 will be automatically put under <code class="code docutils literal notranslate"><span class="pre">self.weight_model</span></code>.</li>
 </ul>
 </td>
@@ -114,7 +114,15 @@ will be automatically put under <code class="code docutils literal notranslate">
 <dl class="attribute">
 <dt id="skmultilearn.cluster.StochasticBlockModel.model_">
 <code class="descname">model_</code><a class="headerlink" href="#skmultilearn.cluster.StochasticBlockModel.model_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>graph_tool.inference.BlockState or its subclass</em> – an instance of the fitted model obtained from graph-tool</p>
+<dd><p>an instance of the fitted model obtained from graph-tool</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">graph_tool.inference.BlockState or its subclass</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -125,14 +133,30 @@ will be automatically put under <code class="code docutils literal notranslate">
 <dl class="attribute">
 <dt id="skmultilearn.cluster.StochasticBlockModel.graph">
 <code class="descname">graph</code><a class="headerlink" href="#skmultilearn.cluster.StochasticBlockModel.graph" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>graphtool.Graph</em> – the graph to fit the model to</p>
+<dd><p>the graph to fit the model to</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">graphtool.Graph</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.cluster.StochasticBlockModel.weights">
 <code class="descname">weights</code><a class="headerlink" href="#skmultilearn.cluster.StochasticBlockModel.weights" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>graphtool.EdgePropertyMap&lt;double&gt;</em> – the property map: edge -&gt; weight (double) to fit the model to, if weighted variant
+<dd><p>the property map: edge -&gt; weight (double) to fit the model to, if weighted variant
 is selected</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">graphtool.EdgePropertyMap&lt;double&gt;</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -174,13 +198,29 @@ can be found in <a class="reference external" href="https://graph-tool.skewed.de
 <dl class="attribute">
 <dt id="skmultilearn.cluster.GraphToolLabelGraphClusterer.graph_">
 <code class="descname">graph_</code><a class="headerlink" href="#skmultilearn.cluster.GraphToolLabelGraphClusterer.graph_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>graphtool.Graph</em> – object representing a label co-occurence graph</p>
+<dd><p>object representing a label co-occurence graph</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">graphtool.Graph</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.cluster.GraphToolLabelGraphClusterer.weights_">
 <code class="descname">weights_</code><a class="headerlink" href="#skmultilearn.cluster.GraphToolLabelGraphClusterer.weights_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>graphtool.EdgeProperty&lt;double&gt;</em> – edge weights defined by graph builder stored in a graphtool compatible format</p>
+<dd><p>edge weights defined by graph builder stored in a graphtool compatible format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">graphtool.EdgeProperty&lt;double&gt;</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <div class="admonition note">
@@ -251,7 +291,7 @@ on <cite>y</cite> and then detects communities using the selected <cite>method</
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>None</em>) – currently unused, left for scikit compatibility</li>
+<li><strong>X</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a>) – currently unused, left for scikit compatibility</li>
 <li><strong>y</strong> (<em>scipy.sparse</em>) – label space of shape <code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></li>
 </ul>
 </td>
@@ -315,7 +355,7 @@ on <cite>y</cite> and then detects communities using the selected <cite>method</
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.cluster.graphtool.rst.txt"
          rel="nofollow">Show this page source</a>

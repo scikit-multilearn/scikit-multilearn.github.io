@@ -1,0 +1,1272 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Using the MEKA wrapper" href="meka.html" />
+    <link rel="prev" title="5. How to select a classifier" href="modelselection.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">1. Exploring Label Relations</a><ul>
+<li><a class="reference internal" href="#Detecting-communities-in-Label-Relations-Graph">1.1. Detecting communities in Label Relations Graph</a><ul>
+<li><a class="reference internal" href="#Building-a-Label-Graph">1.1.1. Building a Label Graph</a></li>
+<li><a class="reference internal" href="#NetworkX">1.1.2. NetworkX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Using-iGraph">2. Using iGraph</a></li>
+<li><a class="reference internal" href="#Stochastic-Blockmodel-from-graph-tool">3. Stochastic Blockmodel from graph-tool</a><ul>
+<li><a class="reference internal" href="#Using-scikit-learn-clusterers">3.1. Using scikit-learn clusterers</a></li>
+<li><a class="reference internal" href="#Fixed-partition-based-on-expert-knowledge">3.2. Fixed partition based on expert knowledge</a></li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Exploring-Label-Relations">
+<h1>1. Exploring Label Relations<a class="headerlink" href="#Exploring-Label-Relations" title="Permalink to this headline">¶</a></h1>
+<p>Multi-label classification tends to have problems with overfitting and
+underfitting classifiers when the label space is large, especially in
+problem transformation approaches. A well known approach to remedy this
+is to split the problem into subproblems with smaller label subsets to
+improve the generalization quality.</p>
+<p>Scikit-multilearn library is the first Python library to provide this
+functionality, this will guide your through using different libraries
+for label space division. Let’s start with loading up the well-cited
+<code class="docutils literal notranslate"><span class="pre">emotions</span></code> dataset, that use throughout the User Guide:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">label_names</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emotions:train - exists, not redownloading
+emotions:test - exists, not redownloading
+</pre></div></div>
+</div>
+<p>Label relationships can be exploited in a handful of ways:</p>
+<ol class="arabic simple">
+<li>inferring the label space division from the label assignment matrix
+in the training set:<ul>
+<li>through building a label graph and <a class="reference external" href="http://www.mdpi.com/1099-4300/18/8/282/htm">inferring community structure
+of this graph</a>,
+this can be facilitated with three network libraries in
+scikit-multilearn: NetworkX (BSD), igraph (GPL) and graphtool
+(GPL)</li>
+<li>through using a traditional clustering approach from scikit-learn
+to cluster label assignment vectors, ex. using k-means, this
+usually required parameter estimation</li>
+</ul>
+</li>
+<li>employing expert knowledge to divide the label space</li>
+<li>random label space partitioning with methods like <a class="reference external" href="https://ieeexplore.ieee.org/document/5567103/">random k-label
+sets</a></li>
+</ol>
+<p>In most cases these approaches are used with a Label Powerset problem
+transformation classifier and a base multi-class classifier, for the
+examples in this chapter we will use sklearn’s Gaussian Naive Bayes
+classifier, but you can use whatever classifiers you in your ensembles.</p>
+<p>Let’s go through the approaches:</p>
+<div class="section" id="Detecting-communities-in-Label-Relations-Graph">
+<h2>1.1. Detecting communities in Label Relations Graph<a class="headerlink" href="#Detecting-communities-in-Label-Relations-Graph" title="Permalink to this headline">¶</a></h2>
+<p>Exploring label relations using the current methods of Network Science
+is a new approach to improve classification results. This area is still
+under research, both in terms of methods used for label space division
+and in terms of what qualities should be represented in the Label
+Relations Graph.</p>
+<p>In scikit-multilearn classifying with label space division based on
+label graphs requires three elements:</p>
+<ul class="simple">
+<li>selecting a graph builder, a class that constructs a graph based on
+the label assignment matrix <code class="docutils literal notranslate"><span class="pre">y</span></code>, at the moment scikit-multilearn
+provides one such graph builder, based on the notion of label
+co-occurrence</li>
+<li>selecting a Label Graph clusterer which employs community detection
+methods from different sources to provide a label space clustering</li>
+<li>selecting a classification approach, i.e. how to train and merge
+results of classifiers, scikit-multilearn provides two approaches:<ul>
+<li>a partitioning classifier which trains a classifier per label
+cluster, assuming they are disjoint, and merges the results of
+each subclassifier’s prediction</li>
+<li>a majority voting classifier that trains a classifier per label
+clusters, but if they overlap, it follows the decision of the
+majority of subclassifiers concerning assigning the label or not</li>
+</ul>
+</li>
+</ul>
+<p>Let’s start with looking at the Label Graph builder.</p>
+<div class="section" id="Building-a-Label-Graph">
+<h3>1.1.1. Building a Label Graph<a class="headerlink" href="#Building-a-Label-Graph" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">LabelCooccurrenceGraphBuilder</span>
+</pre></div>
+</div>
+</div>
+<p>This graph builder constructs a Label Graph based on the output matrix
+where two label nodes are connected when at least one sample is labeled
+with both of them. If the graph is weighted, the weight of an edge
+between two label nodes is the number of samples labeled with these two
+labels. Self-edge weights contain the number of samples with a given
+label.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">graph_builder</span> <span class="o">=</span> <span class="n">LabelCooccurrenceGraphBuilder</span><span class="p">(</span><span class="n">weighted</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">include_self_edges</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">edge_map</span> <span class="o">=</span> <span class="n">graph_builder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;{} labels, {} edges&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label_names</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_map</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">edge_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6 labels, 14 edges
+{(1, 2): 58.0, (0, 1): 33.0, (1, 3): 6.0, (4, 5): 9.0, (1, 4): 1.0, (0, 2): 9.0, (1, 5): 6.0, (0, 5): 61.0, (0, 4): 4.0, (2, 3): 66.0, (2, 5): 5.0, (3, 4): 56.0, (2, 4): 60.0, (3, 5): 2.0}
+</pre></div></div>
+</div>
+<p>The dictionary <code class="docutils literal notranslate"><span class="pre">edge_map</span></code> contains the adjacency matrix in
+dictionary-of-keys format, each key is a label number tuple, weight is
+the number of samples with the two labels assigned. Its values will be
+used by all of the supported Label Graph Clusterers below:</p>
+<ul class="simple">
+<li>NetworkX</li>
+<li>igraph</li>
+<li>graph-tool</li>
+</ul>
+<p>All these clusterers take their names from the respected Python
+graph/network libraries which they are using to infer community
+structure and provide the label space clustering.</p>
+</div>
+<div class="section" id="NetworkX">
+<h3>1.1.2. NetworkX<a class="headerlink" href="#NetworkX" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">NetworkXLabelGraphClusterer</span>
+
+<span class="c1"># we define a helper function for visualization purposes</span>
+<span class="k">def</span> <span class="nf">to_membership_vector</span><span class="p">(</span><span class="n">partition</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">member</span> <span class="p">:</span>  <span class="n">partition_id</span>
+        <span class="k">for</span> <span class="n">partition_id</span><span class="p">,</span> <span class="n">members</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">partition</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">members</span>
+    <span class="p">}</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clusterer</span> <span class="o">=</span> <span class="n">NetworkXLabelGraphClusterer</span><span class="p">(</span><span class="n">graph_builder</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;louvain&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">partition</span> <span class="o">=</span> <span class="n">clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">partition</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[0, 1, 5],
+       [2, 3, 4]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">membership_vector</span> <span class="o">=</span> <span class="n">to_membership_vector</span><span class="p">(</span><span class="n">partition</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="kn">as</span> <span class="nn">nx</span>
+<span class="n">names_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39;-</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">label_names</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+    <span class="n">clusterer</span><span class="o">.</span><span class="n">graph_</span><span class="p">,</span>
+    <span class="n">pos</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">circular_layout</span><span class="p">(</span><span class="n">clusterer</span><span class="o">.</span><span class="n">graph_</span><span class="p">),</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">names_dict</span><span class="p">,</span>
+    <span class="n">with_labels</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">clusterer</span><span class="o">.</span><span class="n">weights_</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]],</span>
+    <span class="n">node_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">membership_vector</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Spectral</span><span class="p">,</span>
+    <span class="n">node_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">font_size</span><span class="o">=</span><span class="mi">14</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/labelrelations_16_0.png" src="_images/labelrelations_16_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">LabelSpacePartitioningClassifier</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">clusterer</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.17821782178217821
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Using-iGraph">
+<h1>2. Using iGraph<a class="headerlink" href="#Using-iGraph" title="Permalink to this headline">¶</a></h1>
+<p>To use igraph with scikit-multilearn you need to install the igraph
+python package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install python-igraph
+</pre></div>
+</div>
+<p>Do not install the <code class="docutils literal notranslate"><span class="pre">igraph</span></code> package which is not the correct
+python-igraph library. Information about build requirements of
+<code class="docutils literal notranslate"><span class="pre">python-igraph</span></code> can be found in the <a class="reference external" href="http://igraph.org/python/#pyinstall">library
+documentation</a>.</p>
+<p>Let’s load the python igraph library and scikit-multilearn’s
+igraph-based clusterer.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">IGraphLabelGraphClusterer</span>
+<span class="kn">import</span> <span class="nn">igraph</span> <span class="kn">as</span> <span class="nn">ig</span>
+</pre></div>
+</div>
+</div>
+<p>Igraph provides a set of community detection methods, out of which the
+following are supported:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method name string</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">fastgreedy</span></code></td>
+<td>Detecting
+communities
+with largest
+modularity
+using
+incremental
+greedy search</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">infomap</span></code></td>
+<td>Detecting
+communities
+through
+information
+flow
+compressing
+simulated via
+random walks</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">label_propagation</span></code></td>
+<td>Detecting
+communities
+from colorings
+via multiple
+label
+propagation on
+the graph</td>
+</tr>
+<tr class="row-odd"><td><a href="#id1"><span class="problematic" id="id2">``</span></a>leading_eigenvector
+``</td>
+<td>Detecting
+communities
+with largest
+modularity
+through
+adjacency
+matrix
+eigenvectors</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">multilevel</span></code></td>
+<td>Recursive
+communitiy
+detection with
+largest
+modularity
+step by step
+maximization</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">walktrap</span></code></td>
+<td>Finding
+communities by
+trapping many
+random walks</td>
+</tr>
+</tbody>
+</table>
+<p>Each of them denotes a <code class="docutils literal notranslate"><span class="pre">community_*</span></code> method of the Graph object, you
+can read more about the methods in <a class="reference external" href="http://igraph.org/python/doc/igraph.Graph-class.html#community_fastgreedy">igraph
+documentation</a>
+and in comparison of their performance in <a class="reference external" href="http://www.mdpi.com/1099-4300/18/8/282/htm">multi-label
+classification</a>.</p>
+<p>Let’s start with detecting a community structure in the label
+co-occurrence graph and visualizing it with igraph.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clusterer_igraph</span> <span class="o">=</span> <span class="n">IGraphLabelGraphClusterer</span><span class="p">(</span><span class="n">graph_builder</span><span class="o">=</span><span class="n">graph_builder</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;walktrap&#39;</span><span class="p">)</span>
+<span class="n">partition</span> <span class="o">=</span> <span class="n">clusterer_igraph</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">partition</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[17]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[0, 5], [1, 2, 3, 4]], dtype=object)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]</span>
+<span class="n">membership_vector</span> <span class="o">=</span> <span class="n">to_membership_vector</span><span class="p">(</span><span class="n">partition</span><span class="p">)</span>
+<span class="n">visual_style</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vertex_size&quot;</span> <span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;vertex_label&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">label_names</span><span class="p">],</span>
+    <span class="s2">&quot;edge_width&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">clusterer_igraph</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]],</span>
+    <span class="s2">&quot;vertex_color&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="n">membership_vector</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
+    <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span>
+    <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+    <span class="s2">&quot;layout&quot;</span><span class="p">:</span> <span class="n">clusterer_igraph</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">layout_circle</span><span class="p">()</span>
+
+<span class="p">}</span>
+
+<span class="n">ig</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">clusterer_igraph</span><span class="o">.</span><span class="n">graph_</span><span class="p">,</span> <span class="o">**</span><span class="n">visual_style</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="_images/labelrelations_27_0.svg" src="_images/labelrelations_27_0.svg" /></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">clusterer_igraph</span>
+<span class="p">)</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.19306930693069307
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Stochastic-Blockmodel-from-graph-tool">
+<h1>3. Stochastic Blockmodel from graph-tool<a class="headerlink" href="#Stochastic-Blockmodel-from-graph-tool" title="Permalink to this headline">¶</a></h1>
+<p>Another approach to label space division is to fit a <a class="reference external" href="https://en.wikipedia.org/wiki/Stochastic_block_model">Stochastic Block
+Model</a> to the
+label graph. An efficient implementation of the Stochastic Block Model
+in Python is provided by <a class="reference external" href="https://graph-tool.skewed.de">graphtool</a>.
+Note that using graphtool incurs GPL requirements on your code.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.cluster.graphtool</span> <span class="kn">import</span> <span class="n">GraphToolLabelGraphClusterer</span><span class="p">,</span> <span class="n">StochasticBlockModel</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">StochasticBlockModel</span></code> class fits the model and specifies the
+variant of SBM to be used, it can include:</p>
+<ul class="simple">
+<li>whether to use a nested blockmodel or not</li>
+<li>whether to take degree correlation into account</li>
+<li>whether to allow overlapping communities</li>
+<li>how to model weights of label relationships</li>
+</ul>
+<p>Selecting these parameters efficiently for multi-label purposes is still
+researched, but reading the <a class="reference external" href="https://graph-tool.skewed.de/static/doc/inference.html">inference
+documentation</a>
+in graphtool will give you an intuition what to choose.</p>
+<p>As the emotions data set is small there is no reason to use the nested
+model, we select the real-normal weight model as it is reasonable to
+believe that label assignments come from an i.i.d source and should
+follow some limit theorem.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">StochasticBlockModel</span><span class="p">(</span><span class="n">nested</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_degree_correlation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">allow_overlap</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">weight_model</span><span class="o">=</span><span class="s1">&#39;real-normal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clusterer_graphtool</span> <span class="o">=</span> <span class="n">GraphToolLabelGraphClusterer</span><span class="p">(</span><span class="n">graph_builder</span><span class="o">=</span><span class="n">graph_builder</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[0, 1, 5],
+       [2, 3, 4]])
+</pre></div>
+</div>
+</div>
+<p>The above partition was generated by the model, let’s visualize it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">node_label</span> <span class="o">=</span> <span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">new_vertex_property</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">vertices</span><span class="p">()):</span>
+    <span class="n">node_label</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_names</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model_</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">vertex_text</span><span class="o">=</span><span class="n">node_label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/labelrelations_37_0.png" src="_images/labelrelations_37_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;PropertyMap object with key type &#39;Vertex&#39; and value type &#39;vector&lt;double&gt;&#39;, for Graph 0x7fd284397b90, at 0x7fd283cf1450&gt;
+</pre></div>
+</div>
+</div>
+<p>We can use this clusterer as an argument for the label space
+partitioning classifier, as we did not enable overlapping communities:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">clusterer_graphtool</span>
+<span class="p">)</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[29]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.19306930693069307
+</pre></div>
+</div>
+</div>
+<p>Now let’s try to go with the same variant of the model, but now we allow
+overlapping communities:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">StochasticBlockModel</span><span class="p">(</span><span class="n">nested</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_degree_correlation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">allow_overlap</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">weight_model</span><span class="o">=</span><span class="s1">&#39;real-normal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clusterer_graphtool</span> <span class="o">=</span> <span class="n">GraphToolLabelGraphClusterer</span><span class="p">(</span><span class="n">graph_builder</span><span class="o">=</span><span class="n">graph_builder</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[55]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[0, 1, 2, 5],
+       [2, 3, 4, 5]])
+</pre></div>
+</div>
+</div>
+<p>We have a division, note that we train the same number of classifiers as
+in the partitioning case. Let’s visualize label membership likelihoods
+alongside the division:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">node_label</span> <span class="o">=</span> <span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">new_vertex_property</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">graph_</span><span class="o">.</span><span class="n">vertices</span><span class="p">()):</span>
+    <span class="n">node_label</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_names</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">clusterer_graphtool</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model_</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">vertex_text</span><span class="o">=</span><span class="n">node_label</span><span class="p">,</span> <span class="n">vertex_text_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/labelrelations_44_0.png" src="_images/labelrelations_44_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[56]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;PropertyMap object with key type &#39;Vertex&#39; and value type &#39;vector&lt;double&gt;&#39;, for Graph 0x7fd283d14bd0, at 0x7fd259aa2a90&gt;
+</pre></div>
+</div>
+</div>
+<p>We can now perform classification, but for it to work we now need to use
+a classifier that can decide whether to assign a label if more than one
+subclassifiers were making a decision about the label. We will use the
+<code class="docutils literal notranslate"><span class="pre">MajorityVotingClassifier</span></code> which makes a decision if the majority of
+classifiers decide to assign the label.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble.voting</span> <span class="kn">import</span> <span class="n">MajorityVotingClassifier</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">MajorityVotingClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="o">=</span><span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span><span class="o">=</span><span class="n">clusterer_graphtool</span>
+<span class="p">)</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[59]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.25742574257425743
+</pre></div>
+</div>
+</div>
+<div class="section" id="Using-scikit-learn-clusterers">
+<h2>3.1. Using scikit-learn clusterers<a class="headerlink" href="#Using-scikit-learn-clusterers" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-learn offers a variety of
+<a class="reference external" href="http://scikit-learn.org/stable/modules/clustering.html">clustering</a>
+methods, some of which have been applied to dividing the label space
+into subspaces in multi-label classification. The main problem which
+often concerns these approaches is the need to empirically fit the
+parameter of the number of clusters to select.</p>
+<p>scikit-multilearn provides a clusterer which does not build a graph,
+instead it employs the scikit-multilearn clusterer on transposed label
+assignment vectors, i.e. a vector for a given label is a vector of all
+samples’ assignment values. To use this approach, just import a
+scikit-learn cluster, and pass its instance as a parameter.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">MatrixLabelSpaceClusterer</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">matrix_clusterer</span> <span class="o">=</span> <span class="n">MatrixLabelSpaceClusterer</span><span class="p">(</span><span class="n">clusterer</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">matrix_clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[38]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[2, 3, 4],
+       [0, 1, 5]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">matrix_clusterer</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[41]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.17821782178217821
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Fixed-partition-based-on-expert-knowledge">
+<h2>3.2. Fixed partition based on expert knowledge<a class="headerlink" href="#Fixed-partition-based-on-expert-knowledge" title="Permalink to this headline">¶</a></h2>
+<p>There may be cases where we know something about the label relationships
+based on expert or intuitive knowledge, or perhaps our knowledge comes
+from a different machine learning model, or it is crowdsourced, in all
+of these cases, scikit-multilearn let’s you use this knowledge to your
+advantage. Let’s see this on our exampel data set. It has six labels
+that denote emotions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">label_names</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[42]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[(u&#39;amazed-suprised&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;happy-pleased&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;relaxing-calm&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;quiet-still&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;sad-lonely&#39;, [u&#39;0&#39;, u&#39;1&#39;]),
+ (u&#39;angry-aggresive&#39;, [u&#39;0&#39;, u&#39;1&#39;])]
+</pre></div>
+</div>
+</div>
+<p>Looking at label names we might see, that labels <code class="docutils literal notranslate"><span class="pre">quiet-still</span></code> and
+<code class="docutils literal notranslate"><span class="pre">angry-agressive</span></code> are contradictory, but one can be <code class="docutils literal notranslate"><span class="pre">amazed</span></code> both in
+the <code class="docutils literal notranslate"><span class="pre">happy/relaxing</span></code> context, in the <code class="docutils literal notranslate"><span class="pre">sad/agresive</span></code> context. Also
+one can be easily <code class="docutils literal notranslate"><span class="pre">pleased/relaxed</span></code> and/or <code class="docutils literal notranslate"><span class="pre">calm</span></code> but not actually
+amazed. We thus come up with a new intuitive label space division:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">MajorityVotingClassifier</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">FixedLabelSpaceClusterer</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">MajorityVotingClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span>
+        <span class="n">classifier</span><span class="o">=</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+        <span class="n">require_dense</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">]</span>
+    <span class="p">),</span>
+    <span class="n">require_dense</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">],</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">FixedLabelSpaceClusterer</span><span class="p">(</span><span class="n">clusters</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="p">)</span>
+
+<span class="c1"># train</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># predict</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[44]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.29702970297029702
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="meka.html" title="4. Using the MEKA wrapper"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modelselection.html" title="5. How to select a classifier"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="/index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="userguide.html" accesskey="U">User Guide</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/labelrelations.ipynb.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

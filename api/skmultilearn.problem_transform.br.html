@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -100,8 +99,8 @@ prediction output is the union of all per label classifiers</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>classifier</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.19.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>) – scikit-learn compatible base classifier</li>
-<li><strong>require_dense</strong> (<em>[</em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>]</em><em>, </em><em>optional</em>) – whether the base classifier requires dense representations
+<li><strong>classifier</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>) – scikit-learn compatible base classifier</li>
+<li><strong>require_dense</strong> (<em>[</em><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>]</em><em>, </em><em>optional</em>) – whether the base classifier requires dense representations
 for input features and classes/labels matrices in fit/predict.
 If value not provided, sparse representations are used if base classifier is
 an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">MLClassifierBase</span></code> and dense otherwise.</li>
@@ -113,20 +112,44 @@ an instance of <code class="xref py py-class docutils literal notranslate"><span
 <dl class="attribute">
 <dt id="skmultilearn.problem_transform.BinaryRelevance.model_count_">
 <code class="descname">model_count_</code><a class="headerlink" href="#skmultilearn.problem_transform.BinaryRelevance.model_count_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – number of trained models, in this classifier equal to <cite>n_labels</cite></p>
+<dd><p>number of trained models, in this classifier equal to <cite>n_labels</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.problem_transform.BinaryRelevance.partition_">
 <code class="descname">partition_</code><a class="headerlink" href="#skmultilearn.problem_transform.BinaryRelevance.partition_" title="Permalink to this definition">¶</a></dt>
-<dd><p>List[List[int]], shape=(<cite>model_count_</cite>,) – list of lists of label indexes, used to index the output space matrix, set in <code class="xref py py-meth docutils literal notranslate"><span class="pre">_generate_partition()</span></code>
+<dd><p>list of lists of label indexes, used to index the output space matrix, set in <code class="xref py py-meth docutils literal notranslate"><span class="pre">_generate_partition()</span></code>
 via <a class="reference internal" href="#skmultilearn.problem_transform.BinaryRelevance.fit" title="skmultilearn.problem_transform.BinaryRelevance.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">List[List[int]], shape=(<cite>model_count_</cite>,)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.problem_transform.BinaryRelevance.classifiers_">
 <code class="descname">classifiers_</code><a class="headerlink" href="#skmultilearn.problem_transform.BinaryRelevance.classifiers_" title="Permalink to this definition">¶</a></dt>
-<dd><p>List[<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.19.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>] of shape <cite>model_count</cite> – list of classifiers trained per partition, set in <a class="reference internal" href="#skmultilearn.problem_transform.BinaryRelevance.fit" title="skmultilearn.problem_transform.BinaryRelevance.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p>
+<dd><p>list of classifiers trained per partition, set in <a class="reference internal" href="#skmultilearn.problem_transform.BinaryRelevance.fit" title="skmultilearn.problem_transform.BinaryRelevance.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">List[<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>] of shape <cite>model_count</cite></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">Notes</p>
@@ -136,7 +159,7 @@ via <a class="reference internal" href="#skmultilearn.problem_transform.BinaryRe
 </div>
 <p class="rubric">Examples</p>
 <p>An example use case for Binary Relevance classification
-with an <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="(in scikit-learn v0.19.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.svm.SVC</span></code></a> base classifier which supports sparse input:</p>
+with an <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="(in scikit-learn v0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.svm.SVC</span></code></a> base classifier which supports sparse input:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
@@ -158,8 +181,8 @@ with an <a class="reference external" href="http://scikit-learn.org/stable/modul
 </div>
 <p>Another way to use this classifier is to select the best scenario from a set of single-label classifiers used
 with Binary Relevance, this can be done using cross validation grid search. In the example below, the model
-with highest accuracy results is selected from either a <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html#sklearn.naive_bayes.MultinomialNB" title="(in scikit-learn v0.19.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.naive_bayes.MultinomialNB</span></code></a> or
-<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="(in scikit-learn v0.19.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.svm.SVC</span></code></a> base classifier, alongside with best parameters for that base classifier.</p>
+with highest accuracy results is selected from either a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html#sklearn.naive_bayes.MultinomialNB" title="(in scikit-learn v0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.naive_bayes.MultinomialNB</span></code></a> or
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="(in scikit-learn v0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.svm.SVC</span></code></a> base classifier, alongside with best parameters for that base classifier.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">BinaryRelevance</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
@@ -305,7 +328,7 @@ with highest accuracy results is selected from either a <a class="reference exte
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.problem_transform.br.rst.txt"
          rel="nofollow">Show this page source</a>

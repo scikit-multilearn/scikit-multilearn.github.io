@@ -1,0 +1,1162 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="scikit-multilearn benchmark" href="benchmark.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">Developer documentation</a><ul>
+<li><a class="reference internal" href="#Working-with-the-repository">Working with the repository</a></li>
+<li><a class="reference internal" href="#Development-Docker-image">Development Docker image</a></li>
+<li><a class="reference internal" href="#Building-documentation">Building documentation</a></li>
+<li><a class="reference internal" href="#Development">Development</a><ul>
+<li><a class="reference internal" href="#Writing-code">Writing code</a></li>
+<li><a class="reference internal" href="#Writing-a-label-space-clusterer">Writing a label space clusterer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Example-Clusterer">Example Clusterer</a></li>
+<li><a class="reference internal" href="#Using-the-example-Clusterer">Using the example Clusterer</a><ul>
+<li><a class="reference internal" href="#Writing-a-Graph-Builder">Writing a Graph Builder</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Example-GraphBuilder">Example GraphBuilder</a></li>
+<li><a class="reference internal" href="#Using-the-example-GraphBuilder">Using the example GraphBuilder</a><ul>
+<li><a class="reference internal" href="#Writing-a-classifier">Writing a classifier</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Scikit-learn-base-classses">Scikit-learn base classses</a></li>
+<li><a class="reference internal" href="#MLClassifierBase">MLClassifierBase</a></li>
+<li><a class="reference internal" href="#Selecting-the-base-class">Selecting the base class</a></li>
+<li><a class="reference internal" href="#Ensemble-classification">Ensemble classification</a></li>
+<li><a class="reference internal" href="#Unit-testing-classifiers">Unit testing classifiers</a></li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Developer-documentation">
+<h1>Developer documentation<a class="headerlink" href="#Developer-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Scikit-multilearn development team is an open international community
+that welcomes contributions and new developers. This document is for you
+if you want to implement a new:</p>
+<ul class="simple">
+<li>classifier</li>
+<li>relationship graph builder</li>
+<li>label space clusterer</li>
+</ul>
+<p>Before we can go into development details, we need to discuss how to
+setup a comfortable development environment and what is the best way to
+contribute.</p>
+<div class="section" id="Working-with-the-repository">
+<h2>Working with the repository<a class="headerlink" href="#Working-with-the-repository" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-learn is developed on github using git for code version
+management. To get the current codebase you need to checkout the
+scikit-multilearn repository</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">scikit</span><span class="o">-</span><span class="n">multilearn</span><span class="o">/</span><span class="n">scikit</span><span class="o">-</span><span class="n">multilearn</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>To make a contribution to the repository your should fork the
+repository, clone your fork, and start development based on the
+<code class="docutils literal notranslate"><span class="pre">master</span></code> branch. Once you’re done, push your commits to your
+repository and submit a pull request for review.</p>
+<p>The review usually includes: - making sure that your code works, i.e. it
+has enough unit tests and tests pass - reading your code’s
+documentation, it should follow the numpydoc standard - checking whether
+your code works properly on sparse matrix input - your class should not
+store more data in memory than neccessary</p>
+<p>Once your contributions adhere to reviewer comments, your code will be
+included in the next release.</p>
+</div>
+<div class="section" id="Development-Docker-image">
+<h2>Development Docker image<a class="headerlink" href="#Development-Docker-image" title="Permalink to this headline">¶</a></h2>
+<p>To ease development and testing we provide a docker image containing all
+libraries needed to test all of scikit-multilearn codebase. It is an
+ubuntu based docker image with libraries that are very costly to compile
+such as python-graphtool. This docker image can be easily integrated
+with your PyCharm environment.</p>
+<p>To pull the <a class="reference external" href="https://github.com/scikit-multilearn/development-docker">scikit-multilearn docker
+image</a> just
+use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker pull niedakh/scikit-multilearn-dev:latest
+</pre></div>
+</div>
+<p>After cloning the scikit-multilearn repository, run the following
+command:</p>
+<p>This docker contains two python environments set for scikit-multilearn:
+2.7 and 3.x, to use the first one run <code class="docutils literal notranslate"><span class="pre">python2</span></code> and <code class="docutils literal notranslate"><span class="pre">pip2</span></code>, the
+second is available via <code class="docutils literal notranslate"><span class="pre">python3</span></code> and <code class="docutils literal notranslate"><span class="pre">pip3</span></code>.</p>
+<p>You can pull the latest version from Docker hub using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker pull niedakh/scikit-multilearn-dev:latest
+</pre></div>
+</div>
+<p>You can start it via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run -e <span class="s2">&quot;MEKA_CLASSPATH=/opt/meka/lib&quot;</span> -v <span class="s2">&quot;YOUR_CLONE_DIR:/home/python-dev/repo&quot;</span> --name scikit_multilearn_dev_test_docker -p <span class="m">8888</span>:8888 -d niedakh/scikit-multilearn-dev:latest
+</pre></div>
+</div>
+<p>To run the tests under the python 2.7 environment use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it scikit_multilearn_dev_test_docker python3 -m pytest /home/python-dev/repo
+</pre></div>
+</div>
+<p>or for python 3.x use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it scikit_multilearn_dev_test_docker python2 -m pytest /home/python-dev/repo
+</pre></div>
+</div>
+<p>To play around just login with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it scikit_multilearn_dev_test_docker bash
+</pre></div>
+</div>
+<p>To start jupyter notebook run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it scikit_multilearn_dev_test_docker bash -c <span class="s2">&quot;cd /home/python-dev/repo &amp;&amp; jupyter notebook&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Building-documentation">
+<h2>Building documentation<a class="headerlink" href="#Building-documentation" title="Permalink to this headline">¶</a></h2>
+<p>In order to build HTML documentation just run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it scikit_multilearn_dev_test_docker bash -c <span class="s2">&quot;cd /home/python-dev/repo/docs &amp;&amp; make html&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Development">
+<h2>Development<a class="headerlink" href="#Development" title="Permalink to this headline">¶</a></h2>
+<p>One of the most comfortable ways to work on the library is to use
+<a class="reference external" href="https://www.jetbrains.com/pycharm/">Pycharm</a> and its <a class="reference external" href="https://www.jetbrains.com/help/pycharm/using-docker-as-a-remote-interpreter.html">support for
+docker-contained
+interpreters</a>,
+just configure access to the docker server, set it up in Pycharm, use
+<code class="docutils literal notranslate"><span class="pre">niedakh/scikit-multilearn-dev:latest</span></code> as the image name and set up
+relevant path mappings, voila - you can now use this environment for
+development, debugging and running tests within the IDE.</p>
+<div class="section" id="Writing-code">
+<h3>Writing code<a class="headerlink" href="#Writing-code" title="Permalink to this headline">¶</a></h3>
+<p>At the very list you should make sure that your code:</p>
+<ul class="simple">
+<li>works on Python 2 and Python 3 on Windows 10/Linux/OSX using
+travis/appveyor</li>
+<li>PEP8 coding guidelines</li>
+<li>follows scikit-learn interfaces if relevant interfaces exist</li>
+<li>is documented in the <a class="reference external" href="http://numpydoc.readthedocs.io/en/latest/format.html">numpydocs
+fashion</a>,
+especially that all public API is documented, including attributes
+and an example use case, see existing code for inspiration</li>
+<li>has tests written, you can find relevant tests in
+<code class="docutils literal notranslate"><span class="pre">skmultilearn.cluster.tests</span></code> and
+<code class="docutils literal notranslate"><span class="pre">skmultilearn.problem_transform.tests</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="Writing-a-label-space-clusterer">
+<h3>Writing a label space clusterer<a class="headerlink" href="#Writing-a-label-space-clusterer" title="Permalink to this headline">¶</a></h3>
+<p>One of the approaches to multi-label classification is to cluster the
+label space into subspaces and perform classification in smaller
+subproblems to reduce the risk of under/overfitting.</p>
+<p>In order to create your own label space clusterer you need to inherit
+:class:<code class="docutils literal notranslate"><span class="pre">LabelSpaceClustererBase</span></code> and implement the
+<code class="docutils literal notranslate"><span class="pre">fit_predict(X,</span> <span class="pre">y)</span></code> class method. Expect <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> to be sparse
+matrices, you and also use
+:func:<code class="docutils literal notranslate"><span class="pre">skmultilearn.utils.get_matrix_in_format</span></code> to convert to a
+desired matrix format. <code class="docutils literal notranslate"><span class="pre">fit_predict(X,</span> <span class="pre">y)</span></code> should return an array-like
+(preferably <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> or at least a <code class="docutils literal notranslate"><span class="pre">list</span></code>) of <code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>
+subarrays which contain lists of labels present in a given cluster. An
+example of a correct partition of five labels is:
+<code class="docutils literal notranslate"><span class="pre">np.array([[0,1],</span> <span class="pre">[2,3,4]])</span></code> and of overlapping clusters:
+<code class="docutils literal notranslate"><span class="pre">np.array([[0,1,2],</span> <span class="pre">[2,3,4]])</span></code>.</p>
+</div>
+</div>
+<div class="section" id="Example-Clusterer">
+<h2>Example Clusterer<a class="headerlink" href="#Example-Clusterer" title="Permalink to this headline">¶</a></h2>
+<p>Let us look at a toy example, where a clusterer divides the label space
+based on how a given label’s ordinal divides modulo a given number of
+clusters.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;emotions&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emotions:train - exists, not redownloading
+emotions:test - exists, not redownloading
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [81]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">LabelSpacePartitioningClassifier</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.cluster.base</span> <span class="kn">import</span> <span class="n">LabelSpaceClustererBase</span>
+
+
+<span class="k">class</span> <span class="nc">ModuloClusterer</span><span class="p">(</span><span class="n">LabelSpaceClustererBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initializes the clusterer</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_clusters: int</span>
+<span class="sd">        number of clusters to partition into</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    array-like of array-like, (n_clusters,)</span>
+<span class="sd">        list of lists label indexes, each sublist represents labels</span>
+<span class="sd">        that are in that community</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">ModuloClusterer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
+
+    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">n_labels</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">partition_list</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_labels</span><span class="p">):</span>
+            <span class="n">partition_list</span><span class="p">[</span><span class="n">label</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">partition_list</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clusterer</span> <span class="o">=</span> <span class="n">ModuloClusterer</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[0, 3],
+       [1, 4],
+       [2, 5]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Using-the-example-Clusterer">
+<h2>Using the example Clusterer<a class="headerlink" href="#Using-the-example-Clusterer" title="Permalink to this headline">¶</a></h2>
+<p>Such a clusterer can then be used with an ensemble classifier such as
+the <code class="docutils literal notranslate"><span class="pre">LabelSpacePartitioningClassifier</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">LabelSpacePartitioningClassifier</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">clusterer</span>
+<span class="p">)</span>
+<span class="n">clf</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>LabelSpacePartitioningClassifier(classifier=LabelPowerset(classifier=GaussianNB(priors=None), require_dense=[True, True]),
+                 clusterer=ModuloClusterer(n_clusters=3),
+                 require_dense=[False, False])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.23762376237623761
+</pre></div>
+</div>
+</div>
+<div class="section" id="Writing-a-Graph-Builder">
+<h3>Writing a Graph Builder<a class="headerlink" href="#Writing-a-Graph-Builder" title="Permalink to this headline">¶</a></h3>
+<p>Scikit-multilearn implements clusterers that are capable of infering
+label space clusters (in network science the word communities is used
+more often) from a graph/network depicting label relationships. These
+clusterers are further described in <a class="reference internal" href="labelrelations.html"><span class="doc">Label
+relations</span></a> chapter of the user guide.</p>
+<p>To implement your own graph builder you need to subclass
+<code class="docutils literal notranslate"><span class="pre">GraphBuilderBase</span></code> and implement the <code class="docutils literal notranslate"><span class="pre">transform</span></code> function which
+should return a weighted (or not) adjacency matrix in the form of a
+dictionary, with keys <code class="docutils literal notranslate"><span class="pre">(label1,</span> <span class="pre">label2)</span></code> and values representing a
+weight.</p>
+</div>
+</div>
+<div class="section" id="Example-GraphBuilder">
+<h2>Example GraphBuilder<a class="headerlink" href="#Example-GraphBuilder" title="Permalink to this headline">¶</a></h2>
+<p>Let’s implement a simple graph builder which returns the correlations
+between labels.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">GraphBuilderBase</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.utils</span> <span class="kn">import</span> <span class="n">get_matrix_in_format</span>
+
+<span class="k">class</span> <span class="nc">LabelCorrelationGraphBuilder</span><span class="p">(</span><span class="n">GraphBuilderBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Builds a graph with label correlations on edge weights&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate weighted adjacency matrix from label matrix</span>
+
+<span class="sd">        This function generates a weighted label correlation</span>
+<span class="sd">        graph based on input binary label vectors</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y : numpy.ndarray or scipy.sparse</span>
+<span class="sd">            dense or sparse binary matrix with shape</span>
+<span class="sd">            ``(n_samples, n_labels)``</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            weight map with a tuple of ints as keys</span>
+<span class="sd">            and a float value ``{ (int, int) : float }``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">label_data</span> <span class="o">=</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">label_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_weighted</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="n">edge_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">label_1</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">label_2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">label_1</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="c1"># calculate pearson R correlation coefficient for label pairs</span>
+                <span class="c1"># we only include the edges above diagonal as it is an undirected graph</span>
+                <span class="n">pearson_r</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">label_data</span><span class="p">[:,</span><span class="n">label_2</span><span class="p">]</span><span class="o">.</span><span class="n">todense</span><span class="p">(),</span> <span class="n">label_data</span><span class="p">[:,</span><span class="n">label_1</span><span class="p">]</span><span class="o">.</span><span class="n">todense</span><span class="p">())</span>
+                <span class="n">edge_map</span><span class="p">[(</span><span class="n">label_2</span><span class="p">,</span> <span class="n">label_1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">pearson_r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">edge_map</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">graph_builder</span> <span class="o">=</span> <span class="n">LabelCorrelationGraphBuilder</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">graph_builder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[50]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>{(0, 0): 1.0,
+ (0, 1): 0.0054205072520802679,
+ (0, 2): -0.4730507042031965,
+ (0, 3): -0.35907118960632034,
+ (0, 4): -0.32287762681546733,
+ (0, 5): 0.24883125852376733,
+ (1, 1): 1.0,
+ (1, 2): 0.1393556218283642,
+ (1, 3): -0.25112700233108359,
+ (1, 4): -0.3343594619173676,
+ (1, 5): -0.36277277605002756,
+ (2, 2): 1.0,
+ (2, 3): 0.34204580629202336,
+ (2, 4): 0.23107157941324433,
+ (2, 5): -0.56137098197912705,
+ (3, 3): 1.0,
+ (3, 4): 0.48890609122000817,
+ (3, 5): -0.35949125643829821,
+ (4, 4): 1.0,
+ (4, 5): -0.28842101609587079,
+ (5, 5): 1.0}
+</pre></div>
+</div>
+</div>
+<p>This adjacency matrix can be then used by a Label Graph clusterer.</p>
+</div>
+<div class="section" id="Using-the-example-GraphBuilder">
+<h2>Using the example GraphBuilder<a class="headerlink" href="#Using-the-example-GraphBuilder" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.cluster</span> <span class="kn">import</span> <span class="n">NetworkXLabelGraphClusterer</span>
+<span class="n">clusterer</span> <span class="o">=</span> <span class="n">NetworkXLabelGraphClusterer</span><span class="p">(</span><span class="n">graph_builder</span><span class="o">=</span><span class="n">graph_builder</span><span class="p">)</span>
+<span class="n">clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[56]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[0, 5], [1], [2], [3, 4]], dtype=object)
+</pre></div>
+</div>
+</div>
+<p>The clusterer can be then used with the LabelSpacePartitioning
+classifier.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ensemble</span> <span class="kn">import</span> <span class="n">LabelSpacePartitioningClassifier</span>
+<span class="kn">from</span> <span class="nn">skmultilearn.problem_transform</span> <span class="kn">import</span> <span class="n">LabelPowerset</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">LabelSpacePartitioningClassifier</span><span class="p">(</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">LabelPowerset</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">()),</span>
+    <span class="n">clusterer</span> <span class="o">=</span> <span class="n">clusterer</span>
+<span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[57]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.13861386138613863
+</pre></div>
+</div>
+</div>
+<div class="section" id="Writing-a-classifier">
+<h3>Writing a classifier<a class="headerlink" href="#Writing-a-classifier" title="Permalink to this headline">¶</a></h3>
+<p>To implement a multi-label classifier you need to subclass a classifier
+base class. Currently, you can select of a few classifier base classes
+depending on which approach to multi-label classification you follow.</p>
+<p>Scikit-multilearn inheritance tree for the classifier is shown on the
+figure below.</p>
+<div class="figure" id="id1">
+<img alt="Classifier inheritance diagram" src="_images/inheritance.png" />
+<p class="caption"><span class="caption-text">Classifier inheritance diagram</span></p>
+</div>
+<p>To implement a scikit-learn’s ecosystem compatible classifier, we need
+to subclass two classes from sklearn.base: BaseEstimator and
+ClassifierMixin. For that we provide
+:class:<code class="docutils literal notranslate"><span class="pre">skmultilearn.base.MLClassifierBase</span></code> base class. We further
+extend this class with properties specific to the problem transformation
+approach in multi-label classification in
+:class:<code class="docutils literal notranslate"><span class="pre">skmultilearn.base.ProblemTransformationBase</span></code>.</p>
+<p>To implement a scikit-learn’s ecosystem compatible classifier, we need
+to subclass two classes from sklearn.base: BaseEstimator and
+ClassifierMixin. For that we provide
+:class:<code class="docutils literal notranslate"><span class="pre">skmultilearn.base.MLClassifierBase</span></code> base class. We further
+extend this class with properties specific to the problem transformation
+approach in multi-label classification in
+:class:<code class="docutils literal notranslate"><span class="pre">skmultilearn.base.ProblemTransformationBase</span></code>.</p>
+</div>
+</div>
+<div class="section" id="Scikit-learn-base-classses">
+<h2>Scikit-learn base classses<a class="headerlink" href="#Scikit-learn-base-classses" title="Permalink to this headline">¶</a></h2>
+<p>The base estimator class from scikit is responsible for providing the
+ability of cloning classifiers, for example when multiple instances of
+the same classifier are needed for cross-validation performed using the
+CrossValidation class.</p>
+<p>The class provides two functions responsible for that: <code class="docutils literal notranslate"><span class="pre">get_params</span></code>,
+which fetches parameters from a classifier object and <code class="docutils literal notranslate"><span class="pre">set_params</span></code>,
+which sets params of the target clone. The params should also be
+acceptable by the constructor.</p>
+<p>This is an interface with a non-important method that allows different
+classes in scikit to detect that our classifier behaves as a classifier
+(i.e. implements <code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">predict</span></code> etc.) and provides certain kind of
+outputs.</p>
+</div>
+<div class="section" id="MLClassifierBase">
+<h2>MLClassifierBase<a class="headerlink" href="#MLClassifierBase" title="Permalink to this headline">¶</a></h2>
+<p>The base multi-label classifier in scikit-multilearn is
+:class:<code class="docutils literal notranslate"><span class="pre">skmultilearn.base.MLClassifierBase</span></code>. It provides two abstract
+methods: fit(X, y) to train the classifier and predict(X) to predict
+labels for a set of samples. These functions are expected from every
+classifier. It also provides a default implementation of
+get_params/set_params that works for multi-label classifiers.</p>
+<p>All you need to do in your classifier is:</p>
+<ol class="arabic simple">
+<li>subclass <code class="docutils literal notranslate"><span class="pre">MLClassifierBase</span></code> or a derivative class</li>
+<li>set <code class="docutils literal notranslate"><span class="pre">self.copyable_attrs</span></code> in your class’s constructor to a list of
+fields (as strings), that should be cloned (usually it is equal to
+the list of constructor’s arguments)</li>
+<li>implement the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method that trains your classifier</li>
+<li>implement the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method that predicts results</li>
+</ol>
+<p>One of the most important concepts in scikit-learn’s <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>,
+is the concept of cloning. Scikit-learn provides a plethora of
+experiment performing methods, among others, cross-validation, which
+require the ability to clone a classifier. Scikit-multilearn’s base
+multi-label class - <code class="docutils literal notranslate"><span class="pre">MLClassifierBase</span></code> - provides infrastructure for
+automatic cloning support.</p>
+<p>An example of this would be:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.base</span> <span class="kn">import</span> <span class="n">MLClassifierBase</span>
+
+<span class="k">class</span> <span class="nc">AssignKBestLabels</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Assigns k most frequent labels</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k : int</span>
+<span class="sd">        number of most frequent labels to assign</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    An example use case for AssignKBestLabels:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from skmultilearn.&lt;YOUR_CLASSIFIER_MODULE&gt; import AssignKBestLabels</span>
+
+<span class="sd">        # initialize LabelPowerset multi-label classifier with a RandomForest</span>
+<span class="sd">        classifier = AssignKBestLabels(</span>
+<span class="sd">            k = 3</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # train</span>
+<span class="sd">        classifier.fit(X_train, y_train)</span>
+
+<span class="sd">        # predict</span>
+<span class="sd">        predictions = classifier.predict(X_test)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AssignKBestLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit(self,</span> <span class="pre">X,</span> <span class="pre">y)</span></code> expects classifier training data:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code> should be a sparse matrix of shape:
+<code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>, although for compatibility reasons array
+of arrays and a dense matrix are supported.</li>
+<li><code class="docutils literal notranslate"><span class="pre">y</span></code> should be a sparse, binary indicator, matrix of shape:
+<code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code> with 1 in a position <code class="docutils literal notranslate"><span class="pre">i,j</span></code> when <code class="docutils literal notranslate"><span class="pre">i</span></code>-th
+sample is labelled with label no. <code class="docutils literal notranslate"><span class="pre">j</span></code></li>
+</ul>
+<p>It should return <code class="docutils literal notranslate"><span class="pre">self</span></code> after the classifier has been fitted to
+training data. It is customary that <code class="docutils literal notranslate"><span class="pre">fit</span></code> should remember <code class="docutils literal notranslate"><span class="pre">n_labels</span></code>
+in a way. In practice we store <code class="docutils literal notranslate"><span class="pre">n_labels</span></code> as <code class="docutils literal notranslate"><span class="pre">self.label_count</span></code> in
+scikit-multilearn classifiers.</p>
+<p>Let’s make our classifier trainable:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fits classifier to training data</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">        input feature matrix</span>
+<span class="sd">    y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">        binary indicator matrix with label assignments</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    self</span>
+<span class="sd">        fitted instance of self</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">frequencies</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">labels_sorted_by_frequency</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">frequencies</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">labels_to_assign</span> <span class="o">=</span> <span class="n">labels_sorted_by_frequency</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">predict(self,</span> <span class="pre">X)</span></code> returns a prediction of labels for the samples
+from <code class="docutils literal notranslate"><span class="pre">X</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code> should be a sparse matrix of shape:
+<code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>, although for compatibility reasons array
+of arrays and a dense matrix are supported.</li>
+</ul>
+<p>The returned value is similar to <code class="docutils literal notranslate"><span class="pre">y</span></code> in <code class="docutils literal notranslate"><span class="pre">fit</span></code>. It should be a sparse
+binary indicator matrix of the shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code>.</p>
+<p>In some cases, while scikit continues to progress towards a complete
+switch to sparse matrices, it might be needed to convert the sparse
+matrix to a <code class="docutils literal notranslate"><span class="pre">dense</span> <span class="pre">matrix</span></code> or even <code class="docutils literal notranslate"><span class="pre">array-like</span> <span class="pre">of</span> <span class="pre">array-likes</span></code>. Such
+is the case for some scoring functions in scikit. This problem should go
+away in the future versions of scikit.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">predict_proba(self,</span> <span class="pre">X)</span></code> functions similarly but returns the
+likelihood of the label being correctly assigned to samples from <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p>Let’s add the prediction functionality to our classifier and see how it
+works:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [99]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.base</span> <span class="kn">import</span> <span class="n">MLClassifierBase</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">lil_matrix</span>
+
+<span class="k">class</span> <span class="nc">AssignKBestLabels</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Assigns k most frequent labels</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k : int</span>
+<span class="sd">        number of most frequent labels to assign</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    An example use case for AssignKBestLabels:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from skmultilearn.&lt;YOUR_CLASSIFIER_MODULE&gt; import AssignKBestLabels</span>
+
+<span class="sd">        # initialize LabelPowerset multi-label classifier with a RandomForest</span>
+<span class="sd">        classifier = AssignKBestLabels(</span>
+<span class="sd">            k = 3</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # train</span>
+<span class="sd">        classifier.fit(X_train, y_train)</span>
+
+<span class="sd">        # predict</span>
+<span class="sd">        predictions = classifier.predict(X_test)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AssignKBestLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fits classifier to training data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+<span class="sd">        y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">            binary indicator matrix with label assignments</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">            fitted instance of self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_labels</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">labels_sorted_by_frequency</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">frequencies</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels_to_assign</span> <span class="o">=</span> <span class="n">labels_sorted_by_frequency</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">            binary indicator matrix with label assignments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">prediction</span> <span class="o">=</span> <span class="n">lil_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_labels</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
+        <span class="n">prediction</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">labels_to_assign</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">prediction</span>
+
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :mod:`scipy.sparse` matrix of `float in [0.0, 1.0]`, shape=(n_samples, n_labels)</span>
+<span class="sd">            matrix with label assignment probabilities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="n">lil_matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_labels</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+        <span class="n">probabilities</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">labels_to_assign</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="k">return</span> <span class="n">probabilities</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">AssignKBestLabels</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[99]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.10396039603960396
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Selecting-the-base-class">
+<h2>Selecting the base class<a class="headerlink" href="#Selecting-the-base-class" title="Permalink to this headline">¶</a></h2>
+<p>Madjarov et al. divide approach to multi-label classification into three
+categories, you should select a scikit-multilearn base class according
+to the philosophy behind your classifier:</p>
+<ul class="simple">
+<li>algorithm adaptation, when a single-label algorithm is directly
+adapted to the multi-label case, ex. Decision Trees can be adapted by
+taking multiple labels into consideration in decision functions, for
+now the base function for this approach is <code class="docutils literal notranslate"><span class="pre">MLClassifierBase</span></code></li>
+<li>problem transformation, when the multi-label problem is transformed
+to a set of single-label problems, solved there and converted to a
+multi-label solution afterwards - for this approach we provide a
+comfortable <code class="docutils literal notranslate"><span class="pre">ProblemTransformationBase</span></code> base class</li>
+<li>ensemble classification, when the multi-label classification is
+performed by an ensemble of multi-label classifiers to improve
+performance, overcome overfitting etc. In the case when your
+classifier concentrates on clustering the label space, you should use
+:class:<code class="docutils literal notranslate"><span class="pre">LabelSpacePartitioningClassifier</span></code> - which partitions a
+label space using a cluster class that implements the
+:class:<code class="docutils literal notranslate"><span class="pre">LabelSpaceClustererBase</span></code> interface.</li>
+</ul>
+<p>Problem transformation approach is centred around the idea of converting
+a multi-label problem into one or more single-label problems, which are
+usually solved by single- or multi-class classifiers. Scikit-learn is
+the de facto standard source of Python implementations of single-label
+classifiers.</p>
+<p>To perform the transformation, every problem transformation classifier
+needs a base classifier. As all classifiers that follow scikit-s
+BaseEstimator a clonable, scikit-multilearn’s base class for problem
+transformation classifiers requires an instance of a base classifier in
+initialization. Such an instance can be cloned if needed, and its
+parameters can be set up comfortably.</p>
+<p>The biggest problem with joining single-label scikit classifiers with
+multi-label classifiers is that there exists no way to learn whether a
+given scikit classifier accepts sparse matrices as input for
+<code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">predict</span></code> functions. For this reason
+<code class="docutils literal notranslate"><span class="pre">ProblemTransformationBase</span></code> requires another parameter -
+<code class="docutils literal notranslate"><span class="pre">require_dense</span></code> : <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">bool,</span> <span class="pre">bool</span> <span class="pre">]</span></code> - a list/tuple of two boolean
+values. If the first one is true, that means the base classifier expects
+a dense (scikit-compatible array-like of array-likes) representation of
+the sample feature space <code class="docutils literal notranslate"><span class="pre">X</span></code>. If the second one is true - the target
+space <code class="docutils literal notranslate"><span class="pre">y</span></code> is passed to the base classifier as an array like of
+numbers. In case any of these are false - the arguments are passed as a
+sparse matrix.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">required_dense</span></code> argument is not passed, it is set to
+<code class="docutils literal notranslate"><span class="pre">[false,</span> <span class="pre">false]</span></code> if a classifier inherits
+::class::<code class="docutils literal notranslate"><span class="pre">MLClassifierBase</span></code> and to <code class="docutils literal notranslate"><span class="pre">[true,</span> <span class="pre">true]</span></code> as a fallback
+otherwise. In short, it assumes dense representation is required for
+base classifier if the base classifier is not a scikit-multilearn
+classifier.</p>
+</div>
+<div class="section" id="Ensemble-classification">
+<h2>Ensemble classification<a class="headerlink" href="#Ensemble-classification" title="Permalink to this headline">¶</a></h2>
+<p>Ensemble classification is an approach of transforming a multi-label
+classification problem into a family (an ensemble) of multi-label
+subproblems.</p>
+</div>
+<div class="section" id="Unit-testing-classifiers">
+<h2>Unit testing classifiers<a class="headerlink" href="#Unit-testing-classifiers" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-multilearn provides a base unit test class for testing
+classifiers. Please check <code class="docutils literal notranslate"><span class="pre">skmultilearn.tests.classifier_basetest</span></code> for
+a general framework for testing the multi-label classifier.</p>
+<p>Currently tests test three capabilities of the classifier: - whether the
+classifier works with dense/sparse input data
+:func:<code class="docutils literal notranslate"><span class="pre">ClassifierBaseTest.assertClassifierWorksWithSparsity</span></code> - whether
+the classifier predicts probabilities using <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> for
+dense/sparse input data
+:func:<code class="docutils literal notranslate"><span class="pre">ClassifierBaseTest.assertClassifierPredictsProbabilities</span></code> -
+whether it is clonable and works with scikit-learn’s cross-validation
+classes :func:<code class="docutils literal notranslate"><span class="pre">ClassifierBaseTest.assertClassifierWorksWithCV</span></code></p>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="benchmark.html" title="scikit-multilearn benchmark"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="/index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/developer.ipynb.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

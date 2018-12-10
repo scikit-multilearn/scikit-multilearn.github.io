@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.embedding.classifier</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.base</span> <span class="k">import</span> <span class="n">ProblemTransformationBase</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
+
+<div class="viewcode-block" id="EmbeddingClassifier"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.classifier.html#skmultilearn.embedding.EmbeddingClassifier">[docs]</a><span class="k">class</span> <span class="nc">EmbeddingClassifier</span><span class="p">(</span><span class="n">ProblemTransformationBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Embedding-based classifier</span>
+
+<span class="sd">    Implements a general scheme presented in LNEMLC: label network embeddings for multi-label classification. The</span>
+<span class="sd">    classifier embeds the label space with the embedder, trains a set of single-variate or a multi-variate regressor</span>
+<span class="sd">    for embedding unseen cases and a base classifier to predict labels based on input features and the embeddings.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    embedder : :class:`~sklearn.base.BaseEstimator`</span>
+<span class="sd">        the class to embed the label space</span>
+
+<span class="sd">    regressor : :class:`~sklearn.base.BaseEstimator`</span>
+<span class="sd">        the base regressor to predict embeddings from input features</span>
+
+<span class="sd">    classifier : :class:`~sklearn.base.BaseEstimator`</span>
+<span class="sd">        the base classifier to predict labels from input features and embeddings</span>
+
+<span class="sd">    regressor_per_dimension : bool</span>
+<span class="sd">        whether to train one joint multi-variate regressor (False) or per dimension single-variate regressor (True)</span>
+
+<span class="sd">    require_dense : [bool, bool], optional</span>
+<span class="sd">        whether the base classifier requires dense representations for input features and classes/labels</span>
+<span class="sd">        matrices in fit/predict.</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_regressors_ : int</span>
+<span class="sd">        number of trained regressors</span>
+<span class="sd">    partition_ : List[List[int]], shape=(`model_count_`,)</span>
+<span class="sd">        list of lists of label indexes, used to index the output space matrix, set in :meth:`_generate_partition`</span>
+<span class="sd">        via :meth:`fit`</span>
+<span class="sd">    classifiers_ : List[:class:`~sklearn.base.BaseEstimator`] of shape `model_count`</span>
+<span class="sd">        list of classifiers trained per partition, set in :meth:`fit`</span>
+
+
+<span class="sd">    If you use this classifier please cite the relevant embedding method paper</span>
+<span class="sd">    and the label network embedding for multi-label classification paper:</span>
+
+<span class="sd">    .. code :: bibtex</span>
+
+<span class="sd">        @article{zhang2007ml,</span>
+<span class="sd">          title={ML-KNN: A lazy learning approach to multi-label learning},</span>
+<span class="sd">          author={Zhang, Min-Ling and Zhou, Zhi-Hua},</span>
+<span class="sd">          journal={Pattern recognition},</span>
+<span class="sd">          volume={40},</span>
+<span class="sd">          number={7},</span>
+<span class="sd">          pages={2038--2048},</span>
+<span class="sd">          year={2007},</span>
+<span class="sd">          publisher={Elsevier}</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    An example use case for EmbeddingClassifier:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from skmultilearn.embedding import SKLearnEmbedder, EmbeddingClassifier</span>
+<span class="sd">        from sklearn.manifold import SpectralEmbedding</span>
+<span class="sd">        from sklearn.ensemble import RandomForestRegressor</span>
+<span class="sd">        from skmultilearn.adapt import MLkNN</span>
+
+<span class="sd">        clf = EmbeddingClassifier(</span>
+<span class="sd">            SKLearnEmbedder(SpectralEmbedding(n_components = 10)),</span>
+<span class="sd">            RandomForestRegressor(n_estimators=10),</span>
+<span class="sd">            MLkNN(k=5)</span>
+<span class="sd">        )</span>
+
+<span class="sd">        clf.fit(X_train, y_train)</span>
+
+<span class="sd">        predictions = clf.predict(X_test)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedder</span><span class="p">,</span> <span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">regressor_per_dimension</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">require_dense</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EmbeddingClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span> <span class="o">=</span> <span class="n">embedder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">regressor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor_per_dimension</span> <span class="o">=</span> <span class="n">regressor_per_dimension</span>
+
+        <span class="k">if</span> <span class="n">require_dense</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">require_dense</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span> <span class="o">=</span> <span class="n">require_dense</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;embedder&#39;</span><span class="p">,</span> <span class="s1">&#39;regressor&#39;</span><span class="p">,</span> <span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="s1">&#39;regressor_per_dimension&#39;</span><span class="p">,</span> <span class="s1">&#39;require_dense&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="EmbeddingClassifier.fit"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.classifier.html#skmultilearn.embedding.EmbeddingClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fits classifier to training data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+<span class="sd">        y : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">            binary indicator matrix with label assignments</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">            fitted instance of self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_input_format</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="n">y_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">X_y_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concatenate_matrices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor_per_dimension</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_regressors_</span> <span class="o">=</span> <span class="n">y_embedded</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">regressors_</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_regressors_</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_regressors_</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">regressors_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">regressors_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_regressors_</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_y_embedded</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="EmbeddingClassifier.predict"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.classifier.html#skmultilearn.embedding.EmbeddingClassifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict labels for X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :mod:`scipy.sparse` matrix of `{0, 1}`, shape=(n_samples, n_labels)</span>
+<span class="sd">            binary indicator matrix with label assignments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">X_y_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_embedding</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_y_embedded</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EmbeddingClassifier.predict_proba"><a class="viewcode-back" href="../../../api/skmultilearn.embedding.classifier.html#skmultilearn.embedding.EmbeddingClassifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict probabilities of label assignments for X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : `array_like`, :class:`numpy.matrix` or :mod:`scipy.sparse` matrix, shape=(n_samples, n_features)</span>
+<span class="sd">            input feature matrix</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :mod:`scipy.sparse` matrix of `float in [0.0, 1.0]`, shape=(n_samples, n_labels)</span>
+<span class="sd">            matrix with label assignment probabilities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X_y_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_embedding</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_y_embedded</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_concatenate_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_input_format</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">y_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_input_format</span><span class="p">(</span><span class="n">y_embedded</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="n">X_y_embedded</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X_y_embedded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">X_y_embedded</span>
+
+    <span class="k">def</span> <span class="nf">_predict_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor_per_dimension</span><span class="p">:</span>
+            <span class="n">y_embedded</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">regressors_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_regressors_</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="n">y_embedded</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">y_embedded</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_embedded</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">y_embedded</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concatenate_matrices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_embedded</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

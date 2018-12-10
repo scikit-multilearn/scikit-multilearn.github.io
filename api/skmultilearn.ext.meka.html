@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -98,12 +97,12 @@ how to use this class see the tutorial: <a class="reference internal" href="../m
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>meka_classifier</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The MEKA classifier string and parameters from the MEKA API,
+<li><strong>meka_classifier</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The MEKA classifier string and parameters from the MEKA API,
 such as <code class="code docutils literal notranslate"><span class="pre">meka.classifiers.multilabel.MULAN</span> <span class="pre">-S</span> <span class="pre">RAkEL2</span></code></li>
-<li><strong>weka_classifier</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The WEKA classifier string and parameters from the WEKA API,
+<li><strong>weka_classifier</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The WEKA classifier string and parameters from the WEKA API,
 such as <code class="code docutils literal notranslate"><span class="pre">weka.classifiers.trees.J48</span></code></li>
-<li><strong>java_command</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Path to test the java command</li>
-<li><strong>meka_classpath</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Path to the MEKA class path folder, usually the folder lib
+<li><strong>java_command</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Path to test the java command</li>
+<li><strong>meka_classpath</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Path to the MEKA class path folder, usually the folder lib
 in the directory MEKA was extracted into</li>
 </ul>
 </td>
@@ -113,7 +112,15 @@ in the directory MEKA was extracted into</li>
 <dl class="attribute">
 <dt id="skmultilearn.ext.Meka.output_">
 <code class="descname">output_</code><a class="headerlink" href="#skmultilearn.ext.Meka.output_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – the full text output of MEKA command</p>
+<dd><p>the full text output of MEKA command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)">str</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">References</p>
@@ -223,7 +230,7 @@ of the X matrix.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>version</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the MEKA version to download, default falls back to currently supported version 1.9.2</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the MEKA version to download, default falls back to currently supported version 1.9.2</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">meka class path string for installed version</p>
@@ -233,8 +240,8 @@ of the X matrix.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code> – if unpacking the meka release file does not provide a proper setup</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code> – if MD5 mismatch happens after a download error</li>
+<li><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#IOError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code></a> – if unpacking the meka release file does not provide a proper setup</li>
+<li><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> – if MD5 mismatch happens after a download error</li>
 </ul>
 </td>
 </tr>
@@ -289,7 +296,7 @@ of the X matrix.</p>
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.ext.meka.rst.txt"
          rel="nofollow">Show this page source</a>

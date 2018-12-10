@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="_static/" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Multi-label data stratification" href="stratification.html" />
+    <link rel="prev" title="1. Exploring Label Relations" href="labelrelations.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="userguide.html">User Guide</a></li>
+        <li><a href="api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">4. Using the MEKA wrapper</a><ul>
+<li><a class="reference internal" href="#Setting-up-MEKA">4.1. Setting up MEKA</a></li>
+<li><a class="reference internal" href="#Using-MEKA-via-scikit-multilearn">4.2. Using MEKA via scikit-multilearn</a></li>
+<li><a class="reference internal" href="#Citing-meka">4.3. Citing meka</a></li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Using-the-MEKA-wrapper">
+<h1>4. Using the MEKA wrapper<a class="headerlink" href="#Using-the-MEKA-wrapper" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="http://waikato.github.io/meka/">MEKA</a> project provides an open
+source implementation of methods for multi-label learning and
+evaluation. In multi-label classification, we want to predict multiple
+output variables for each input instance.</p>
+<p>MEKA is based on the <a class="reference external" href="http://www.cs.waikato.ac.nz/ml/weka/">WEKA</a>
+Machine Learning Toolkit; it includes dozens of multi-label methods from
+the scientific literature, as well as a wrapper to the related
+<a class="reference external" href="http://mulan.sourceforge.net/">MULAN</a> framework.</p>
+<p>An introduction to multi-label classification and MEKA is given in a
+<a class="reference external" href="http://jmlr.org/papers/volume17/12-164/12-164.pdf">JMLR MLOSS-track
+paper</a>. Note that
+while MEKA is GPL-licensed, using this wrapper does not incur GPL
+limitations on your code.</p>
+<div class="section" id="Setting-up-MEKA">
+<h2>4.1. Setting up MEKA<a class="headerlink" href="#Setting-up-MEKA" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the scikit-multilearn interface to MEKA you need to have
+JAVA and MEKA installed. Paths to both are passed to the class’s
+constructor. <strong>The current version supports meka 1.9.1+</strong></p>
+<p>The currently officially supported MEKA version is
+<a class="reference external" href="https://github.com/Waikato/meka/releases/tag/meka-1.9.2">1.9.2</a>.</p>
+<p>You can download it using the :fun:<code class="docutils literal notranslate"><span class="pre">download_meka</span></code>, the function
+returns path to MEKA classes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ext</span> <span class="k">import</span> <span class="n">download_meka</span>
+
+<span class="n">meka_classpath</span> <span class="o">=</span> <span class="n">download_meka</span><span class="p">()</span>
+<span class="n">meka_classpath</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MEKA 1.9.2 found, not downloading
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[1]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&#39;/home/niedakh/scikit_ml_learn_data/meka/meka-release-1.9.2/lib/&#39;
+</pre></div>
+</div>
+</div>
+<p>If you want to use a different version, just pass the version number as
+an argument to <code class="docutils literal notranslate"><span class="pre">download_meka</span></code>.</p>
+<p>Note that you will need to have <code class="docutils literal notranslate"><span class="pre">liac-arff</span></code> installed if you want to
+use the MEKA wrapper, you can get them using: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">liac-arff</span></code>.</p>
+<p>You will also need Java. You can pass a path to the Java binary in MEKA
+wrapper constructor. In Python 2.7 the pip package <code class="docutils literal notranslate"><span class="pre">whichcraft</span></code> is
+used to detect the location of java executables if no path is provided
+to the constructor. You can install it via <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">whichcraft</span></code>.
+In Python 3 <code class="docutils literal notranslate"><span class="pre">whichcraft</span></code> is not used, java path will be found using
+the standard library.</p>
+</div>
+<div class="section" id="Using-MEKA-via-scikit-multilearn">
+<h2>4.2. Using MEKA via scikit-multilearn<a class="headerlink" href="#Using-MEKA-via-scikit-multilearn" title="Permalink to this headline">¶</a></h2>
+<p>Starting from scikit-multilearn <code class="docutils literal notranslate"><span class="pre">0.0.2</span></code> the meka wrapper is available
+from <code class="docutils literal notranslate"><span class="pre">skmultilearn.ext</span></code> (ext as in external) and is a fully
+scikit-compatible multi-label classifier.</p>
+<p>To use the interface class start with importing skmultilearn’s module,
+then create an object of the <code class="docutils literal notranslate"><span class="pre">Meka</span></code> class using the constructor and
+perform the standard fit &amp; predict scenario.</p>
+<p>Let’s load up some data to see how it works.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.dataset</span> <span class="k">import</span> <span class="n">load_dataset</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;scene&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">X_test</span><span class="p">,</span>  <span class="n">y_test</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;scene&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+scene - exists, not redownloading
+scene - exists, not redownloading
+</pre></div></div>
+</div>
+<p>Now that we have a data set let’s classify it using MEKA and WEKA! If
+you are new to the MEKA and WEKA stack you can find available
+classifiers under the following links:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://weka.sourceforge.net/doc.dev/weka/classifiers/Classifier.html">WEKA base classifier
+list</a></li>
+<li><a class="reference external" href="http://waikato.github.io/meka/methods/">MEKA multi-label classifier
+list</a></li>
+</ul>
+<p>Let’s start by importing :class:<code class="docutils literal notranslate"><span class="pre">Meka</span></code> and constructing a MEKA wrapper
+classifier:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">skmultilearn.ext</span> <span class="k">import</span> <span class="n">Meka</span>
+
+<span class="n">meka</span> <span class="o">=</span> <span class="n">Meka</span><span class="p">(</span>
+        <span class="n">meka_classifier</span> <span class="o">=</span> <span class="s2">&quot;meka.classifiers.multilabel.BR&quot;</span><span class="p">,</span> <span class="c1"># Binary Relevance</span>
+        <span class="n">weka_classifier</span> <span class="o">=</span> <span class="s2">&quot;weka.classifiers.bayes.NaiveBayesMultinomial&quot;</span><span class="p">,</span> <span class="c1"># with Naive Bayes single-label classifier</span>
+        <span class="n">meka_classpath</span> <span class="o">=</span> <span class="n">meka_classpath</span><span class="p">,</span> <span class="c1">#obtained via download_meka</span>
+        <span class="n">java_command</span> <span class="o">=</span> <span class="s1">&#39;/usr/bin/java&#39;</span> <span class="c1"># path to java executable</span>
+<span class="p">)</span>
+<span class="n">meka</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Meka(java_command=&#39;/usr/bin/java&#39;,
+   meka_classifier=&#39;meka.classifiers.multilabel.BR&#39;,
+   meka_classpath=&#39;/home/niedakh/scikit_ml_learn_data/meka/meka-release-1.9.2/lib/&#39;,
+   weka_classifier=&#39;weka.classifiers.bayes.NaiveBayesMultinomial&#39;)
+</pre></div>
+</div>
+</div>
+<p>Where:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">meka_classifier</span></code> is the MEKA classifier class</li>
+<li><code class="docutils literal notranslate"><span class="pre">weka_classifier</span></code> is the WEKA base classifier class if used</li>
+<li><code class="docutils literal notranslate"><span class="pre">java_command</span></code> is the path to java</li>
+<li><code class="docutils literal notranslate"><span class="pre">meka_classpath</span></code> is the path to where meka.jar and weka.jar are
+located, usually they come together in meka releases, so this points
+to the <code class="docutils literal notranslate"><span class="pre">lib</span></code> subfolder of the folder where
+<code class="docutils literal notranslate"><span class="pre">meka-&lt;version&gt;-realease.zip</span></code> file was unzipped. If not provided
+the path is taken from environmental variable: <code class="docutils literal notranslate"><span class="pre">MEKA_CLASSPATH</span></code></li>
+</ul>
+<p>Now let’s train and test the classifier - we’ll se what level of hamming
+loss do we get?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;1211x294 sparse matrix of type &#39;&lt;class &#39;numpy.float64&#39;&gt;&#39;
+    with 351805 stored elements in LInked List format&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">meka</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">meka</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">hamming_loss</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">hamming_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.14659977703455965
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Citing-meka">
+<h2>4.3. Citing meka<a class="headerlink" href="#Citing-meka" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span>@article<span class="nb">{</span>MEKA,
+    author = <span class="nb">{</span>Read, Jesse and Reutemann, Peter and Pfahringer, Bernhard and Holmes, Geoff<span class="nb">}</span>,
+    title = <span class="nb">{{</span>MEKA<span class="nb">}</span>: A Multi-label/Multi-target Extension to <span class="nb">{</span>Weka<span class="nb">}}</span>,
+    journal = <span class="nb">{</span>Journal of Machine Learning Research<span class="nb">}</span>,
+    year = <span class="nb">{</span>2016<span class="nb">}</span>,
+    volume = <span class="nb">{</span>17<span class="nb">}</span>,
+    number = <span class="nb">{</span>21<span class="nb">}</span>,
+    pages = <span class="nb">{</span>1--5<span class="nb">}</span>,
+    url = <span class="nb">{</span>http://jmlr.org/papers/v17/12-164.html<span class="nb">}</span>,
+<span class="nb">}</span>
+
+@article<span class="nb">{</span>Hall:2009:WDM:1656274.1656278,
+    author = <span class="nb">{</span>Hall, Mark and Frank, Eibe and Holmes, Geoffrey and Pfahringer, Bernhard and Reutemann, Peter and Witten, Ian H.<span class="nb">}</span>,
+    title = <span class="nb">{</span>The WEKA Data Mining Software: An Update<span class="nb">}</span>,
+    journal = <span class="nb">{</span>SIGKDD Explor. Newsl.<span class="nb">}</span>,
+    issue<span class="nb">_</span>date = <span class="nb">{</span>June 2009<span class="nb">}</span>,
+    volume = <span class="nb">{</span>11<span class="nb">}</span>,
+    number = <span class="nb">{</span>1<span class="nb">}</span>,
+    month = nov,
+    year = <span class="nb">{</span>2009<span class="nb">}</span>,
+    issn = <span class="nb">{</span>1931-0145<span class="nb">}</span>,
+    pages = <span class="nb">{</span>10--18<span class="nb">}</span>,
+    numpages = <span class="nb">{</span>9<span class="nb">}</span>,
+    url = <span class="nb">{</span>http://doi.acm.org/10.1145/1656274.1656278<span class="nb">}</span>,
+    doi = <span class="nb">{</span>10.1145/1656274.1656278<span class="nb">}</span>,
+    acmid = <span class="nb">{</span>1656278<span class="nb">}</span>,
+    publisher = <span class="nb">{</span>ACM<span class="nb">}</span>,
+    address = <span class="nb">{</span>New York, NY, USA<span class="nb">}</span>,
+<span class="nb">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stratification.html" title="5. Multi-label data stratification"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="labelrelations.html" title="1. Exploring Label Relations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="/index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="userguide.html" accesskey="U">User Guide</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="_sources/meka.ipynb.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

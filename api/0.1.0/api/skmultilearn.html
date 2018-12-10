@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../userguide.html">User Guide</a></li>
+        <li><a href="#">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">scikit-multilearn API Reference</a><ul>
+<li><a class="reference internal" href="#classifiers-and-tools">Classifiers and tools</a><ul>
+<li><a class="reference internal" href="#module-skmultilearn.adapt">Algorithm Adaptation approaches</a></li>
+<li><a class="reference internal" href="#module-skmultilearn.problem_transform">Problem Transformation approaches</a></li>
+<li><a class="reference internal" href="#module-skmultilearn.ensemble">Ensembles of classifiers</a></li>
+<li><a class="reference internal" href="#module-skmultilearn.cluster">Label Space Clusterers</a></li>
+<li><a class="reference internal" href="#module-skmultilearn.ext">External classifiers</a></li>
+<li><a class="reference internal" href="#module-skmultilearn.model_selection">Model selection and data manipulation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="scikit-multilearn-api-reference">
+<h1>scikit-multilearn API Reference<a class="headerlink" href="#scikit-multilearn-api-reference" title="Permalink to this headline">¶</a></h1>
+<p>Scikit-multilearn is a BSD-licensed library for multi-label classification that is
+built on top of the well-known scikit-learn ecosystem.</p>
+<div class="section" id="classifiers-and-tools">
+<h2>Classifiers and tools<a class="headerlink" href="#classifiers-and-tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-skmultilearn.adapt">
+<span id="algorithm-adaptation-approaches"></span><h3>Algorithm Adaptation approaches<a class="headerlink" href="#module-skmultilearn.adapt" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.adapt" title="skmultilearn.adapt"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.adapt</span></code></a> module implements algorithm
+adaptation approaches to multi-label classification.</p>
+<p>Algorithm adaptation methods for multi-label classification
+concentrate on adapting single-label classification algorithms
+to the multi-label case usually by changes in cost/decision
+functions.</p>
+<p>Currently the following algorithm adaptation classification schemes are available in scikit-multilearn:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Classifier</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNaClassifier" title="skmultilearn.adapt.BRkNNaClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRkNNaClassifier</span></code></a></td>
+<td>a Binary Relevance kNN classifier that assigns a label
+if at least half of the neighbors are also classified
+with the label</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.adapt.brknn.html#skmultilearn.adapt.BRkNNbClassifier" title="skmultilearn.adapt.BRkNNbClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRkNNbClassifier</span></code></a></td>
+<td>a Binary Relevance kNN classifier that assigns top m
+labels of neighbors with m - average number of labels
+assigned to neighbors</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.adapt.mlknn.html#skmultilearn.adapt.MLkNN" title="skmultilearn.adapt.MLkNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">MLkNN</span></code></a></td>
+<td>a multi-label adapted kNN classifier with bayesian prior
+corrections</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM" title="skmultilearn.adapt.MLARAM"><code class="xref py py-class docutils literal notranslate"><span class="pre">MLARAM</span></code></a></td>
+<td>a multi-Label Hierarchical ARAM Neural Network</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-skmultilearn.problem_transform">
+<span id="problem-transformation-approaches"></span><h3>Problem Transformation approaches<a class="headerlink" href="#module-skmultilearn.problem_transform" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.problem_transform" title="skmultilearn.problem_transform"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.problem_transform</span></code></a> module provides classifiers
+that follow the problem transformation approaches to multi-label classification.</p>
+<p>The problem transformation approach to multi-label classification converts multi-label problems to
+single-label problems: single-class or multi-class.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="55%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Classifier</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.problem_transform.br.html#skmultilearn.problem_transform.BinaryRelevance" title="skmultilearn.problem_transform.BinaryRelevance"><code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryRelevance</span></code></a></td>
+<td>treats each label as a separate single-class
+classification problem</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.problem_transform.cc.html#skmultilearn.problem_transform.ClassifierChain" title="skmultilearn.problem_transform.ClassifierChain"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierChain</span></code></a></td>
+<td>treats each label as a part of a conditioned
+chain of single-class classification problems</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset" title="skmultilearn.problem_transform.LabelPowerset"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelPowerset</span></code></a></td>
+<td>treats each label combination as a separate
+class with one multi-class classification
+problem</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-skmultilearn.ensemble">
+<span id="ensembles-of-classifiers"></span><h3>Ensembles of classifiers<a class="headerlink" href="#module-skmultilearn.ensemble" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.ensemble" title="skmultilearn.ensemble"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.ensemble</span></code></a> module implements ensemble classification schemes
+that construct an ensemble of base multi-label classifiers.</p>
+<p>Currently the following ensemble classification schemes are available in scikit-multilearn:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="52%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Classifier name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.ensemble.rakeld.html#skmultilearn.ensemble.RakelD" title="skmultilearn.ensemble.RakelD"><code class="xref py py-class docutils literal notranslate"><span class="pre">RakelD</span></code></a></td>
+<td>Distinct RAndom k-labELsets multi-label classifier</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.ensemble.rakelo.html#skmultilearn.ensemble.RakelO" title="skmultilearn.ensemble.RakelO"><code class="xref py py-class docutils literal notranslate"><span class="pre">RakelO</span></code></a></td>
+<td>Overlapping RAndom k-labELsets multi-label classifier.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.ensemble.partition.html#skmultilearn.ensemble.LabelSpacePartitioningClassifier" title="skmultilearn.ensemble.LabelSpacePartitioningClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelSpacePartitioningClassifier</span></code></a></td>
+<td>a label space partitioning classifier that trains a
+classifier per label subspace as clustered using methods
+from <a class="reference internal" href="#module-skmultilearn.cluster" title="skmultilearn.cluster"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.cluster</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier" title="skmultilearn.ensemble.MajorityVotingClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorityVotingClassifier</span></code></a></td>
+<td>a label space division classifier that trains a classifier
+per label subspace as clustered using methods from
+<a class="reference internal" href="#module-skmultilearn.cluster" title="skmultilearn.cluster"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.cluster</span></code></a> and assign labels if the majority
+of classifiers that contain the label agree on the assignment.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-skmultilearn.cluster">
+<span id="label-space-clusterers"></span><h3>Label Space Clusterers<a class="headerlink" href="#module-skmultilearn.cluster" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.cluster" title="skmultilearn.cluster"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.cluster</span></code></a> module gathers label space clustering methods.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.cluster.fixed.html#skmultilearn.cluster.FixedLabelSpaceClusterer" title="skmultilearn.cluster.FixedLabelSpaceClusterer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FixedLabelSpaceClusterer</span></code></a></td>
+<td>Return a predefined fixed clustering, usually driven by
+expert knowledge</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.cluster.matrix.html#skmultilearn.cluster.MatrixLabelSpaceClusterer" title="skmultilearn.cluster.MatrixLabelSpaceClusterer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixLabelSpaceClusterer</span></code></a></td>
+<td>Cluster the label space using a scikit-compatible
+matrix-based clusterer</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.cluster.graphtool.html#skmultilearn.cluster.GraphToolLabelGraphClusterer" title="skmultilearn.cluster.GraphToolLabelGraphClusterer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphToolLabelGraphClusterer</span></code></a></td>
+<td>Fits a Stochastic Block Model to the Label Graph and
+infers the communities</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.cluster.graphtool.html#skmultilearn.cluster.StochasticBlockModel" title="skmultilearn.cluster.StochasticBlockModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">StochasticBlockModel</span></code></a></td>
+<td>A Stochastic Blockmodel class</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.cluster.igraph.html#skmultilearn.cluster.IGraphLabelGraphClusterer" title="skmultilearn.cluster.IGraphLabelGraphClusterer"><code class="xref py py-class docutils literal notranslate"><span class="pre">IGraphLabelGraphClusterer</span></code></a></td>
+<td>Clusters label space using igraph community detection</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.cluster.random.html#skmultilearn.cluster.RandomLabelSpaceClusterer" title="skmultilearn.cluster.RandomLabelSpaceClusterer"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomLabelSpaceClusterer</span></code></a></td>
+<td>Randomly divides label space into equally-sized clusters</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.cluster.networkx.html#skmultilearn.cluster.NetworkXLabelGraphClusterer" title="skmultilearn.cluster.NetworkXLabelGraphClusterer"><code class="xref py py-class docutils literal notranslate"><span class="pre">NetworkXLabelGraphClusterer</span></code></a></td>
+<td>Cluster label space with NetworkX community detection</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-skmultilearn.ext">
+<span id="external-classifiers"></span><h3>External classifiers<a class="headerlink" href="#module-skmultilearn.ext" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.ext" title="skmultilearn.ext"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.ext</span></code></a> provides wrappers for other multi-label
+classification libraries. Currently it provides a wrapper for:</p>
+<p>Currently the available classes include:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.ext.meka.html#skmultilearn.ext.Meka" title="skmultilearn.ext.Meka"><code class="xref py py-class docutils literal notranslate"><span class="pre">Meka</span></code></a></td>
+<td>Wrapper for the Multilabel Extension to WEKA -
+<a class="reference external" href="http://meka.sf.net">MEKA</a> library</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.ext.meka.html#skmultilearn.ext.download_meka" title="skmultilearn.ext.download_meka"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_meka()</span></code></a></td>
+<td>Helper function for installing MEKA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-skmultilearn.model_selection">
+<span id="model-selection-and-data-manipulation"></span><h3>Model selection and data manipulation<a class="headerlink" href="#module-skmultilearn.model_selection" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.model_selection" title="skmultilearn.model_selection"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.model_selection</span></code></a> module provides implementations multi-label stratification methods
+useful for parameter estimation.</p>
+<p>Currently the available modules include:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="61%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.model_selection.iterative_stratification.html#module-skmultilearn.model_selection.iterative_stratification" title="skmultilearn.model_selection.iterative_stratification"><code class="xref py py-class docutils literal notranslate"><span class="pre">iterative_stratification</span></code></a></td>
+<td>Iterative stratification</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.model_selection.measures.html#module-skmultilearn.model_selection.measures" title="skmultilearn.model_selection.measures"><code class="xref py py-mod docutils literal notranslate"><span class="pre">measures</span></code></a></td>
+<td>Stratification quality measures package</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-skmultilearn.dataset"></span></div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="../_sources/api/skmultilearn.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

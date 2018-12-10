@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -97,7 +96,7 @@
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">available datasets and their variants with the key pertaining
 to the <code class="code docutils literal notranslate"><span class="pre">(set_name,</span> <span class="pre">variant_name)</span></code> and values include md5 and file name on server</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a>[(set_name, variant_name)] -&gt; [md5, file_name]</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#dict" title="(in Python v3.6)">dict</a>[(set_name, variant_name)] -&gt; [md5, file_name]</td>
 </tr>
 </tbody>
 </table>
@@ -111,7 +110,7 @@ to the <code class="code docutils literal notranslate"><span class="pre">(set_na
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_home</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> (</em><em>default is None</em><em>)</em>) – the path to the directory in which scikit-multilearn data sets
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_home</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> (</em><em>default is None</em><em>)</em>) – the path to the directory in which scikit-multilearn data sets
 should be stored.</td>
 </tr>
 </tbody>
@@ -127,16 +126,16 @@ should be stored.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>set_name</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
-<li><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – variant of the data set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
-<li><strong>data_home</strong> (<em>default None</em><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – custom base folder for data, if None, default is used</li>
+<li><strong>set_name</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – variant of the data set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>data_home</strong> (<em>default None</em><em>, </em><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – custom base folder for data, if None, default is used</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">path to the downloaded data set file on disk</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)">str</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
 </td>
 </tr>
 </tbody>
@@ -161,16 +160,16 @@ folder.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data_home</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> (</em><em>default is None</em><em>)</em>) – the path to the directory in which scikit-multilearn data sets
+<li><strong>data_home</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> (</em><em>default is None</em><em>)</em>) – the path to the directory in which scikit-multilearn data sets
 should be stored, if None the path is generated as stated above</li>
-<li><strong>subdirectory</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>default ''</em>) – return path subdirectory under data_home if data_home passed or under default if not passed</li>
+<li><strong>subdirectory</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>default ''</em>) – return path subdirectory under data_home if data_home passed or under default if not passed</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the path to the data home</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)">str</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
 </td>
 </tr>
 </tbody>
@@ -186,9 +185,9 @@ should be stored, if None the path is generated as stated above</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>set_name</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
-<li><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – variant of the data set</li>
-<li><strong>data_home</strong> (<em>default None</em><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – custom base folder for data, if None, default is used</li>
+<li><strong>set_name</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – name of set from <a class="reference internal" href="#skmultilearn.dataset.available_data_sets" title="skmultilearn.dataset.available_data_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">available_data_sets()</span></code></a></li>
+<li><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – variant of the data set</li>
+<li><strong>data_home</strong> (<em>default None</em><em>, </em><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – custom base folder for data, if None, default is used</li>
 </ul>
 </td>
 </tr>
@@ -196,7 +195,7 @@ should be stored, if None the path is generated as stated above</li>
 format, see data_sets</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#dict" title="(in Python v3.6)">dict</a></p>
 </td>
 </tr>
 </tbody>
@@ -211,7 +210,7 @@ format, see data_sets</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – path to dump file, if without .bz2 ending, the .bz2 extension will be appended.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – path to dump file, if without .bz2 ending, the .bz2 extension will be appended.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
 <li><strong>X</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix, shape=(n_samples, n_features)) – input feature matrix</li>
@@ -234,7 +233,7 @@ format, see data_sets</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – path to ARFF file</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – path to ARFF file</li>
 <li><strong>labelcount</strong> (<em>integer</em>) – number of labels in the ARFF file</li>
 <li><strong>endian</strong> (<em>str {&quot;big&quot;</em><em>, </em><em>&quot;little&quot;}</em><em> (</em><em>default is &quot;big&quot;</em><em>)</em>) – whether the ARFF file contains labels at the beginning of the
 attributes list (“start”, MEKA format)
@@ -242,7 +241,7 @@ or at the end (“end”, MULAN format)</li>
 <li><strong>input_feature_type</strong> (<em>numpy.type as string</em><em> (</em><em>default is &quot;float&quot;</em><em>)</em>) – the desire type of the contents of the return ‘X’ array-likes,
 default ‘i8’, should be a numpy type,
 see <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">http://docs.scipy.org/doc/numpy/user/basics.types.html</a></li>
-<li><strong>encode_nominal</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – whether convert categorical data into numeric factors - required
+<li><strong>encode_nominal</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em> (</em><em>default is True</em><em>)</em>) – whether convert categorical data into numeric factors - required
 for some scikit classifiers that can’t handle non-numeric
 input features.</li>
 <li><strong>load_sparse</strong> (<em>boolean</em><em> (</em><em>default is False</em><em>)</em>) – whether to read arff file as a sparse file format, liac-arff
@@ -279,7 +278,7 @@ indicator vector (i.e. if 5th position has value 1
 then the input vector has label no. 5)</li>
 <li><strong>feature_names</strong> (<em>array-like</em><em>,</em><em>optional</em>) – names of features</li>
 <li><strong>label_names</strong> (<em>array-like</em><em>, </em><em>optional</em>) – names of labels</li>
-<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>optional</em>) – Path to dump file, if without .bz2, the .bz2 extension will be
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Path to dump file, if without .bz2, the .bz2 extension will be
 appended.</li>
 </ul>
 </td>
@@ -304,14 +303,14 @@ attributes list (“start”, MEKA format)
 or at the end (“end”, MULAN format)</li>
 <li><strong>save_sparse</strong> (<em>boolean</em>) – Whether to save in ARFF’s sparse dictionary-like format instead of listing all
 zeroes within file, very useful in multi-label classification.</li>
-<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> or </em><em>None</em>) – Path to ARFF file, if None, the ARFF representation is returned as string</li>
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.6/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a>) – Path to ARFF file, if None, the ARFF representation is returned as string</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the ARFF dump string, if filename is None</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)">str</a> or None</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)">str</a> or <a class="reference external" href="https://docs.python.org/3.6/library/constants.html#None" title="(in Python v3.6)">None</a></p>
 </td>
 </tr>
 </tbody>
@@ -365,7 +364,7 @@ zeroes within file, very useful in multi-label classification.</li>
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.dataset.rst.txt"
          rel="nofollow">Show this page source</a>

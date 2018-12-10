@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../userguide.html">User Guide</a></li>
+        <li><a href="skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            <ul>
+<li><a class="reference internal" href="#">skmultilearn.ext.meka module</a></li>
+</ul>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <div class="section" id="skmultilearn-ext-meka-module">
+<h1>skmultilearn.ext.meka module<a class="headerlink" href="#skmultilearn-ext-meka-module" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="skmultilearn.ext.Meka">
+<em class="property">class </em><code class="descclassname">skmultilearn.ext.</code><code class="descname">Meka</code><span class="sig-paren">(</span><em>meka_classifier=None</em>, <em>weka_classifier=None</em>, <em>java_command=None</em>, <em>meka_classpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ext/meka.html#Meka"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ext.Meka" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase" title="skmultilearn.base.base.MLClassifierBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">skmultilearn.base.base.MLClassifierBase</span></code></a></p>
+<p>Wrapper for the MEKA classifier</p>
+<p>Allows using MEKA, WEKA and some of MULAN classifiers from scikit-compatible API. For more information on
+how to use this class see the tutorial: <a class="reference internal" href="../meka.html"><span class="doc">Using the MEKA wrapper</span></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>meka_classifier</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The MEKA classifier string and parameters from the MEKA API,
+such as <code class="code docutils literal notranslate"><span class="pre">meka.classifiers.multilabel.MULAN</span> <span class="pre">-S</span> <span class="pre">RAkEL2</span></code></li>
+<li><strong>weka_classifier</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The WEKA classifier string and parameters from the WEKA API,
+such as <code class="code docutils literal notranslate"><span class="pre">weka.classifiers.trees.J48</span></code></li>
+<li><strong>java_command</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Path to test the java command</li>
+<li><strong>meka_classpath</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Path to the MEKA class path folder, usually the folder lib
+in the directory MEKA was extracted into</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="skmultilearn.ext.Meka.output_">
+<code class="descname">output_</code><a class="headerlink" href="#skmultilearn.ext.Meka.output_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – the full text output of MEKA command</p>
+</dd></dl>
+
+<p class="rubric">References</p>
+<p>If you use this wrapper please also cite:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span>@article<span class="nb">{</span>MEKA,
+    author = <span class="nb">{</span>Read, Jesse and Reutemann, Peter and Pfahringer, Bernhard and Holmes, Geoff<span class="nb">}</span>,
+    title = <span class="nb">{{</span>MEKA<span class="nb">}</span>: A Multi-label/Multi-target Extension to <span class="nb">{</span>Weka<span class="nb">}}</span>,
+    journal = <span class="nb">{</span>Journal of Machine Learning Research<span class="nb">}</span>,
+    year = <span class="nb">{</span>2016<span class="nb">}</span>,
+    volume = <span class="nb">{</span>17<span class="nb">}</span>,
+    number = <span class="nb">{</span>21<span class="nb">}</span>,
+    pages = <span class="nb">{</span>1--5<span class="nb">}</span>,
+    url = <span class="nb">{</span>http://jmlr.org/papers/v17/12-164.html<span class="nb">}</span>,
+<span class="nb">}</span>
+
+@article<span class="nb">{</span>Hall:2009:WDM:1656274.1656278,
+    author = <span class="nb">{</span>Hall, Mark and Frank, Eibe and Holmes, Geoffrey and Pfahringer, Bernhard and Reutemann, Peter and Witten, Ian H.<span class="nb">}</span>,
+    title = <span class="nb">{</span>The WEKA Data Mining Software: An Update<span class="nb">}</span>,
+    journal = <span class="nb">{</span>SIGKDD Explor. Newsl.<span class="nb">}</span>,
+    issue<span class="nb">_</span>date = <span class="nb">{</span>June 2009<span class="nb">}</span>,
+    volume = <span class="nb">{</span>11<span class="nb">}</span>,
+    number = <span class="nb">{</span>1<span class="nb">}</span>,
+    month = nov,
+    year = <span class="nb">{</span>2009<span class="nb">}</span>,
+    issn = <span class="nb">{</span>1931-0145<span class="nb">}</span>,
+    pages = <span class="nb">{</span>10--18<span class="nb">}</span>,
+    numpages = <span class="nb">{</span>9<span class="nb">}</span>,
+    url = <span class="nb">{</span>http://doi.acm.org/10.1145/1656274.1656278<span class="nb">}</span>,
+    doi = <span class="nb">{</span>10.1145/1656274.1656278<span class="nb">}</span>,
+    acmid = <span class="nb">{</span>1656278<span class="nb">}</span>,
+    publisher = <span class="nb">{</span>ACM<span class="nb">}</span>,
+    address = <span class="nb">{</span>New York, NY, USA<span class="nb">}</span>,
+<span class="nb">}</span>
+</pre></div>
+</div>
+<p class="rubric">Examples</p>
+<p>Here’s an example of performing Label Powerset classification using MEKA with a WEKA Naive Bayes classifier.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmultilearn.ext</span> <span class="kn">import</span> <span class="n">Meka</span><span class="p">,</span> <span class="n">download_meka</span>
+
+<span class="n">meka</span> <span class="o">=</span> <span class="n">Meka</span><span class="p">(</span>
+    <span class="n">meka_classifier</span> <span class="o">=</span> <span class="s2">&quot;meka.classifiers.multilabel.LC&quot;</span><span class="p">,</span>
+    <span class="n">weka_classifier</span> <span class="o">=</span> <span class="s2">&quot;weka.classifiers.bayes.NaiveBayes&quot;</span><span class="p">,</span>
+    <span class="n">meka_classpath</span> <span class="o">=</span> <span class="n">download_meka</span><span class="p">(),</span>
+    <span class="n">java_command</span> <span class="o">=</span> <span class="s1">&#39;/usr/bin/java&#39;</span><span class="p">)</span>
+
+<span class="n">meka</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">meka</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="skmultilearn.ext.Meka.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ext/meka.html#Meka.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ext.Meka.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits classifier to training data</p>
+<p>Internally this method dumps X and y to temporary arff files and
+runs MEKA with relevant arguments using <code class="xref py py-meth docutils literal notranslate"><span class="pre">_run()</span></code>. It uses a
+sparse DOK representation (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.dok_matrix.html#scipy.sparse.dok_matrix" title="(in SciPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.dok_matrix</span></code></a>)
+of the X matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix, shape=(n_samples, n_features)) – input feature matrix</li>
+<li><strong>y</strong> (<cite>array_like</cite>, <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matrix.html#numpy.matrix" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.matrix</span></code></a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.1.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a> matrix of <cite>{0, 1}</cite>, shape=(n_samples, n_labels)) – binary indicator matrix with label assignments</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">fitted instance of self</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="skmultilearn.ext.Meka.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ext/meka.html#Meka.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ext.Meka.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict label assignments for X</p>
+<p>Internally this method dumps X to temporary arff files and
+runs MEKA with relevant arguments using <code class="xref py py-func docutils literal notranslate"><span class="pre">_run()</span></code>. It uses a
+sparse DOK representation (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.dok_matrix.html#scipy.sparse.dok_matrix" title="(in SciPy v1.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.dok_matrix</span></code></a>)
+of the X matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><em>numpy.ndarray</em></a><em> or </em><em>scipy.sparse</em>) – input features of shape <code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">sparse matrix of integers with shape <code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">scipy.sparse of int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="skmultilearn.ext.download_meka">
+<code class="descclassname">skmultilearn.ext.</code><code class="descname">download_meka</code><span class="sig-paren">(</span><em>version=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ext/meka.html#download_meka"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ext.download_meka" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads a given version of the MEKA library and returns its classpath</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>version</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the MEKA version to download, default falls back to currently supported version 1.9.2</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">meka class path string for installed version</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">string</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code> – if unpacking the meka release file does not provide a proper setup</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code> – if MD5 mismatch happens after a download error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">scikit-multilearn</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+      <span style="padding-left: 5ex;">
+        <a href="../_sources/api/skmultilearn.ext.meka.rst.txt"
+         rel="nofollow">Show this page source</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

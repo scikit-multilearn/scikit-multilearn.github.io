@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -152,26 +151,58 @@ with respect to order-th label combinations.</p>
 <dl class="attribute">
 <dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.n_splits">
 <code class="descname">n_splits</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.n_splits" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>number of splits, int</em> – the number of folds to stratify into</p>
+<dd><p>the number of folds to stratify into</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">number of splits, <a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.order">
 <code class="descname">order</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.order" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int, &gt;= 1</em> – the order of label relationship to take into account when balancing sample distribution across labels</p>
+<dd><p>the order of label relationship to take into account when balancing sample distribution across labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)">int</a>, &gt;= 1</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.sample_distribution_per_fold">
 <code class="descname">sample_distribution_per_fold</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.sample_distribution_per_fold" title="Permalink to this definition">¶</a></dt>
-<dd><p>None or List[float], <code class="code docutils literal notranslate"><span class="pre">(n_splits)</span></code> – desired percentage of samples in each of the folds, if None and equal distribution of samples per fold
+<dd><p>desired percentage of samples in each of the folds, if None and equal distribution of samples per fold
 is assumed i.e. 1/n_splits for each fold. The value is held in <code class="code docutils literal notranslate"><span class="pre">self.percentage_per_fold</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">None or List[float], <code class="code docutils literal notranslate"><span class="pre">(n_splits)</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.model_selection.iterative_stratification.IterativeStratification.random_state">
 <code class="descname">random_state</code><a class="headerlink" href="#skmultilearn.model_selection.iterative_stratification.IterativeStratification.random_state" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – the random state seed (optional)</p>
+<dd><p>the random state seed (optional)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -184,7 +215,7 @@ is assumed i.e. 1/n_splits for each fold. The value is held in <code class="code
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a><em>, </em><em>[</em><em>0</em><em>,</em><em>1</em><em>]</em>) – the proportion of the dataset to include in the test split, the rest will be put in the train set</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>[</em><em>0</em><em>,</em><em>1</em><em>]</em>) – the proportion of the dataset to include in the test split, the rest will be put in the train set</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">stratified division into train/test split</td>
 </tr>
@@ -241,7 +272,7 @@ is assumed i.e. 1/n_splits for each fold. The value is held in <code class="code
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.model_selection.iterative_stratification.rst.txt"
          rel="nofollow">Show this page source</a>

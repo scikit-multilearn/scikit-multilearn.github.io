@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -127,13 +126,29 @@ a label space clustering.</p>
 <dl class="attribute">
 <dt id="skmultilearn.cluster.NetworkXLabelGraphClusterer.graph_">
 <code class="descname">graph_</code><a class="headerlink" href="#skmultilearn.cluster.NetworkXLabelGraphClusterer.graph_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>networkx.Graph</em> – the networkx Graph object containing the graph representation of graph builder’s adjacency matrix and weights</p>
+<dd><p>the networkx Graph object containing the graph representation of graph builder’s adjacency matrix and weights</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">networkx.Graph</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="skmultilearn.cluster.NetworkXLabelGraphClusterer.weights_">
 <code class="descname">weights_</code><a class="headerlink" href="#skmultilearn.cluster.NetworkXLabelGraphClusterer.weights_" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>{ ‘weight’ : list of values in edge order of graph edges }</em> – edge weights stored in a format recognizable by the networkx module</p>
+<dd><p>edge weights stored in a format recognizable by the networkx module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">{ ‘weight’ : list of values in edge order of graph edges }</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">References</p>
@@ -206,7 +221,7 @@ on <cite>y</cite> and then detects communities using the selected <cite>method</
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>None</em>) – currently unused, left for scikit compatibility</li>
+<li><strong>X</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a>) – currently unused, left for scikit compatibility</li>
 <li><strong>y</strong> (<em>scipy.sparse</em>) – label space of shape <code class="code docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_labels)</span></code></li>
 </ul>
 </td>
@@ -270,7 +285,7 @@ on <cite>y</cite> and then detects communities using the selected <cite>method</
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.cluster.networkx.rst.txt"
          rel="nofollow">Show this page source</a>

@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
+    <link rel="stylesheet" href="../../../_static/" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta content="True" name="HandheldFriendly">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@scikitml">
+<meta name="twitter:title" content="scikit-multilearn">
+<meta name="twitter:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed.">
+<meta name="keywords" content="scikit-multilearn, multi-label classification, clustering, python, machinelearning">
+<meta property="og:title" content="scikit-multilearn | Multi-label classification package for python" />
+<meta property="og:description" content="A native Python implementation of a variety of multi-label classification algorithms. Includes a Meka, MULAN, Weka wrapper. BSD licensed." />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+<link rel="stylesheet" href="/_static/custom.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51136636-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51136636-1');
+</script>
+
+
+  </head><body>
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="../../../index.html" class="brand-logo">scikit-multilearn</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="../../../userguide.html">User Guide</a></li>
+        <li><a href="../../../api/skmultilearn.html">Reference</a></li>
+        <li><a href="https://github.com/scikit-multilearn/scikit-multilearn">Github</a></li>
+        <li><a href="https://pypi.org/project/scikit-multilearn">PyPi</a></li>
+        <li id="navbar-about"><a href="../../../authors.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!-- this is a replacement -->
+
+<div class="container">
+  <div class="row">
+    <!-- Table of contents -->
+    <div class="col hide-on-small-only m3 xl2">
+      <div class="toc-wrapper">
+        <div style="height: 1px;">
+          <ul class="section table-of-contents">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-text section col s12 m8 offset-m1 xl9 offset-xl3">
+
+      
+  <h1>Source code for skmultilearn.base.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">get_matrix_in_format</span><span class="p">,</span> <span class="n">matrix_creation_function_for_format</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="k">import</span> <span class="n">issparse</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span>
+
+
+<div class="viewcode-block" id="MLClassifierBase"><a class="viewcode-back" href="../../../api/skmultilearn.base.base.html#skmultilearn.adapt.MLClassifierBase">[docs]</a><span class="k">class</span> <span class="nc">MLClassifierBase</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class providing API and common functions for all multi-label</span>
+<span class="sd">    classifiers.</span>
+
+<span class="sd">    Implements base functionality for ML classifiers, especially the get/set params for</span>
+<span class="sd">    scikit-learn compatibility.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    copyable_attrs : List[str]</span>
+<span class="sd">        list of attribute names that should be copied when class is cloned</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MLClassifierBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_generate_data_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Subset rows or columns from matrix</span>
+
+<span class="sd">        This function subsets the array of binary label vectors to </span>
+<span class="sd">        include only certain labels. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y : array-like of array-likes</span>
+<span class="sd">            An array-like of binary label vectors.</span>
+<span class="sd">        subset: array-like of integers</span>
+<span class="sd">            array of integers, indices that will be subsetted from</span>
+<span class="sd">            array-likes in y</span>
+<span class="sd">        axis: integer 0 for &#39;rows&#39;, 1 for &#39;labels&#39;, </span>
+<span class="sd">            control variable for whether to return rows or labels as</span>
+<span class="sd">            indexed by subset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        multi-label binary label vector : array-like of array-likes of {0,1}</span>
+<span class="sd">            array of binary label vectors including label data only for</span>
+<span class="sd">            labels from parameter labels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">return_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">return_data</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()[:,</span> <span class="n">subset</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">return_data</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()[</span><span class="n">subset</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">return_data</span>
+
+    <span class="k">def</span> <span class="nf">_ensure_input_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ensure the desired input format</span>
+
+<span class="sd">        This function ensures that input format follows the</span>
+<span class="sd">        density/sparsity requirements of base classifier. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like or sparse matrix</span>
+<span class="sd">            An input feature matrix of shape :code:`(n_samples, n_features)`</span>
+<span class="sd">        sparse_format: str</span>
+<span class="sd">            Requested format of returned scipy.sparse matrix, if sparse is returned</span>
+<span class="sd">        enforce_sparse : bool</span>
+<span class="sd">            Ignore require_dense and enforce sparsity, useful internally</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array-like or sparse matrix</span>
+<span class="sd">            Transformed X values of shape :code:`(n_samples, n_features)`</span>
+<span class="sd">            </span>
+<span class="sd">        .. note:: If :code:`require_dense` was set to :code:`True` for</span>
+<span class="sd">            input features in the constructor, the returned value is an</span>
+<span class="sd">            array-like of array-likes. If :code:`require_dense` is </span>
+<span class="sd">            set to :code:`false`, a sparse matrix of format</span>
+<span class="sd">            :code:`sparse_format` is returned, if possible - without cloning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_sparse</span> <span class="o">=</span> <span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_sparse</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enforce_sparse</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sparse_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">X</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enforce_sparse</span><span class="p">:</span>
+                <span class="c1"># TODO: perhaps a check_array?</span>
+                <span class="k">return</span> <span class="n">X</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span><span class="n">sparse_format</span><span class="p">)(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_ensure_output_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">sparse_format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">enforce_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ensure the desired output format</span>
+
+<span class="sd">        This function ensures that output format follows the</span>
+<span class="sd">        density/sparsity requirements of base classifier. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        matrix : array-like matrix</span>
+<span class="sd">            An input feature matrix of shape :code:`(n_samples)` or</span>
+<span class="sd">            :code:`(n_samples, n_outputs)` or a sparse matrix of shape</span>
+<span class="sd">            :code:`(n_samples, n_outputs)`</span>
+
+<span class="sd">        sparse_format: str (default is csr)</span>
+<span class="sd">            Requested format of returned :code:`scipy.sparse` matrix,</span>
+<span class="sd">            if sparse is returned</span>
+
+<span class="sd">        enforce_sparse : bool (default is False)</span>
+<span class="sd">            Ignore :code:`require_dense` and enforce sparsity, useful</span>
+<span class="sd">            internally</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array-like or sparse matrix</span>
+<span class="sd">            Transformed X values of shape :code:`(n_samples, n_features)`</span>
+<span class="sd">            </span>
+<span class="sd">        .. note:: If :code:`require_dense` was set to :code:`True` for</span>
+<span class="sd">            input features in the constructor, the returned value is an</span>
+<span class="sd">            array-like of array-likes. If :code:`require_dense` is </span>
+<span class="sd">            set to :code:`false`, a sparse matrix of format</span>
+<span class="sd">            :code:`sparse_format` is returned, if possible - without cloning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_sparse</span> <span class="o">=</span> <span class="n">issparse</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_sparse</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enforce_sparse</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sparse_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">matrix</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">get_matrix_in_format</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">sparse_format</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_dense</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enforce_sparse</span><span class="p">:</span>
+                <span class="c1"># ensuring 1d</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># a regular dense np.matrix or np.array of np.arrays</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">matrix</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># ensuring 2d</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">matrix_creation_function_for_format</span><span class="p">(</span><span class="n">sparse_format</span><span class="p">)(</span><span class="n">matrix</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MLClassifierBase.fit"><a class="viewcode-back" href="../../../api/skmultilearn.base.base.html#skmultilearn.adapt.MLClassifierBase.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Abstract method to fit classifier with training data</span>
+
+<span class="sd">        It must return a fitted instance of :code:`self`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.ndarray or scipy.sparse</span>
+<span class="sd">            input features, can be a dense or sparse matrix of size</span>
+<span class="sd">            :code:`(n_samples, n_features)`</span>
+<span class="sd">        y : numpy.ndaarray or scipy.sparse {0,1}</span>
+<span class="sd">            binary indicator matrix with label assignments.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            fitted instance of self</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            this is just an abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;MLClassifierBase::fit()&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MLClassifierBase.predict"><a class="viewcode-back" href="../../../api/skmultilearn.base.base.html#skmultilearn.adapt.MLClassifierBase.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Abstract method to predict labels</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.ndarray or scipy.sparse.csc_matrix</span>
+<span class="sd">            input features of shape :code:`(n_samples, n_features)`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        scipy.sparse of int</span>
+<span class="sd">            binary indicator matrix with label assignments with shape</span>
+<span class="sd">            :code:`(n_samples, n_labels)`</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            this is just an abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;MLClassifierBase::predict()&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MLClassifierBase.get_params"><a class="viewcode-back" href="../../../api/skmultilearn.base.base.html#skmultilearn.adapt.MLClassifierBase.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get parameters to sub-objects</span>
+
+<span class="sd">        Introspection of classifier for search models like</span>
+<span class="sd">        cross-validation and grid search.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        deep : bool</span>
+<span class="sd">            if :code:`True` all params will be introspected also and</span>
+<span class="sd">            appended to the output dictionary.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        out : dict</span>
+<span class="sd">            dictionary of all parameters and their values. If </span>
+<span class="sd">            :code:`deep=True` the dictionary also holds the parameters</span>
+<span class="sd">            of the parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">copyable_attrs</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">),</span> <span class="s1">&#39;get_params&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">deep</span><span class="p">:</span>
+                <span class="n">deep_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="n">attr</span> <span class="o">+</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="n">k</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">deep_items</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="MLClassifierBase.set_params"><a class="viewcode-back" href="../../../api/skmultilearn.base.base.html#skmultilearn.adapt.MLClassifierBase.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Propagate parameters to sub-objects</span>
+
+<span class="sd">        Set parameters as returned by :code:`get_params`. Please </span>
+<span class="sd">        see this `link`_.</span>
+
+<span class="sd">        .. _link: https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py#L243</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">valid_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">parameters_current_level</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parameters</span> <span class="k">if</span> <span class="s1">&#39;__&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">parameters_current_level</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">valid_params</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid parameter </span><span class="si">%s</span><span class="s1"> for estimator </span><span class="si">%s</span><span class="s1">. &#39;</span>
+                                 <span class="s1">&#39;Check the list of available parameters &#39;</span>
+                                 <span class="s1">&#39;with `estimator.get_params().keys()`.&#39;</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+
+        <span class="n">parameters_below_current_level</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parameters</span> <span class="k">if</span> <span class="s1">&#39;__&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+        <span class="n">parameters_grouped_by_current_level</span> <span class="o">=</span> <span class="p">{</span><span class="nb">object</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="nb">object</span> <span class="ow">in</span> <span class="n">valid_params</span><span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">parameters_below_current_level</span><span class="p">:</span>
+            <span class="n">object_name</span><span class="p">,</span> <span class="n">sub_param</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">object_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters_grouped_by_current_level</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid parameter </span><span class="si">%s</span><span class="s1"> for estimator </span><span class="si">%s</span><span class="s1">. &#39;</span>
+                                 <span class="s1">&#39;Check the list of available parameters &#39;</span>
+                                 <span class="s1">&#39;with `estimator.get_params().keys()`.&#39;</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="n">object_name</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+
+            <span class="n">value</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span>
+            <span class="n">parameters_grouped_by_current_level</span><span class="p">[</span><span class="n">object_name</span><span class="p">][</span><span class="n">sub_param</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="n">valid_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># parameters_grouped_by_current_level groups valid parameters for subojects</span>
+        <span class="k">for</span> <span class="n">object_name</span><span class="p">,</span> <span class="n">sub_params</span> <span class="ow">in</span> <span class="n">parameters_grouped_by_current_level</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_params</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sub_object</span> <span class="o">=</span> <span class="n">valid_params</span><span class="p">[</span><span class="n">object_name</span><span class="p">]</span>
+                <span class="n">sub_object</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">sub_params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+</pre></div>
+
+    </div>
+  </div>
+
+</div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">scikit-multilearn</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<footer class="page-footer blue-grey darken-4">
+  <div class="container">
+    <div class="row  ">
+      <div class="col l6 s12">
+        <h5 class="white-text">Cite US!</h5>
+        <p>If you use scikit-multilearn in your research and publish it, please consider citing us, it will help us get funding for making the library better. The paper is available on <a href="https://arxiv.org/abs/1702.01460">arXiv</a>, to cite it try the Bibtex code on the right.</p>
+      </div>
+      <div class="col l4 s12">
+        <pre><code>
+        
+        @ARTICLE{2017arXiv170201460S,
+          author = {{Szyma{\'n}ski}, P. and {Kajdanowicz}, T.},
+          title = "{A scikit-based Python environment for performing multi-label classification}",
+          journal = {ArXiv e-prints},
+          archivePrefix = "arXiv",
+          eprint = {1702.01460},
+          primaryClass = "cs.LG",
+          keywords = {Computer Science - Learning, Computer Science - Mathematical Software},
+          year = 2017,
+          month = feb,
+        }
+        
+      </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright blue-grey darken-4">
+    <div class="container">
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    </div>
+  </div>
+</footer>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -88,7 +87,7 @@
 <h1>RAkELo: random overlapping label space division with Label Powerset<a class="headerlink" href="#rakelo-random-overlapping-label-space-division-with-label-powerset" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="skmultilearn.ensemble.RakelO">
-<em class="property">class </em><code class="descclassname">skmultilearn.ensemble.</code><code class="descname">RakelO</code><span class="sig-paren">(</span><em>base_classifier=None</em>, <em>model_count=None</em>, <em>labelset_size=None</em>, <em>base_classifier_require_dense=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ensemble/rakelo.html#RakelO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ensemble.RakelO" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">skmultilearn.ensemble.</code><code class="descname">RakelO</code><span class="sig-paren">(</span><em>base_classifier=None</em>, <em>model_count=None</em>, <em>labelset_size=3</em>, <em>base_classifier_require_dense=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/skmultilearn/ensemble/rakelo.html#RakelO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skmultilearn.ensemble.RakelO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="skmultilearn.base.base.html#skmultilearn.base.base.MLClassifierBase" title="skmultilearn.base.base.MLClassifierBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">skmultilearn.base.base.MLClassifierBase</span></code></a></p>
 <p>Overlapping RAndom k-labELsets multi-label classifier</p>
 <p>Divides the label space in to m subsets of size k, trains a Label Powerset
@@ -100,13 +99,15 @@ assigned the label to the instance.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>base_classifier</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.19.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>) – scikit-learn compatible base classifier, will be set under <cite>self.classifier.classifier</cite>.</li>
-<li><strong>base_classifier_require_dense</strong> (<em>[</em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>]</em>) – whether the base classifier requires [input, output] matrices
+<li><strong>base_classifier</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>) – scikit-learn compatible base classifier, will be set under <cite>self.classifier.classifier</cite>.</li>
+<li><strong>base_classifier_require_dense</strong> (<em>[</em><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>]</em>) – whether the base classifier requires [input, output] matrices
 in dense representation. Will be automatically
 set under <cite>self.classifier.require_dense</cite></li>
-<li><strong>labelset_size</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – the desired size of each of the partitions, parameter k according to paper.
+<li><strong>labelset_size</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the desired size of each of the partitions, parameter k according to paper.
+According to paper, the best parameter is 3, so it’s set as default
 Will be automatically set under <cite>self.labelset_size</cite></li>
-<li><strong>model_count</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – the desired number of classifiers, parameter m according to paper.
+<li><strong>model_count</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the desired number of classifiers, parameter m according to paper.
+According to paper, the best value for this parameter is 2M (being M the number of labels)
 Will be automatically set under <code class="code docutils literal notranslate"><span class="pre">self.model_count_</span></code>.</li>
 </ul>
 </td>
@@ -116,8 +117,16 @@ Will be automatically set under <code class="code docutils literal notranslate">
 <dl class="attribute">
 <dt id="skmultilearn.ensemble.RakelO.classifier">
 <code class="descname">classifier</code><a class="headerlink" href="#skmultilearn.ensemble.RakelO.classifier" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference internal" href="skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier" title="skmultilearn.ensemble.MajorityVotingClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorityVotingClassifier</span></code></a> – the voting classifier initialized with <a class="reference internal" href="skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset" title="skmultilearn.problem_transform.LabelPowerset"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelPowerset</span></code></a> multi-label
+<dd><p>the voting classifier initialized with <a class="reference internal" href="skmultilearn.problem_transform.lp.html#skmultilearn.problem_transform.LabelPowerset" title="skmultilearn.problem_transform.LabelPowerset"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelPowerset</span></code></a> multi-label
 classifier with <cite>base_classifier</cite> and <code class="xref py py-class docutils literal notranslate"><span class="pre">RandomLabelSpaceClusterer</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="skmultilearn.ensemble.voting.html#skmultilearn.ensemble.MajorityVotingClassifier" title="skmultilearn.ensemble.MajorityVotingClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorityVotingClassifier</span></code></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">References</p>
@@ -262,7 +271,7 @@ each trained on a quarter of labels, which is sure to overlap:</p>
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.ensemble.rakelo.rst.txt"
          rel="nofollow">Show this page source</a>

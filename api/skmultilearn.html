@@ -8,11 +8,10 @@
     <title>scikit-multilearn: Multi-Label Classification in Python &#8212; Multi-Label Classification for Python</title>
     <link rel="stylesheet" href="../_static/" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta content="True" name="HandheldFriendly">
@@ -78,6 +77,7 @@
 <li><a class="reference internal" href="#classifiers-and-tools">Classifiers and tools</a><ul>
 <li><a class="reference internal" href="#module-skmultilearn.adapt">Algorithm Adaptation approaches</a></li>
 <li><a class="reference internal" href="#module-skmultilearn.problem_transform">Problem Transformation approaches</a></li>
+<li><a class="reference internal" href="#module-skmultilearn.embedding">Multi-label embeddings</a></li>
 <li><a class="reference internal" href="#module-skmultilearn.ensemble">Ensembles of classifiers</a></li>
 <li><a class="reference internal" href="#module-skmultilearn.cluster">Label Space Clusterers</a></li>
 <li><a class="reference internal" href="#module-skmultilearn.ext">External classifiers</a></li>
@@ -138,6 +138,9 @@ corrections</td>
 <tr class="row-odd"><td><a class="reference internal" href="skmultilearn.adapt.mlaram.html#skmultilearn.adapt.MLARAM" title="skmultilearn.adapt.MLARAM"><code class="xref py py-class docutils literal notranslate"><span class="pre">MLARAM</span></code></a></td>
 <td>a multi-Label Hierarchical ARAM Neural Network</td>
 </tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.adapt.mltsvm.html#skmultilearn.adapt.MLTSVM" title="skmultilearn.adapt.MLTSVM"><code class="xref py py-class docutils literal notranslate"><span class="pre">MLTSVM</span></code></a></td>
+<td>twin multi-Label Support Vector Machines</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -170,6 +173,36 @@ chain of single-class classification problems</td>
 <td>treats each label combination as a separate
 class with one multi-class classification
 problem</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-skmultilearn.embedding">
+<span id="multi-label-embeddings"></span><h3>Multi-label embeddings<a class="headerlink" href="#module-skmultilearn.embedding" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-skmultilearn.embedding" title="skmultilearn.embedding"><code class="xref py py-mod docutils literal notranslate"><span class="pre">skmultilearn.embedding</span></code></a> module provides implementations of label space embedding methods and a general
+embedding based classifier.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.embedding.clems.html#skmultilearn.embedding.CLEMS" title="skmultilearn.embedding.CLEMS"><code class="xref py py-class docutils literal notranslate"><span class="pre">CLEMS</span></code></a></td>
+<td>Cost-Sensitive Label Embedding with Multidimensional Scaling</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.embedding.openne.html#skmultilearn.embedding.OpenNetworkEmbedder" title="skmultilearn.embedding.OpenNetworkEmbedder"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpenNetworkEmbedder</span></code></a></td>
+<td>Label Network Embedding for Multilabel Classification</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.embedding.skembeddings.html#skmultilearn.embedding.SKLearnEmbedder" title="skmultilearn.embedding.SKLearnEmbedder"><code class="xref py py-class docutils literal notranslate"><span class="pre">SKLearnEmbedder</span></code></a></td>
+<td>Wrapper for scikit-learn embedders</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.embedding.classifier.html#skmultilearn.embedding.EmbeddingClassifier" title="skmultilearn.embedding.EmbeddingClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddingClassifier</span></code></a></td>
+<td>A general embedding-based classifier</td>
 </tr>
 </tbody>
 </table>
@@ -271,7 +304,11 @@ classification libraries. Currently it provides a wrapper for:</p>
 <td>Wrapper for the Multilabel Extension to WEKA -
 <a class="reference external" href="http://meka.sf.net">MEKA</a> library</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.ext.meka.html#skmultilearn.ext.download_meka" title="skmultilearn.ext.download_meka"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_meka()</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="skmultilearn.ext.keras.html#skmultilearn.ext.Keras" title="skmultilearn.ext.Keras"><code class="xref py py-class docutils literal notranslate"><span class="pre">Keras</span></code></a></td>
+<td>Wrapper for the Python Deep Learning library -
+<a class="reference external" href="http://https://keras.io/">KERAS</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="skmultilearn.ext.meka.html#skmultilearn.ext.download_meka" title="skmultilearn.ext.download_meka"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_meka()</span></code></a></td>
 <td>Helper function for installing MEKA</td>
 </tr>
 </tbody>
@@ -350,7 +387,7 @@ useful for parameter estimation.</p>
   </div>
   <div class="footer-copyright blue-grey darken-4">
     <div class="container">
-        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.
       <span style="padding-left: 5ex;">
         <a href="../_sources/api/skmultilearn.rst.txt"
          rel="nofollow">Show this page source</a>
